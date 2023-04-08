@@ -1,4 +1,4 @@
-<link rel="manifest" href="manifest.json" />
+<link rel="manifest" href="{{asset('manifest.json')}}" />
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" href="{{asset('assets/img/favicon180.png')}}" sizes="180x180">
@@ -19,3 +19,6 @@
 
 <!-- style css for this template -->
 <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" id="style">
+<script>
+    var baseUrl = '{{URL::to('/')}}'
+</script>

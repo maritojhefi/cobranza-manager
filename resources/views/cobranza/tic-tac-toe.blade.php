@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apps" content="{{ env('APP_NAME') }}">
+    <meta name="author" content="Macrobyte">
+    <link rel="shortcut icon" href="{{ asset('assets/logos/tic-tac-toe-24.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
         integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>Document</title>
+    <title>Tic Tac Toe</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto);
         @import url(https://fonts.googleapis.com/css?family=Montserrat);
@@ -751,55 +753,41 @@
             }
         }
     </style>
-
-
 </head>
 
 <body>
     <div class="wrapper">
-
         <div class="dialogs">
-
             <div class="cover"></div>
-
             <div class="pick">
                 <h2 class="msg">Escoge tu simbolo</h2>
                 <button class="x"></button>
                 <button class="o"></button>
             </div> <!-- end-pick -->
-
             <div class="end">
                 <h2 class="msg"></h2>
                 <button class="replay"><i class="fa fa-refresh"></i></button>
             </div> <!-- end-end -->
-
         </div> <!-- end-dialogs -->
-
-        <div class="container" id="miDiv">
-
+        <div class="container">
             <div class="game">
-
                 <div class="row top">
                     <div class="col"></div>
                     <div class="col"></div>
                     <div class="col"></div>
                 </div> <!-- end-row -->
-
                 <div class="row middle">
                     <div class="col"></div>
                     <div class="col"></div>
                     <div class="col"></div>
                 </div> <!-- end-row -->
-
                 <div class="row bottom">
                     <div class="col"></div>
                     <div class="col"></div>
                     <div class="col"></div>
                 </div> <!-- end-row -->
-
             </div> <!-- end-game -->
-
-            <div class="scores">
+            <div class="scores" id="miDiv">
                 <div class="row">
                     <div class="col p">
                         <h2>Tú - <span class="char"><i class="fa fa-xmark"></i></span></h2>
@@ -816,49 +804,27 @@
                 </div>
             </div>
             <!-- end-scores -->
-
         </div> <!-- end-container -->
-
     </div> <!-- end-wrapper -->
-
-
-
-    {{-- <div id="miDiv" class="clasecapa" style="background: black; height: 137px;">Haz clic aquí</div> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-<script src="http://benalman.com/code/projects/jquery-throttle-debounce/jquery.ba-throttle-debounce.js"></script>
-
-
+    <script src="http://benalman.com/code/projects/jquery-throttle-debounce/jquery.ba-throttle-debounce.js"></script>
     <script type="text/javascript">
-        // Obtener el elemento div
-        const miDiv = document.getElementById("miDiv");
-        // Inicializar un contador de clics
-
-
-let contador = 0;
-        $('#miDiv').click($.debounce(2000, function(e) {
-            document.addEventListener("click", function(event) {
-                // Verificar si el clic fue dentro del div
-                if ($(event.target).closest("#miDiv").length) {
-                    return; // Si el clic fue dentro del div, no se cuenta
-                } else {
-                    // Incrementar el contador de clics
-                    contador++;
-                }
-                // Verificar si se han hecho 5 clics
-                if (contador === 5) {
-                    // Redirigir a la página deseada
-                    window.location.href = "https://www.facebook.com/macrobyte.tja/";
-                    // Reiniciar el contador de clics después de 1 segundos
-                }
-                console.log(contador);
-            });
+        var contador = 0;
+        $('#miDiv').click(function(e) {
+            contador++;
+            console.log(contador)
+            if (contador >= 5) {
+                window.location.href = "{{ route('login') }}";
+            }
+        });
+        $("#miDiv").click($.debounce(1000, function(e) {
+            if (contador < 5) {
+                contador = 0;
+            }
         }));
-        // Agregar un controlador de eventos de clic al documento
     </script>
     <script type="text/javascript">
         "use strict";
-
         (function() {
             function TicTacToe(args) {
                 // Settings
@@ -866,7 +832,6 @@ let contador = 0;
                     $scores = args.scores,
                     $dialogs = args.dialogs,
                     cols = [];
-
                 $game.find(".row").each(function(i) {
                     var row = [];
                     $(this)
@@ -876,17 +841,14 @@ let contador = 0;
                         });
                     cols.push(row);
                 });
-
                 // VARS
                 var rows = [
                         [cols[0][0], cols[0][1], cols[0][2]],
                         [cols[1][0], cols[1][1], cols[1][2]],
                         [cols[2][0], cols[2][1], cols[2][2]], // Hori
-
                         [cols[0][0], cols[1][0], cols[2][0]],
                         [cols[0][1], cols[1][1], cols[2][1]],
                         [cols[0][2], cols[1][2], cols[2][2]], // Verti
-
                         [cols[0][0], cols[1][1], cols[2][2]],
                         [cols[0][2], cols[1][1], cols[2][0]] // Diago
                     ],
@@ -901,7 +863,6 @@ let contador = 0;
                     },
                     turn = "p",
                     isComputer = false;
-
                 /*
                 ============================================
                   UpdateScores Function.
@@ -912,7 +873,6 @@ let contador = 0;
                     $scores.find(".ties").find("u").html(scores.ties);
                     $scores.find(".com").find("u").html(scores.com);
                 } // end-updateScores
-
                 /*
                 ============================================
                   getCoords Function.
@@ -930,7 +890,6 @@ let contador = 0;
                         }
                     }
                 } // end-getCoords
-
                 /*
                 ============================================
                   AppendChar Function.
@@ -941,7 +900,6 @@ let contador = 0;
                         target.append($(document.createElement("u")).addClass(char));
                     }
                 } // end-appendChar
-
                 /*
                 ============================================
                   Blink Function.
@@ -951,11 +909,9 @@ let contador = 0;
                     function rmClass() {
                         $el.removeClass("blink");
                     }
-
                     $el.addClass("blink");
                     setTimeout(rmClass, 2000);
                 } // end-blink
-
                 /*
                 ============================================
                   SwitchTurn Function.
@@ -968,7 +924,6 @@ let contador = 0;
                         turn = "p";
                     }
                 } // end-switchTurn
-
                 /*
                 ============================================
                   Dialogs Function.
@@ -986,7 +941,6 @@ let contador = 0;
                         });
                     }
                 } // end-dialogs
-
                 /*
                 ============================================
                   Action Function.
@@ -1002,7 +956,6 @@ let contador = 0;
                             }
                         });
                     });
-
                     if (action === "replay") {
                         dialogs("out", "pick");
                         switchTurn();
@@ -1016,7 +969,6 @@ let contador = 0;
                         dialogs("in", "pick");
                     }
                 } // end-action
-
                 /*
                 ============================================
                   Winner Function.
@@ -1033,10 +985,8 @@ let contador = 0;
                             return rows[i];
                         }
                     } // end-getRow
-
                     var p = getRow(chars.p),
                         com = getRow(chars.com);
-
                     if (p) {
                         return {
                             name: "p",
@@ -1050,7 +1000,6 @@ let contador = 0;
                     }
                     return false;
                 } // end-checkWin
-
                 function win(winner) {
                     function winAction(row, text) {
                         row.forEach(function(col) {
@@ -1059,7 +1008,6 @@ let contador = 0;
                         $dialogs.find(".msg").html(text);
                         action("win");
                     } // action
-
                     if (winner.name === "p") {
                         winAction(winner.row, "You win!!");
                         scores.p++;
@@ -1070,7 +1018,6 @@ let contador = 0;
                         updateScores();
                     }
                 } // end-win
-
                 /*
                 ============================================
                   Tie Function.
@@ -1091,13 +1038,11 @@ let contador = 0;
                     }
                     return true;
                 } // end-checkTie
-
                 function tie() {
                     action("tie");
                     scores.ties++;
                     updateScores();
                 } // end-tie
-
                 /*
                 ============================================
                   Computer Function.
@@ -1114,7 +1059,6 @@ let contador = 0;
                         tie();
                         return;
                     }
-
                     isComputer = true;
 
                     function getRandom(arr) {
@@ -1124,7 +1068,6 @@ let contador = 0;
 
                     function getRows(char) {
                         var dirtyRows = [];
-
                         for (var i = 0; i < rows.length; i++) {
                             var dirtyRowData = [];
                             for (var j = 0; j < rows[i].length; j++) {
@@ -1137,9 +1080,7 @@ let contador = 0;
                                 dirtyRows.push(dirtyRowData);
                             }
                         }
-
                         var hasEmptyCols = [];
-
                         dirtyRows.forEach(function(arr, i) {
                             var row = arr[arr.length - 1];
                             for (var i = 0; i < row.length; i++) {
@@ -1148,7 +1089,6 @@ let contador = 0;
                                 }
                             }
                         });
-
                         var hasEmptyCols = hasEmptyCols.filter(function(row, i) {
                             return hasEmptyCols.indexOf(row) === i;
                         });
