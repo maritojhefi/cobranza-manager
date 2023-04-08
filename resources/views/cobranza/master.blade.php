@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{App::currentLocale()}}">
 
 <head>
     @include('cobranza.includes.metas')
@@ -7,7 +7,7 @@
     @stack('header')
     <title>{{ env('APP_NAME') }}</title>
 </head>
-<body>
+<body class="theme-indigo">
     @include('cobranza.includes.components.loader')
     <!-- loader section ends -->
 
