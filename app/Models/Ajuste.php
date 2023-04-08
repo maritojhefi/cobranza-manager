@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Ajuste extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'llave',
+        'valor'
+    ];
 }

@@ -15,6 +15,8 @@ class CreateAjustesTable extends Migration
     {
         Schema::create('ajustes', function (Blueprint $table) {
             $table->id();
+            $table->string('llave', 100)->unique();
+            $table->string('valor', 100)->default(false);
             $table->timestamps();
         });
     }

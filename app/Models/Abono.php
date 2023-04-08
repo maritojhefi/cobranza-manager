@@ -2,10 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Prestamo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Abono extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'prestamo_id',
+        'monto_abono',
+        'fecha',
+        'long',
+        'lat'
+    ];
+    public function prestamo()
+    {
+        return $this->belongsTo(Prestamo::class);
+    }
 }

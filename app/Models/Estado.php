@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 
-class Role extends Model
+class Estado extends Model
 {
     use HasFactory;
-    
-    const ROL1="administrador";
-    const ROL2="supervisor";
-    const ROL3="cobrador";
-    const ROL4="cliente";
+    const ESTADO_PENDIENTE = "pendiente";
+    const ESTADO_FINALIZADO = "finalizado";
+    const ESTADO_LIMPIO = "sin prestamos";
 
     protected $fillable = [
         'nombre',
@@ -22,5 +20,4 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
-    
 }

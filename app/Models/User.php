@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Role;
+use App\Models\Estado;
+use App\Models\Prestamo;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -17,10 +21,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    const PATH_FOTO_DEFAULT = '';
     protected $fillable = [
         'name',
         'email',
         'password',
+        'foto',
+        'ci',
+        'telf',
+        'direccion',
+        'lat',
+        'long',
+        'estado_id'
     ];
 
     /**
@@ -41,4 +53,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes["password"]=Hash::make($value);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
+    }
+    public function gastos()
+    {
+        return $this->hasMany(Gasto::class);
+    }
+    public function prestamos()
+    {
+        return $this->hasMany(Prestamo::class);
+    }
 }
