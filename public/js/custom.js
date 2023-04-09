@@ -22,7 +22,7 @@ $.ajaxSetup({
     },
     beforeSend: function(xhr, options) {
         console.log('Ajax iniciado')
-        options.url = baseUrl + options.url;
+        // options.url = baseUrl + options.url;
     },
     complete:function(xhr,status){
         console.log('Ajax completado')

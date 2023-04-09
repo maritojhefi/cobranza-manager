@@ -20,5 +20,5 @@
 <!-- style css for this template -->
 <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" id="style">
 <script>
-    var baseUrl = '{{URL::to('/')}}'
+    var baseUrl = '/'
 </script>
