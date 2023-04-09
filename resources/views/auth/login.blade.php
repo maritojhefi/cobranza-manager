@@ -86,17 +86,17 @@
             </div>
             <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto align-self-center text-center py-4">
                 <h1 class="mb-4 text-color-theme">Inicio de Sesión</h1>
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST">
                     @csrf
                     <div class="form-group form-floating mb-3 is-valid">
-                        <input id="email" type="email" class="email form-control @error('email') is-invalid @enderror"
-                            name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                        @error('email')
+                        <input id="idUser" type="text" class="idUser form-control @error('id') is-invalid @enderror"
+                            name="id" value="{{ old('id') }}" required autocomplete="id" autofocus >
+                        @error('id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                        <label class="form-control-label" for="email">Correo Electronico</label>
+                        <label class="form-control-label" for="email">Ingrese su ID</label>
                     </div>
 
                     <div class="form-group form-floating is-invalid mb-3">
@@ -108,7 +108,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                        <label class="form-control-label" for="password">Contraseña</label>
+                        <label class="form-control-label" for="password">Ingrese su clave</label>
                         <button type="button" class="text-danger tooltip-btn" data-bs-toggle="tooltip"
                             data-bs-placement="left" title="" id="passworderror"
                             data-bs-original-title="Enter valid Password">
@@ -137,29 +137,17 @@
             $(this).html(
                 `<span class="spinner-border spinner-border-sm mt-1" role="status" aria-hidden="true"></span>`
             );
+            var idUser = $('.idUser').val();
+            var password = $('.password').val();
+            $.ajax({
+                method: "post",
+                url: "{{ route('login') }}",
+                data: {
+                    idUser: idUser,
+                    password: password,
+                    '_token': '{{ csrf_token() }}',
+                },
+            })
         });
-
-
-        // $.ajax({
-        //     method: "get",
-        //     url: url + "?user=" + idUser,
-        //     beforeSend: function() {
-        //         $('#package-info').html(
-        //             `<div class="spinner-border d-block mx-auto" style="width: 5rem; height: 5rem;" role="status"></div>`
-        //         );
-        //         $('#backk').hide();
-        //         $("#logocontainer").hide();
-        //         $(".card-pack").removeClass('d-none');
-        //     },
-        //     success: function(a) {
-        //         $("#admin-permission").modal('show')
-        //         $(".admin-id").html(a[0]);
-        //         myVariable = a[4];
-        //         // Definir el array de valores por defecto
-        //         valoresPorDefecto = JSON.parse(myVariable);
-        //         // Inicializar el Select2 múltiple y establecer los valores por defecto
-        //         select2.val(valoresPorDefecto).trigger("change");
-        //     }
-        // })
     </script>
 @endpush
