@@ -34,6 +34,7 @@
         @include('cobranza.includes.components.footer')
         <!-- Footer ends-->
     @endif
+    @include('cobranza.includes.messages-back');
     @stack('modals')
     @include('cobranza.includes.scripts')
     @stack('footer')

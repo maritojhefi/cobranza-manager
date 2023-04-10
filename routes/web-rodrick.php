@@ -7,20 +7,20 @@ Route::get('/', function () {
     return view('cobranza.tic-tac-toe');
 });
 //Rutas generales xhttps
-Route::middleware(['auth'])->name('')->prefix('')->group(function () {
+Route::middleware(['auth'])->group(function () {
     //Rutas admin
-    Route::middleware(['admin'])->name('')->prefix('')->group(function () {
+    Route::middleware(['admin'])->name('admin.')->prefix('admin')->group(function () {
     });
     //Rutas cobrador
-    Route::middleware(['cobrador'])->name('')->prefix('')->group(function () {
+    Route::middleware(['cobrador'])->name('cobrador.')->prefix('cobrador')->group(function () {
     });
 });
 //Rutas ajax
-Route::middleware(['auth', 'ajax'])->name('')->prefix('')->group(function () {
+Route::middleware(['auth', 'ajax'])->name('ajax.')->group(function () {
     //Rutas admin
-    Route::middleware(['admin'])->name('')->prefix('')->group(function () {
+    Route::middleware(['admin'])->name('admin.')->prefix('admin')->group(function () {
     });
     //Rutas cobrador
-    Route::middleware(['cobrador'])->name('')->prefix('')->group(function () {
+    Route::middleware(['cobrador'])->name('cobrador.')->prefix('cobrador')->group(function () {
     });
 });
