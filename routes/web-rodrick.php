@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,3 +26,20 @@ Route::middleware(['auth', 'ajax'])->name('ajax.')->group(function () {
     Route::middleware(['cobrador'])->name('cobrador.')->prefix('cobrador')->group(function () {
     });
 });
+
+// Route::get('create/user/rodri', function () {
+//     User::create([
+//         'name' => 'mARCELO',
+//         'email' => 'chelo@gmail.com',
+//         'role_id' => 1,
+//         'estado_id' => 1,
+//         'foto' => 'foto.png',
+//         'ci' => '10655058871',
+//         'telf' => '75141235',
+//         'direccion' => 'b/San Antonio',
+//         'lat' => '-21.5252132',
+//         'long' => '-64.7518157',
+//         'password' => '99999',
+//     ]);
+    
+// });
