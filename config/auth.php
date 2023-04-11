@@ -45,7 +45,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | User Providers
-    |--------------------------------------------------------------------------
+    |-------------------------------------------------------------------------6-
     |
     | All authentication drivers have a user provider. This defines how the
     | users are actually retrieved out of your database or other storage
@@ -63,6 +63,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'id'=>'id',
         ],
 
         // 'users' => [

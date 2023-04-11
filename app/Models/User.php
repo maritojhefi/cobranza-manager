@@ -23,6 +23,7 @@ class User extends Authenticatable
      */
     const PATH_FOTO_DEFAULT = '';
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -32,7 +33,8 @@ class User extends Authenticatable
         'direccion',
         'lat',
         'long',
-        'estado_id'
+        'estado_id',
+        'role_id'
     ];
 
     /**
@@ -55,7 +57,7 @@ class User extends Authenticatable
     ];
     public function setPasswordAttribute($value)
     {
-        $this->attributes["password"]=Hash::make($value);
+        $this->attributes["password"] = Hash::make($value);
     }
     public function role()
     {
