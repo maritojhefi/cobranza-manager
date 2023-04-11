@@ -54,9 +54,16 @@
                     ]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
+
+                    <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce" :lista="[
+                        'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
+                        'Estadisticas' => ['cobrador.prestamo', 'bi bi-card-checklist'],
+                    ]">
+                        <i class="bi bi-cash-coin"></i>
+                    </x-elementos.items-sidebar>
                    
                     <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion" ruta="extra.personalizacion" :lista="[]">
-                        <i class="bi bi-person"></i>
+                        <i class="bi bi-palette"></i>
                     </x-elementos.items-sidebar>
                 </ul>
 

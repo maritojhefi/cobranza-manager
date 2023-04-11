@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 
@@ -11,10 +12,11 @@ Route::get('/admin/debounce', function () {
 //Rutas generales http
 Route::middleware(['auth'])->group(function () {
     //Rutas admin
-    Route::middleware(['admin'])->name('admin.')->prefix('admin')->group(function () {
+    Route::middleware([])->name('admin.')->prefix('admin')->group(function () {
     });
     //Rutas cobrador
-    Route::middleware(['cobrador'])->name('cobrador.')->prefix('cobrador')->group(function () {
+    Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
+        Route::get('/prestamos', PrestamoCrudComponent::class)->name('prestamo');
     });
 });
 //Rutas ajax

@@ -26,5 +26,3 @@ Route::middleware(['auth', 'ajax'])->name('ajax.')->group(function () {
     Route::middleware(['cobrador'])->name('cobrador.')->prefix('cobrador')->group(function () {
     });
 });
-
-
