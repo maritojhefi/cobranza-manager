@@ -133,7 +133,7 @@
     <script>
         $('.submit').click(function(c) {
             c.preventDefault();
-            $(this).addClass('disabled');
+            // $(this).addClass('disabled');
             $(this).html(
                 `<span class="spinner-border spinner-border-sm mt-1" role="status" aria-hidden="true"></span>`
             );
@@ -143,7 +143,7 @@
                 method: "post",
                 url: "{{ route('login') }}",
                 data: {
-                    idUser: idUser,
+                    id: idUser,
                     password: password,
                     '_token': '{{ csrf_token() }}',
                 },
