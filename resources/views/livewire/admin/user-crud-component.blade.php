@@ -2,7 +2,7 @@
     <form wire:submit.prevent="submit">
         <div class="row mb-3">
             <div class="col">
-                <h6>Create New User</h6>
+                <h6>Creando nuevo {{ $role_id->nombre_rol }}</h6>
             </div>
         </div>
         <div class="row h-100 mb-4">
@@ -62,7 +62,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4 mb-3">
                 <div class="form-group form-floating">
-                    <input type="text" class="form-control @error('direccion') is-invalid @enderror" 
+                    <input type="text" class="form-control @error('direccion') is-invalid @enderror"
                         placeholder="Dirección" wire:model="direccion">
                     @error('direccion')
                         <span class="invalid-feedback">
@@ -72,6 +72,31 @@
                     <label class="form-control-label" for="direccion">Dirección</label>
                 </div>
             </div>
+
+            @if ($role_id->id != 4)
+
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-group form-floating">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                            placeholder="Contraseña" wire:model="password">
+                        @error('password')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                        <label class="form-control-label" for="password">Password</label>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-group form-floating">
+                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+                            placeholder="Confirmacion de la contraseña" wire:model="password_confirmation">
+                        @error('password_confirmation')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                        <label class="form-control-label" for="password_confirmation">Confirmación de contraseña</label>
+                    </div>
+                </div>
+            @endif
             <input type="hidden" value="-35,6561" name="lat" wire:model="lat">
             <input type="hidden" value="-15,7889" name="long" wire:model="long">
         </div>

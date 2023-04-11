@@ -16,8 +16,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::name('user.')->prefix('user')->group(function () {
             Route::get('/list', UserCrudComponent::class)->name('list');
-            Route::get('/create', UserCrudComponent::class)->name('create');
+            Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
             Route::get('/pendiente', UserCrudComponent::class)->name('pendiente');
+        });
+        Route::name('cobrador.')->prefix('cobrador')->group(function () {
+            Route::get('/list', UserCrudComponent::class)->name('list');
+            Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
         });
     });
     //Rutas cobrador

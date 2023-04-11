@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Estado;
+use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -10,8 +12,16 @@ use Illuminate\Support\Facades\Storage;
 class UserCrudComponent extends Component
 {
     use WithFileUploads;
-    public $name, $apellido, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario;
-
+    public Role $role_id;
+    public $name, $apellido, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation;
+    public function mount($role_id)
+    {
+        $this->role_id = $role_id;
+        if ($role_id->id == 4) {
+            $this->password = '0000';
+            $this->password_confirmation = '0000';
+        }
+    }
     protected $rules = [
         'name' => 'required|string',
         'apellido' => 'required|string',
@@ -20,7 +30,9 @@ class UserCrudComponent extends Component
         'ci' => 'required|string',
         'direccion' => 'required|string',
         'lat' => 'nullable',
-        'long' => 'nullable'
+        'long' => 'nullable',
+        'password' => 'required|min:1',
+        'password_confirmation' => 'required|same:password',
     ];
     public function resetInputs()
     {
@@ -42,6 +54,9 @@ class UserCrudComponent extends Component
             'direccion' => $this->direccion,
             'lat' => $this->lat,
             'long' => $this->long,
+            'role_id' => $this->role_id->id,
+            'estado_id' => Estado::ID_LIMPIO,
+            'password' => $this->password
         ]);
     }
     public function render()

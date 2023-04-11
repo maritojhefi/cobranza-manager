@@ -56,13 +56,25 @@
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
 
-                    <x-elementos.items-sidebar titulo="Cliente" segmentoLink="user" ruta="debounce" :lista="[
+                    <x-elementos.items-sidebar titulo="Clientes" segmentoLink="user" ruta="debounce" :lista="[
                         'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history'],
                         'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task'],
-                        'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus'],
+                        'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus',4],
                     ]">
                         <i class="bi bi-person-circle"></i>
                     </x-elementos.items-sidebar>
+
+
+
+                    <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
+                        :lista="[
+                            'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task'],
+                            'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus',3],
+                        ]">
+                        <i class="bi bi-person-circle"></i>
+                    </x-elementos.items-sidebar>
+
+
 
                     <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce"
                         :lista="[
