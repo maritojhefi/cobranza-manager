@@ -76,8 +76,8 @@
                         <div class="col-auto"></div>
                         <div class="col">
                             <div class="logo-small">
-                                <img src="assets/img/logo.png" alt="">
-                                <h5>FiMobile</h5>
+                                <img src="{{logoMacrobyte()}}" alt="">
+                                <h5>{{env('APP_NAME')}}</h5>
                             </div>
                         </div>
                         <div class="col-auto"></div>

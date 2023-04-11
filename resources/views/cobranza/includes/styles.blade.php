@@ -2,9 +2,9 @@
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" href="{{asset('assets/img/favicon180.png')}}" sizes="180x180">
-<link rel="icon" href="{{asset('assets/img/favicon32.png')}}" sizes="32x32" type="image/png">
-<link rel="icon" href="{{asset('assets/img/favicon16.png')}}" sizes="16x16" type="image/png">
-
+{{-- <link rel="icon" href="{{asset('assets/img/favicon32.png')}}" sizes="32x32" type="image/png">
+<link rel="icon" href="{{asset('assets/img/favicon16.png')}}" sizes="16x16" type="image/png"> --}}
+<link rel="shortcut icon" href="{{ asset('assets/logos/tic-tac-toe-24.png') }}">
 <!-- Google fonts-->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
