@@ -15,7 +15,7 @@ class CreateEstadosTable extends Migration
     {
         Schema::create('estados', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_rol', 100)->nullable();           
+            $table->string('nombre_estado', 100)->nullable();           
             $table->timestamps();
         });
     }
