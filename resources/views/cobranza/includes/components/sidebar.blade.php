@@ -48,20 +48,32 @@
             <div class="col-12">
                 <ul class="nav nav-pills">
 
-                    <x-elementos.items-sidebar titulo="Resumen" segmentoLink="debounce" ruta="debounce" :lista="[
-                        'Resumen' => ['debounce', 'bi bi-chevron-right'],
-                        'Resumenasd' => ['debounce', 'bi bi-chevron-right'],
-                    ]">
+                    <x-elementos.items-sidebar titulo="Resumen" segmentoLink="debounce" ruta="debounce"
+                        :lista="[
+                            'Resumen' => ['debounce', 'bi bi-chevron-right'],
+                            'Resumenasd' => ['debounce', 'bi bi-chevron-right'],
+                        ]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
-                   
+
+
+                    <x-elementos.items-sidebar titulo="Cliente" segmentoLink="user" ruta="debounce" :lista="[
+                        'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history'],
+                        'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task'],
+                        'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus'],
+                    ]">
+                        <i class="bi bi-person-circle"></i>
+                    </x-elementos.items-sidebar>
+
+
                     <x-elementos.items-sidebar titulo="Resumen" segmentoLink="inicio" ruta="debounce" :lista="[
                         'Resumen' => ['debounce', 'bi bi-chevron-right'],
                         'Resumenasd' => ['debounce', 'bi bi-chevron-right'],
                     ]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
-                    <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion" ruta="extra.personalizacion" :lista="[]">
+                    <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion"
+                        ruta="extra.personalizacion" :lista="[]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
                 </ul>
