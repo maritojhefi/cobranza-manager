@@ -7,8 +7,9 @@
 
 <!-- Customized jquery file  -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
-<script src="{{ asset('assets/js/color-scheme.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/color-scheme.js') }}"></script> --}}
 
+@include('cobranza.includes.extra.script-background-svg')
 <!-- PWA app service registration and works -->
 <script src="{{ asset('assets/js/pwa-services.js') }}"></script>
 

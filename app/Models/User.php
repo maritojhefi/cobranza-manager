@@ -22,6 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     const PATH_FOTO_DEFAULT = '';
+    
     protected $fillable = [
         'id',
         'name',
@@ -35,7 +36,7 @@ class User extends Authenticatable
         'lat',
         'long',
         'estado_id',
-        'role_id'
+        'role_id',
     ];
 
     /**
