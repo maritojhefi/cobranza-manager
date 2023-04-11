@@ -49,18 +49,12 @@
                 <ul class="nav nav-pills">
 
                     <x-elementos.items-sidebar titulo="Resumen" segmentoLink="debounce" ruta="debounce" :lista="[
-                        'Resumen' => ['debounce', 'bi bi-chevron-right'],
-                        'Resumenasd' => ['debounce', 'bi bi-chevron-right'],
+                        'Resumen' => ['debounce', 'bi bi-badge-8k-fill'],
+                        'Resumenasd' => ['debounce', 'bi bi-badge-8k-fill'],
                     ]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
                    
-                    <x-elementos.items-sidebar titulo="Resumen" segmentoLink="inicio" ruta="debounce" :lista="[
-                        'Resumen' => ['debounce', 'bi bi-chevron-right'],
-                        'Resumenasd' => ['debounce', 'bi bi-chevron-right'],
-                    ]">
-                        <i class="bi bi-person"></i>
-                    </x-elementos.items-sidebar>
                     <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion" ruta="extra.personalizacion" :lista="[]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>

@@ -1,5 +1,5 @@
 'use strict'
-$(document).ready(function () {
+$(document).ready(function() {
 
     var html = $('html');
     var body = $('body');
@@ -16,36 +16,38 @@ $(document).ready(function () {
         //html.removeClass('dark-mode');
     }
 
-    $('#btn-layout-modes-light').on('click', function () {
+    $('#btn-layout-modes-light').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("layoutmode", "light-mode", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
-        } else {
-        }
+        } else {}
     });
 
-    $('#btn-layout-modes-dark').on('click', function () {
+    $('#btn-layout-modes-dark').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("layoutmode", "dark-mode", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
-        } else {
-        }
+        } else {}
     });
 
 
-    $('#darkmodeswitch').on('click', function () {
+    $('#darkmodeswitch').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("layoutmode", "dark-mode", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
         } else {
             $.cookie("layoutmode", "light-mode", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
         }
@@ -67,26 +69,26 @@ $(document).ready(function () {
         body.removeClass('rtl');
     }
 
-    $('#btn-ltr').on('click', function () {
+    $('#btn-ltr').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("directionmode", "ltr", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             body.addClass('ltr');
             body.removeClass('rtl');
-        } else {
-        }
+        } else {}
     });
 
-    $('#btn-rtl').on('click', function () {
+    $('#btn-rtl').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("directionmode", "rtl", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             body.addClass('rtl');
             body.removeClass('ltr');
-        } else {
-        }
+        } else {}
     });
 
 
@@ -96,29 +98,31 @@ $(document).ready(function () {
     if ($.type($.cookie("setstylesheet")) != 'undefined' && $.cookie("setstylesheet") != '') {
         curentstyle = $.cookie("setstylesheet");
         $('body').addClass($.cookie("setstylesheet"));
-        $('input[name="color-scheme"]').each(function () {
+        $('input[name="color-scheme"]').each(function() {
             if ($(this).attr('data-title') === $.cookie("setstylesheet")) {
                 $(this).prop("checked", true);
             }
         });
-      
+
     }
 
-    $('input[name="color-scheme"]').on('click', function () {
-        var setstyle = $(this).attr('data-title');        
+    $('input[name="color-scheme"]').on('click', function() {
+        var setstyle = $(this).attr('data-title');
         $('body').removeClass(curentstyle);
 
         if ($(this).is(':checked') && setstyle != '') {
             $.cookie("setstylesheet", setstyle, {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
-            $('body').addClass($.cookie("setstylesheet"));            
+            $('body').addClass($.cookie("setstylesheet"));
             curentstyle = $.cookie("setstylesheet");
-            
+
         } else {
             $('body').removeClass(curentstyle);
             $.cookie("setstylesheet", "", {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
         }
 
@@ -128,17 +132,18 @@ $(document).ready(function () {
     /* background images */
     if ($.type($.cookie("setimagepath")) != 'undefined' && $.cookie("setimagepath") != '') {
         $('.dark-bg').css('background-image', "url('assets/img/" + $.cookie("setimagepath") + "')");
-        $('input[name="background-select"]').each(function () {
+        $('input[name="background-select"]').each(function() {
             if ($(this).attr('data-src') === $.cookie("setimagepath")) {
                 $(this).prop("checked", true);
             }
         });
     }
-    $('input[name="background-select"]').on('click', function () {
+    $('input[name="background-select"]').on('click', function() {
         var setimage = $(this).attr('data-src');
         if ($(this).is(':checked')) {
             $.cookie("setimagepath", setimage, {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             $('.dark-bg').css('background-image', "url('assets/img/" + setimage + "')");
         }
@@ -149,17 +154,18 @@ $(document).ready(function () {
         $('.sidebar-wrap').attr('class', 'sidebar-wrap');
         $('.sidebar-wrap').addClass('sidebar-' + $.cookie("setmenu"));
 
-        $('input[name="menu-select"]').each(function () {
+        $('input[name="menu-select"]').each(function() {
             if ($(this).attr('data-title') === $.cookie("setmenu")) {
                 $(this).prop("checked", true);
             }
         });
     }
-    $('input[name="menu-select"]').on('click', function () {
+    $('input[name="menu-select"]').on('click', function() {
         var setmenustyle = $(this).attr('data-title');
         if ($(this).is(':checked')) {
             $.cookie("setmenu", setmenustyle, {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             $('.sidebar-wrap').attr('class', 'sidebar-wrap');
             $('.sidebar-wrap').addClass('sidebar-' + $.cookie("setmenu"));
@@ -179,11 +185,12 @@ $(document).ready(function () {
         $.removeCookie("rtllayout", "");
     }
 
-    $('#rtllayout').on('click', function () {
+    $('#rtllayout').on('click', function() {
         $(this).parent().addClass('active');
         if ($(this).is(':checked')) {
             $.cookie("rtllayout", 'rtl', {
-                expires: 1
+                expires: 1,
+                path: '/'
             });
             $('body').addClass('rtl');
             $('#rtllayout').parent().addClass('active');
