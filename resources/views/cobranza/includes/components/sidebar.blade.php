@@ -48,22 +48,45 @@
             <div class="col-12">
                 <ul class="nav nav-pills">
 
-                    <x-elementos.items-sidebar titulo="Resumen" segmentoLink="debounce" ruta="debounce" :lista="[
-                        'Resumen' => ['debounce', 'bi bi-badge-8k-fill'],
-                        'Resumenasd' => ['debounce', 'bi bi-badge-8k-fill'],
-                    ]">
+                    <x-elementos.items-sidebar titulo="Resumen" segmentoLink="debounce" ruta="debounce"
+                        :lista="[
+                            'Resumen' => ['debounce', 'bi bi-badge-8k-fill'],
+                            'Resumenasd' => ['debounce', 'bi bi-badge-8k-fill'],
+                        ]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
 
-                    <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce" :lista="[
-                        'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
-                        'Estadisticas' => ['cobrador.prestamo', 'bi bi-card-checklist'],
+                    <x-elementos.items-sidebar titulo="Clientes" segmentoLink="user" ruta="debounce" :lista="[
+                        'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history'],
+                        'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task'],
+                        'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus',4],
                     ]">
+                        <i class="bi bi-person-circle"></i>
+                    </x-elementos.items-sidebar>
+
+
+
+                    <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
+                        :lista="[
+                            'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task'],
+                            'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus',3],
+                        ]">
+                        <i class="bi bi-person-circle"></i>
+                    </x-elementos.items-sidebar>
+
+
+
+                    <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce"
+                        :lista="[
+                            'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
+                            'Estadisticas' => ['cobrador.prestamo', 'bi bi-card-checklist'],
+                        ]">
                         <i class="bi bi-cash-coin"></i>
                     </x-elementos.items-sidebar>
-                   
-                    <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion" ruta="extra.personalizacion" :lista="[]">
-                        <i class="bi bi-palette"></i>
+
+                    <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion"
+                        ruta="extra.personalizacion" :lista="[]">
+                        <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
                 </ul>
 

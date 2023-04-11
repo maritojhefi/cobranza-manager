@@ -13,6 +13,12 @@ class Estado extends Model
     const ESTADO_FINALIZADO = "finalizado";
     const ESTADO_LIMPIO = "sin prestamos";
 
+
+
+    const ID_PENDIENTE = 2;
+    const ID_FINALIZADO = 3;
+    const ID_LIMPIO = 1;
+
     protected $fillable = [
         'nombre',
     ];
