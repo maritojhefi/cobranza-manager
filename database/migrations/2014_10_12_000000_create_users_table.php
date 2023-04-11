@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('apellido');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->foreignId('role_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('estado_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('foto', 100)->nullable()->default(User::PATH_FOTO_DEFAULT);
