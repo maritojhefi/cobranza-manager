@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cobrador\InicioController;
 use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
     });
     //Rutas cobrador
     Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
+        Route::get('/inicio', [InicioController::class,'index'])->name('prestamo');
         Route::get('/prestamos', PrestamoCrudComponent::class)->name('prestamo');
     });
 });
