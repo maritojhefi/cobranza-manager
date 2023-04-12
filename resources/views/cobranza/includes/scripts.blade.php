@@ -21,7 +21,9 @@
 <script src="{{ asset('assets/vendor/progressbar-js/progressbar.min.js') }}"></script>
 
 <!-- swiper js script -->
-<script src="{{ asset('assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js') }}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
 <!-- page level custom script -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
@@ -29,4 +31,5 @@
 {{-- <script src="{{asset('js/sweetalert.min.js')}}"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
+
 @livewireScripts

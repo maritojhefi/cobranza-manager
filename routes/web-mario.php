@@ -17,7 +17,7 @@ Route::middleware(['auth'])->group(function () {
     });
     //Rutas cobrador
     Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
-        Route::get('/inicio', [InicioController::class,'index'])->name('prestamo');
+        Route::get('/inicio', [InicioController::class,'index'])->name('inicio');
         Route::get('/prestamos', PrestamoCrudComponent::class)->name('prestamo');
     });
 });

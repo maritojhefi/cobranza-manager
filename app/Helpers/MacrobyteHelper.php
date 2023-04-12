@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 
 
 function randomText()
@@ -13,6 +15,22 @@ function randomText()
   return $items[array_rand($items)].'...';
 }
 function logoMacrobyte()
+{
+  return asset('assets/logos/logo.png');
+}
+function infoUser($variable)
+{
+  if(Auth::check())
+  {
+    return Auth::user()->$variable;
+  }
+  else
+  {
+    return null;
+  }
+  
+}
+function imageUser()
 {
   return asset('assets/logos/logo.png');
 }
