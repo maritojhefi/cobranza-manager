@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
 {
@@ -16,10 +17,16 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password' => Hash::make($this->faker->password(4)), // password
+            'apellido'=> $this->faker->lastName(),
+            'email'=> $this->faker->email(),
+            'ci'=> $this->faker->unique()->randomNumber($nbDigits = NULL, $strict = false),
+            'telf'=> $this->faker->unique()->mobileNumber(),
+            'direccion'=> $this->faker->address(),
+            'lat'=> $this->faker->latitude($min = -90, $max = 90),
+            'long'=> $this->faker->longitude($min = -90, $max = 90),
+            'estado_id'=> $this->faker->numberBetween($min = 1, $max = 3),
+            'role_id'=> $this->faker->randomElement([1,3,4]),
         ];
     }
 

@@ -22,24 +22,24 @@
                     @foreach ($users as $user)
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-auto">
+                                <div class="col-3">
                                     <figure class="avatar avatar-50 rounded-10 shadow-sm">
                                         <img src="{{ asset('/' . $user->foto) }}" alt="">
                                     </figure>
                                 </div>
-                                <div class="col px-0">
+                                <div class="col-4 px-0">
                                     <small>{{ ucwords($user->name . ' ' . $user->apellido) }}<br><small
                                             class="text-muted">{{ ucfirst($user->estado->nombre_estado) }}</small>
                                     </small>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-3">
                                     <small>C.I.:{{ $user->ci }}<br><small
                                             class="text-muted">Telefono:{{ $user->telf }}</small>
                                     </small>
                                 </div>
-                                <div class="dropdown dropstart col-auto text-end">
+                                <div class=" col-2 dropdown dropstart text-end">
                                     <a type="button" href="javascript:return false"
-                                        class="btn btn-primary text-white btn-44 rounded-circle shadow-sm dropdown-toggle-split"
+                                        class="btn btn-primary btn-sm text-white rounded-circle shadow-sm dropdown-toggle-split"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-gear"></i>
                                     </a>
@@ -69,6 +69,7 @@
                     @endforeach
                 </ul>
             </div>
+            {{$users->links()}}
         </div>
     </div>
 </div>
