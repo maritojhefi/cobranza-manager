@@ -5,12 +5,19 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UserListComponent extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public Role $role_id;
     public $buscar;
     protected $queryString = ['buscar'];
+    public function updatingBuscar()
+    {
+        $this->resetPage();
+    }
     public function mount($role_id)
     {
         $this->role_id = $role_id;
@@ -31,14 +38,14 @@ class UserListComponent extends Component
         $query->where('role_id', $this->role_id->id)
             ->orderBy('created_at', 'desc');
 
-        return $query->get();
+        return $query->paginate(20);
     }
     public function render()
     {
         if ($this->role_id->id == 4) {
-            $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->get();
+            $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
         } else if ($this->role_id->id == 3) {
-            $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->get();
+            $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
         }
         $users = $this->buscarUsuarios();
         return view('livewire.admin.user-list-component', compact('users'))
