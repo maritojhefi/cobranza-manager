@@ -10,6 +10,7 @@ class UserListComponent extends Component
 {
     public Role $role_id;
     public $buscar;
+    protected $queryString = ['buscar'];
     public function mount($role_id)
     {
         $this->role_id = $role_id;

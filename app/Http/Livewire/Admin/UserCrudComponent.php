@@ -12,24 +12,28 @@ use Illuminate\Support\Facades\Storage;
 class UserCrudComponent extends Component
 {
     use WithFileUploads;
-    public Role $role_id;
+    public $role_id;
     public $user;
-    public $name, $apellido, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation;
+    public $name, $apellido,$user_id, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation;
 
-    protected $queryString = ['search'];
+    protected $queryString = ['editando','user_id'];
     public function mount($role_id)
     {
         $this->role_id = $role_id;
-        if ($role_id->id == 4) {
-            $this->password = '0000';
-            $this->password_confirmation = '0000';
+        if ($role_id == 4) {
+            if(!$this->editando)
+            {
+                $this->password = '0000';
+                $this->password_confirmation = '0000';
+            }
+           
         }
     }
     protected $rules = [
         'name' => 'required|string',
         'apellido' => 'required|string',
-        'telf' => 'required|string',
-        'ci' => 'required|string',
+        'telf' => 'required|string|unique:users,telf',
+        'ci' => 'required|string|unique:users,ci',
         'direccion' => 'required|string',
         'lat' => 'nullable',
         'long' => 'nullable',
@@ -57,7 +61,7 @@ class UserCrudComponent extends Component
             'direccion' => $this->direccion,
             'lat' => $this->lat,
             'long' => $this->long,
-            'role_id' => $this->role_id->id,
+            'role_id' => $this->role_id,
             'estado_id' => Estado::ID_LIMPIO,
             'password' => $this->password
         ]);
@@ -73,6 +77,11 @@ class UserCrudComponent extends Component
     }
     public function render()
     {
+        if(isset($this->user_id))
+        {
+            $this->user=User::find($this->user_id);
+            $this->fill($this->user);
+        }
         return view('livewire.admin.user-crud-component')
             ->extends('cobranza.master')
             ->section('content');

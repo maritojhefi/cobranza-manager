@@ -1,15 +1,16 @@
 <div class="main-container container">
+    
     <form wire:submit.prevent="submit">
         <div class="row mb-3">
             <div class="col">
-                <h6>Creando nuevo {{ $role_id->nombre_rol }}</h6>
+                <h6>Creando nuevo {{ $role_id }}</h6>
             </div>
         </div>
         <div class="row h-100 mb-4">
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group form-floating  mb-3">
                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                        placeholder="Nombre del cliente" wire:model="name">
+                        placeholder="Nombre del cliente" wire:model.debounce.750ms="name">
                     @error('name')
                         <span class="invalid-feedback">
                             {{ $message }}
@@ -21,7 +22,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group form-floating  mb-3">
                     <input type="text" class="form-control @error('apellido') is-invalid @enderror"
-                        placeholder="Apellido del cliente" wire:model="apellido">
+                        placeholder="Apellido del cliente" wire:model.debounce.750ms="apellido">
                     @error('apellido')
                         <span class="invalid-feedback">
                             {{ $message }}
@@ -33,7 +34,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group form-floating mb-3">
                     <input type="text" class="form-control @error('telf') is-invalid @enderror" placeholder="Celular"
-                        wire:model="telf">
+                        wire:model.debounce.750ms="telf">
                     @error('telf')
                         <span class="invalid-feedback">
                             {{ $message }}
@@ -48,7 +49,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group form-floating mb-3">
                     <input type="text" class="form-control @error('ci') is-invalid @enderror" placeholder="Carnet"
-                        wire:model="ci">
+                        wire:model.debounce.750ms="ci">
                     @error('ci')
                         <span class="invalid-feedback">
                             {{ $message }}
@@ -60,7 +61,7 @@
             <div class="col-12 col-md-6 col-lg-4 mb-3">
                 <div class="form-group form-floating">
                     <input type="text" class="form-control @error('direccion') is-invalid @enderror"
-                        placeholder="Dirección" wire:model="direccion">
+                        placeholder="Dirección" wire:model.debounce.750ms="direccion">
                     @error('direccion')
                         <span class="invalid-feedback">
                             {{ $message }}
@@ -70,11 +71,11 @@
                 </div>
             </div>
 
-            @if ($role_id->id != 4)
+            @if ($role_id != 4)
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            placeholder="Contraseña" wire:model="password">
+                            placeholder="Contraseña" wire:model.debounce.750ms="password">
                         @error('password')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -84,7 +85,7 @@
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                            placeholder="Confirmacion de la contraseña" wire:model="password_confirmation">
+                            placeholder="Confirmacion de la contraseña" wire:model.debounce.750ms="password_confirmation">
                         @error('password_confirmation')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -94,7 +95,7 @@
             @endif
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group form-floating mb-3">
-                    <input type="file" class="form-control" wire:model="foto">
+                    <input type="file" class="form-control" wire:model.debounce.750ms="foto">
                     @error('foto')
                         <span class="invalid-feedback">
                             {{ $message }}
@@ -120,6 +121,8 @@
             </div>
         </div>
     </form>
+    
+    
 </div>
 
 {{-- <div class="card card-style mb-2 map-full" data-card-height="cover-card" style="height: 573px;">
