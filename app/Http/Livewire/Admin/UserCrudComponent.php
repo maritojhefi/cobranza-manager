@@ -14,20 +14,20 @@ class UserCrudComponent extends Component
     use WithFileUploads;
     public $role_id;
     public $user;
-    public $name, $apellido,$user_id, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation;
+    public $name, $apellido, $user_id, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation, $image;
 
-    protected $queryString = ['editando','user_id'];
+    protected $queryString = ['editando', 'user_id'];
     public function mount($role_id)
     {
         $this->role_id = $role_id;
         if ($role_id == 4) {
-            if(!$this->editando)
-            {
+            if (!$this->editando) {
                 $this->password = '0000';
                 $this->password_confirmation = '0000';
             }
-           
         }
+        $this->lat = 37.7749;
+        $this->long = -122.4194;
     }
     protected $rules = [
         'name' => 'required|string',
@@ -39,7 +39,7 @@ class UserCrudComponent extends Component
         'long' => 'nullable',
         'password' => 'required|min:1',
         'password_confirmation' => 'required|same:password',
-        'foto' => 'nullable|image'
+        'image' => 'nullable|image'
     ];
     public function resetInputs()
     {
@@ -65,9 +65,9 @@ class UserCrudComponent extends Component
             'estado_id' => Estado::ID_LIMPIO,
             'password' => $this->password
         ]);
-        if ($this->foto) {
-            $filename = time() . "." . $this->foto->extension();
-            $rutaFoto = $this->foto->storeAs('/profiles',  $filename, 'publicdisk');
+        if ($this->image) {
+            $filename = time() . "." . $this->image->extension();
+            $rutaFoto = $this->image->storeAs('/profiles',  $filename, 'publicdisk');
             $this->user->foto = $rutaFoto;
         } else {
             $this->user->foto = imageUser(false);
@@ -77,9 +77,8 @@ class UserCrudComponent extends Component
     }
     public function render()
     {
-        if(isset($this->user_id))
-        {
-            $this->user=User::find($this->user_id);
+        if (isset($this->user_id)) {
+            $this->user = User::find($this->user_id);
             $this->fill($this->user);
         }
         return view('livewire.admin.user-crud-component')

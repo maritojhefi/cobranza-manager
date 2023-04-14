@@ -8,7 +8,7 @@
             </div>
             <div class="col align-self-center text-center">
                 <div class="logo-small">
-                    <img src="{{logoMacrobyte()}}" alt="">
+                    <img src="{{ logoMacrobyte() }}" alt="">
                     <h5>Macrobyte</h5>
                 </div>
             </div>
