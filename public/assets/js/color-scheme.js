@@ -19,7 +19,7 @@ $(document).ready(function() {
     $('#btn-layout-modes-light').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("layoutmode", "light-mode", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
@@ -29,7 +29,7 @@ $(document).ready(function() {
     $('#btn-layout-modes-dark').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("layoutmode", "dark-mode", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
@@ -40,13 +40,13 @@ $(document).ready(function() {
     $('#darkmodeswitch').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("layoutmode", "dark-mode", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
         } else {
             $.cookie("layoutmode", "light-mode", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             html.attr('class', $.cookie("layoutmode"));
@@ -72,7 +72,7 @@ $(document).ready(function() {
     $('#btn-ltr').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("directionmode", "ltr", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             body.addClass('ltr');
@@ -83,7 +83,7 @@ $(document).ready(function() {
     $('#btn-rtl').on('click', function() {
         if ($(this).is(':checked')) {
             $.cookie("directionmode", "rtl", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             body.addClass('rtl');
@@ -112,7 +112,7 @@ $(document).ready(function() {
 
         if ($(this).is(':checked') && setstyle != '') {
             $.cookie("setstylesheet", setstyle, {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             $('body').addClass($.cookie("setstylesheet"));
@@ -121,7 +121,7 @@ $(document).ready(function() {
         } else {
             $('body').removeClass(curentstyle);
             $.cookie("setstylesheet", "", {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
         }
@@ -142,7 +142,7 @@ $(document).ready(function() {
         var setimage = $(this).attr('data-src');
         if ($(this).is(':checked')) {
             $.cookie("setimagepath", setimage, {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             $('.dark-bg').css('background-image', "url('assets/img/" + setimage + "')");
@@ -164,7 +164,7 @@ $(document).ready(function() {
         var setmenustyle = $(this).attr('data-title');
         if ($(this).is(':checked')) {
             $.cookie("setmenu", setmenustyle, {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             $('.sidebar-wrap').attr('class', 'sidebar-wrap');
@@ -189,7 +189,7 @@ $(document).ready(function() {
         $(this).parent().addClass('active');
         if ($(this).is(':checked')) {
             $.cookie("rtllayout", 'rtl', {
-                expires: 1,
+                expires: 1000000,
                 path: '/'
             });
             $('body').addClass('rtl');
