@@ -3,10 +3,10 @@
         <div class="col-12">
             <h4 class="mt-2 mb-2">
                 Lista de {{ $role_id->nombre_rol }}
+                {{-- <div class="spinner-border d-none" wire:loading wire:target="buscar">Loading...</div> --}}
             </h4>
         </div>
     </div>
-    <span wire:loading class="badge badge-pill badge-primary">Actualizando...</span>
     <div class="row">
         <div class="col-12">
             <div class="form-group form-floating mb-3">
@@ -58,7 +58,7 @@
                                         </li>
                                         <li><a class="dropdown-item" href="javascript:return false">Ver en Mapa</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="javascript:return false">Editar Datos</a>
+                                        <li><a class="dropdown-item" href="{{ url('admin/user/create/'.$user->role->id.'?editando=true&user_id='.$user->id)}}">Editar Datos</a>
                                         </li>
                                         <li><a class="dropdown-item" href="javascript:return false">Contactar</a>
                                         </li>
