@@ -42,12 +42,9 @@
                     <label for="telf">Telefono</label>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="form-group form-floating mb-3">
-                    <input type="file" class="form-control" wire:model="foto">
-                    <label for="foto">Agregar Imagen <i class="bi bi-plus-circle"></i></label>
-                </div>
-            </div>
+
+
+
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="form-group form-floating mb-3">
                     <input type="text" class="form-control @error('ci') is-invalid @enderror" placeholder="Carnet"
@@ -74,7 +71,6 @@
             </div>
 
             @if ($role_id->id != 4)
-
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -85,7 +81,6 @@
                         <label class="form-control-label" for="password">Password</label>
                     </div>
                 </div>
-
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
@@ -97,6 +92,25 @@
                     </div>
                 </div>
             @endif
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-group form-floating mb-3">
+                    <input type="file" class="form-control" wire:model="foto">
+                    @error('foto')
+                        <span class="invalid-feedback">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                    <label for="foto">Agregar Imagen <i class="bi bi-plus-circle"></i></label>
+                </div>
+            </div>
+            @if ($foto)
+                <div class="col-12 col-md-6 col-lg-4"
+                    style="display: flex; place-items: center; justify-content: center;">
+                    <img class="img-user" style="width: 50%; height: auto; border-radius: 50%;"
+                        src="{{ $foto->temporaryUrl() }}">
+                </div>
+            @endif
+
             <input type="hidden" value="-35,6561" name="lat" wire:model="lat">
             <input type="hidden" value="-15,7889" name="long" wire:model="long">
         </div>

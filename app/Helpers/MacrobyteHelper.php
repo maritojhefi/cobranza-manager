@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Auth;
 
 function randomText()
 {
-  $items=[
+  $items = [
     'Cargando recursos',
     'Seguridad e innovacion',
     'Pioneros en tecnologia',
     'Calidad y confianza'
   ];
-  return $items[array_rand($items)].'...';
+  return $items[array_rand($items)] . '...';
 }
 function logoMacrobyte()
 {
@@ -20,17 +20,17 @@ function logoMacrobyte()
 }
 function infoUser($variable)
 {
-  if(Auth::check())
-  {
+  if (Auth::check()) {
     return Auth::user()->$variable;
-  }
-  else
-  {
+  } else {
     return null;
   }
-  
 }
-function imageUser()
+function imageUser($allPath = true)
 {
-  return asset('assets/logos/logo.png');
+  if ($allPath) {
+    return asset('assets/logos/logo.png');
+  } else {
+    return 'assets/logos/logo.png';
+  }
 }
