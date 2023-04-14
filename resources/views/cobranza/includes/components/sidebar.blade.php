@@ -45,7 +45,7 @@
 
                     <x-elementos.items-sidebar titulo="Clientes" segmentoLink="user" ruta="debounce" :lista="[
                         'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history'],
-                        'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task'],
+                        'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task', 4],
                         'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus', 4],
                     ]">
                         <i class="bi bi-person-circle"></i>
@@ -55,7 +55,7 @@
 
                     <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
                         :lista="[
-                            'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task'],
+                            'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task', 3],
                             'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus', 3],
                         ]">
                         <i class="bi bi-person-circle"></i>

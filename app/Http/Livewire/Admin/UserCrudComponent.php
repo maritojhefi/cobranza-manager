@@ -13,7 +13,10 @@ class UserCrudComponent extends Component
 {
     use WithFileUploads;
     public Role $role_id;
+    public $user;
     public $name, $apellido, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation;
+
+    protected $queryString = ['search'];
     public function mount($role_id)
     {
         $this->role_id = $role_id;
@@ -26,18 +29,18 @@ class UserCrudComponent extends Component
         'name' => 'required|string',
         'apellido' => 'required|string',
         'telf' => 'required|string',
-        'foto' => 'nullable',
         'ci' => 'required|string',
         'direccion' => 'required|string',
         'lat' => 'nullable',
         'long' => 'nullable',
         'password' => 'required|min:1',
         'password_confirmation' => 'required|same:password',
+        'foto' => 'nullable|image'
     ];
     public function resetInputs()
     {
         $this->editando = false;
-        $this->reset('name', 'apellido', 'telf', 'foto', 'ci', 'direccion', 'lat', 'long');
+        $this->reset();
     }
     public function updated($propertyName)
     {
@@ -46,7 +49,7 @@ class UserCrudComponent extends Component
     public function submit()
     {
         $this->validate();
-        User::create([
+        $this->user = User::create([
             'name' => $this->name,
             'apellido' => $this->apellido,
             'telf' => $this->telf,
@@ -58,6 +61,15 @@ class UserCrudComponent extends Component
             'estado_id' => Estado::ID_LIMPIO,
             'password' => $this->password
         ]);
+        if ($this->foto) {
+            $filename = time() . "." . $this->foto->extension();
+            $rutaFoto = $this->foto->storeAs('/profiles',  $filename, 'publicdisk');
+            $this->user->foto = $rutaFoto;
+        } else {
+            $this->user->foto = imageUser(false);
+        }
+        $this->user->save();
+        return redirect()->route('admin.user.list', $this->role_id->id);
     }
     public function render()
     {
