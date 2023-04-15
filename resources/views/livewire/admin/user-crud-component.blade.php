@@ -1,5 +1,4 @@
 @push('header')
-    <script src="https://maps.googleapis.com/maps/api/js?key=key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y"></script>
     <style>
         .displayNone {
             display: none
@@ -33,7 +32,7 @@
         }
     </style>
 @endpush
-<div class="main-container container">
+<div class="">
     <form wire:submit.prevent="submit">
         <div class="row h-100 mb-4">
             <div class="col-12 col-md-6 col-lg-4">
@@ -41,7 +40,7 @@
                     <div class="col-3" style="display: grid; place-items: center;">
                         @if ($image)
                             <img class="img-user"
-                                style="width: 100%; height: auto; border-radius: 50%; position: relative; top: -10%;"
+                                style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -10%;"
                                 src="{{ $image->temporaryUrl() }}">
                         @else
                             <input type="file" class=" d-none btn-default" id="file-picker"
@@ -141,21 +140,47 @@
                     </div>
                 </div>
             @endif
-            <input type="hidden" value="-35,6561" name="lat" wire:model="lat">
-            <input type="hidden" value="-15,7889" name="long" wire:model="long">
+            <input type="hidden" id="latitud" name="latitud" wire:model="lat">
+            <input type="hidden" id="longitud" name="longitud" wire:model="long">
 
 
 
 
 
 
-            <div id="map" style="width:100%;height:600px;" wire:ignore></div>
-
-
-
+            <div class="card card-style mb-2 map-full" data-card-height="cover-card" style="height: 450px;">
+                <div id="map" style="width:100%;height:96%;"></div>
+            </div>
         </div>
 
 
+
+
+
+        <div id="errorMapa" class="displayNone">
+            <div class="card card-style  round-medium " style="height: 380px;">
+                <img src="#" class="card-image " style="height: 430px;">
+                <div class="card-bottom ms-3 mb-2">
+                    <h2 class="font-700 color-white">Concede el permiso</h2>
+                    <p class="color-white mt-n2 mb-0">Haz click en el icono del candado en la parte de la url de tu
+                        navegador, permite el acceso y
+                        recarga la pagina!</p>
+                </div>
+                <div class="card-overlay bg-black opacity-30"></div>
+            </div>
+            <div class="alert me-3 ms-3 rounded-s bg-red-dark " role="alert">
+                <span class="alert-icon"><i class="fa fa-times-circle font-18"></i></span>
+                <h4 class="text-uppercase color-white">Active el GPS</h4>
+                <strong class="alert-icon-text">Necesitamos permiso de su ubicacion.</strong>
+
+                <button type="button" class="close color-white opacity-60 font-16" data-bs-dismiss="alert"
+                    aria-label="Close">×</button>
+            </div>
+        </div>
+        <div id="toast-3" class="toast toast-tiny toast-top bg-blue-dark fade hide" data-bs-delay="1500"
+            data-bs-autohide="true"><i class="fa fa-sync fa-spin me-3"></i>Actualizado!</div>
+        <div id="toast-4" class="toast toast-tiny toast-top bg-red-dark fade hide" data-bs-delay="4000"
+            data-bs-autohide="true"><i class="fa fa-times me-3"></i>Active su GPS</div>
 
 
 
@@ -168,10 +193,25 @@
                 <button type="submit" class="btn btn-default btn-block">Guardar</button>
             </div>
             <div class="col-6 col-md-3 col-lg-2 mb-3">
-                <a type="submit" href="javascript:history.back();" class="btn bg-red text-white btn-block">Cancelar</a>
+                <a type="submit" href="javascript:history.back();"
+                    class="btn bg-red text-white btn-block">Cancelar</a>
             </div>
         </div>
     </form>
+
+    @push('header')
+        <style>
+            .displayNone {
+                display: none
+            }
+
+            .dislayFull {
+                display: contents
+            }
+        </style>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y" async defer></script>
+    @endpush
+
 
     @push('footer')
         <script>
@@ -186,67 +226,74 @@
         </script>
 
 
-
-
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y&callback=initMap" async
-            defer></script>
-
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y&callback=initMap" async
-            defer></script>
         <script>
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    initMap(position.coords.latitude, position.coords.longitude)
-                },
-                function errorCallback(error) {
-                    console.log(error)
+            window.onload = function() {
+
+                var toastActualizado = document.getElementById('toast-3');
+                toastGps = new bootstrap.Toast(toastActualizado);
+                var toastErrorGps = document.getElementById('toast-4');
+                toastError = new bootstrap.Toast(toastErrorGps);
+                navigator.geolocation.getCurrentPosition(function(location) {
+                        console.log(location.coords.latitude);
+                        console.log(location.coords.longitude);
+
+                        var map;
+                        var center = {
+
+                            lat: location.coords.latitude,
+                            lng: location.coords.longitude
+                        };
+
+                        function initMap() {
+                            map = new google.maps.Map(document.getElementById('map'), {
+                                center: center,
+                                zoom: 17,
+                                gestureHandling: 'greedy'
+                            });
+
+                            var marker = new google.maps.Marker({
+                                position: {
+                                    lat: location.coords.latitude,
+                                    lng: location.coords.longitude
+
+                                },
+                                draggable: true,
+                                map: map,
+                                title: 'Ubication'
+
+                            });
+
+                            map.addListener('center_changed', function() {
+                                var center = map.getCenter();
+                                marker.setPosition(center);
+                                $('#latitud').val(center.lat());
+                                $('#longitud').val(center.lng());
+                            });
+
+
+                            $('#latitud').val(location.coords.latitude);
+                            $('#longitud').val(location.coords.longitude);
+                            marker.addListener('dragend', function(event) {
+                                toastGps.show();
+                                $('#latitud').val(this.getPosition().lat());
+                                $('#longitud').val(this.getPosition().lng());
+                            });
+                        }
+                        initMap();
+                    },
+                    errores);
+
+                function errores(err) {
+                    if (err.code == err.TIMEOUT)
+                        alert("Se ha superado el tiempo de espera");
+                    if (err.code == err.PERMISSION_DENIED)
+                        toastError.show();
+                    $("#errorMapa").removeClass("displayNone")
+                    $("#todoBien").addClass("displayNone")
+                    if (err.code == err.POSITION_UNAVAILABLE)
+                        alert("El dispositivo no pudo recuperar la posición actual");
                 }
-            );
-
-
-            var map;
-
-            function initMap(lat, lng) {
-                var content = ['elena', 'prestamo pendiente', '75818246', 'B/Juan XXIII'];
-                var myLatLng = {
-                    lat: -34.397,
-                    lng: 150.644
-                };
-                var map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 17,
-                    center: myLatLng,
-                    gestureHandling: 'cooperative',
-                });
-
-                const contentString =
-                    "<div class='m-4'><div class='text-center'style='display: grid; place-items: center;'>" +
-                    "<div class='text-center'>" +
-                    "<img class='mb-2' style='background-repeat: no-repeat; background-position: 50%;border-radius: 50%;background-size: 100% auto;height: 74px;width: 74px;' src='https://cdn.cloudflare.steamstatic.com/steam/apps/570/header.jpg?t=1678300512' alt = 'Grapefruit slice atop a pile of other slices' > " +
-                    "<div class='text-center mt-3'><h5><strong>" + content[0] +
-                    "</strong></h5></div>" +
-                    "<small>" + content[1] + "</small>" +
-                    "</div>" +
-                    "<button class='mr-2 ml-2 mt-4 btn btn-primary'>Ir al Perfil</button>" +
-                    "</div></div>";
-                const infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    ariaLabel: "myLatLng",
-                });
-                const marker = new google.maps.Marker({
-                    position: myLatLng,
-                    map,
-                    title: "Tú (Ubicación actual)",
-                    icon: "https://img.icons8.com/material-two-tone/24/null/copy-link.png"
-                });
-
-                marker.addListener("click", () => {
-                    infowindow.open({
-                        anchor: marker,
-                        map,
-                    });
-                });
-            }
-            window.initMap = initMap;
+            };
         </script>
     @endpush
 </div>
