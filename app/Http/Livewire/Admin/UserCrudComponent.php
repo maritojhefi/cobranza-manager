@@ -35,8 +35,8 @@ class UserCrudComponent extends Component
         'telf' => 'required|string|unique:users,telf',
         'ci' => 'required|string|unique:users,ci',
         'direccion' => 'required|string',
-        'lat' => 'nullable',
-        'long' => 'nullable',
+        'lat' => 'required',
+        'long' => 'required',
         'password' => 'required|min:1',
         'password_confirmation' => 'required|same:password',
         'image' => 'nullable|image'
