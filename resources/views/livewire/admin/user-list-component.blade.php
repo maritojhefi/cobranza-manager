@@ -68,8 +68,11 @@
                         </li>
                     @endforeach
                 </ul>
+               
             </div>
-            {{$users->links()}}
+            <div class="row table table-responsive">
+                {{$users->links()}}
+            </div>
         </div>
     </div>
 </div>
