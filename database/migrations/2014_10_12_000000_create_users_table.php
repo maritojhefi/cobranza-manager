@@ -28,10 +28,12 @@ class CreateUsersTable extends Migration
             $table->string('direccion', 100)->nullable();
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
+            $table->decimal('prom_retrasos')->unsigned()->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            
         });
     }
     /**

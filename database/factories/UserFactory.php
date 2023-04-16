@@ -23,8 +23,8 @@ class UserFactory extends Factory
             'ci'=> $this->faker->unique()->randomNumber($nbDigits = NULL, $strict = false),
             'telf'=> $this->faker->unique()->mobileNumber(),
             'direccion'=> $this->faker->address(),
-            'lat'=> $this->faker->latitude($min = -90, $max = 90),
-            'long'=> $this->faker->longitude($min = -90, $max = 90),
+            'lat'=> $this->faker->latitude($min = -21, $max = -22),
+            'long'=> $this->faker->longitude($min = -64, $max = -65),
             'estado_id'=> $this->faker->numberBetween($min = 1, $max = 3),
             'role_id'=> $this->faker->randomElement([1,3,4]),
         ];

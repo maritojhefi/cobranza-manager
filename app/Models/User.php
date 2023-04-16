@@ -30,6 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'foto',
+        'prom_retrasos',
         'ci',
         'telf',
         'direccion',

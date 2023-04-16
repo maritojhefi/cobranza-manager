@@ -16,13 +16,16 @@ class CreatePrestamosTable extends Migration
         Schema::create('prestamos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('cobrador_id')->constrained('users');
             $table->foreignId('estado_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->float('monto_inicial')->unsigned()->default(0);
-            $table->float('monto_final')->unsigned()->default(0);
-            $table->float('cuota')->unsigned()->default(0);
-            $table->float('interes')->unsigned()->default(0);
+            $table->decimal('monto_inicial')->unsigned()->default(0);
+            $table->decimal('monto_final')->unsigned()->default(0);
+            $table->decimal('cuota')->unsigned()->default(0);
+            $table->decimal('interes')->unsigned()->default(0);
             $table->integer('dias')->unsigned()->default(0);
-
+            $table->date('fecha_final')->nullable();
+            $table->integer('retrasos')->unsigned()->default(0);
+            $table->integer('dias_por_semana')->unsigned()->default(5);
             $table->timestamps();
         });
     }

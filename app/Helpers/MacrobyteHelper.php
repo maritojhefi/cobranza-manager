@@ -34,3 +34,18 @@ function imageUser($allPath = true)
     return 'assets/logos/logo.png';
   }
 }
+function addDays($days, $addSabado = false, $format = "Y-m-d")
+{
+  $array = [];
+  if ($addSabado) {
+    $limite = 6;
+  } else {
+    $limite = 5;
+  }
+  for ($i = 0; $i < $days; $i++) {
+    $day = date('N', strtotime("+" . ($i + 1) . "day"));
+    if ($day > $limite)
+      $days++;
+  }
+  return date($format, strtotime("+$i day"));
+}
