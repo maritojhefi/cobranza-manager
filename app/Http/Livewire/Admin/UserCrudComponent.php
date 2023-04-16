@@ -16,6 +16,14 @@ class UserCrudComponent extends Component
     public $user;
     public $name, $apellido, $user_id, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation, $image;
 
+    protected $listeners = ['enviarCoord' => 'actualizarCoordendas'];
+    public function actualizarCoordendas($lat, $long)
+    {
+        $this->lat = $lat;
+        $this->long = $long;
+    }
+
+
     protected $queryString = ['editando', 'user_id'];
     public function mount($role_id)
     {
@@ -26,8 +34,6 @@ class UserCrudComponent extends Component
                 $this->password_confirmation = '0000';
             }
         }
-        $this->lat = 37.7749;
-        $this->long = -122.4194;
     }
     protected $rules = [
         'name' => 'required|string',
@@ -52,28 +58,48 @@ class UserCrudComponent extends Component
     }
     public function submit()
     {
-        $this->validate();
-        $this->user = User::create([
-            'name' => $this->name,
-            'apellido' => $this->apellido,
-            'telf' => $this->telf,
-            'ci' => $this->ci,
-            'direccion' => $this->direccion,
-            'lat' => $this->lat,
-            'long' => $this->long,
-            'role_id' => $this->role_id,
-            'estado_id' => Estado::ID_LIMPIO,
-            'password' => $this->password
-        ]);
-        if ($this->image) {
-            $filename = time() . "." . $this->image->extension();
-            $rutaFoto = $this->image->storeAs('/profiles',  $filename, 'publicdisk');
-            $this->user->foto = $rutaFoto;
+        if ($this->editando) {
+            $array = $this->validate([
+                'name' => 'required|string',
+                'apellido' => 'required|string',
+                'telf' => 'required|string|unique:users,telf,' . $this->user->id,
+                'ci' => 'required|string|unique:users,ci,' . $this->user->id,
+                'direccion' => 'required|string',
+                'lat' => 'required',
+                'long' => 'required',
+                'password' => 'required|min:1',
+                'password_confirmation' => 'required|same:password',
+                'foto' => 'nullable|image'
+            ]);
+            $user = $this->user;
+            $user->fill($array);
+            $user->save();
+            return redirect()->route('admin.user.list', $this->role_id)->with('success', 'Se actualizo el registro');
         } else {
-            $this->user->foto = imageUser(false);
+            $this->validate();
+            $this->user = User::create([
+                'name' => $this->name,
+                'apellido' => $this->apellido,
+                'telf' => $this->telf,
+                'ci' => $this->ci,
+                'direccion' => $this->direccion,
+                'lat' => $this->lat,
+                'long' => $this->long,
+                'role_id' => $this->role_id,
+                'estado_id' => Estado::ID_LIMPIO,
+                'password' => $this->password
+            ]);
+            if ($this->image) {
+                $filename = time() . "." . $this->image->extension();
+                $rutaFoto = $this->image->storeAs('/profiles',  $filename, 'publicdisk');
+                $this->user->foto = $rutaFoto;
+            } else {
+                $this->user->foto = imageUser(false);
+            }
+            $this->user->save();
+
+            return redirect()->route('admin.user.list', $this->role_id)->with('success', 'Se creo el nuevo registro');
         }
-        $this->user->save();
-        return redirect()->route('admin.user.list', $this->role_id->id);
     }
     public function render()
     {
