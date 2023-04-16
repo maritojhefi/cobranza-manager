@@ -32,6 +32,9 @@
         }
     </style>
 @endpush
+
+
+
 <div class="">
     <form wire:submit.prevent="submit">
         <div class="row h-100 mb-4">
@@ -140,23 +143,19 @@
                     </div>
                 </div>
             @endif
+
             <input type="hidden" id="latitud" name="latitud" wire:model="lat">
             <input type="hidden" id="longitud" name="longitud" wire:model="long">
 
 
 
-
-
-
             <div class="card card-style mb-2 map-full" data-card-height="cover-card" style="height: 450px;">
-                <div id="map" style="width:100%;height:96%;"></div>
+                <div id="map" style="width:100%;height:96%;" wire:ignore></div>
+                <button type="button" id="como-llegar" class="como-llegar btn btn-sm btn-primary"
+                    style="position: absolute; right: 6%; bottom: 8%; z-index: 1;"> <i class="bi bi-map"></i> como
+                    llegar</button>
             </div>
         </div>
-
-
-
-
-
         <div id="errorMapa" class="displayNone">
             <div class="card card-style  round-medium " style="height: 380px;">
                 <img src="#" class="card-image " style="height: 430px;">
@@ -190,7 +189,7 @@
 
         <div class="row h-100 mb-4">
             <div class="col-6 col-md-3 col-lg-2 mb-3">
-                <button type="submit" class="btn btn-default btn-block">Guardar</button>
+                <button type="submit" id="submitForm" class="btn btn-default btn-block">Guardar</button>
             </div>
             <div class="col-6 col-md-3 col-lg-2 mb-3">
                 <a type="submit" href="javascript:history.back();"
@@ -224,76 +223,124 @@
                     });
                 });
         </script>
+        @if ($editando == true)
+            <script>
+                var latitude = {{ $lat }};
+                var longitud = {{ $long }};
+                var map;
+                var center = {
+                    lat: latitude,
+                    lng: longitud
+                };
+                let marker;
 
-
-        <script>
-            window.onload = function() {
-
-                var toastActualizado = document.getElementById('toast-3');
-                toastGps = new bootstrap.Toast(toastActualizado);
-                var toastErrorGps = document.getElementById('toast-4');
-                toastError = new bootstrap.Toast(toastErrorGps);
-                navigator.geolocation.getCurrentPosition(function(location) {
-                        console.log(location.coords.latitude);
-                        console.log(location.coords.longitude);
-
-                        var map;
-                        var center = {
-
-                            lat: location.coords.latitude,
-                            lng: location.coords.longitude
-                        };
-
-                        function initMap() {
-                            map = new google.maps.Map(document.getElementById('map'), {
-                                center: center,
-                                zoom: 17,
-                                gestureHandling: 'greedy'
-                            });
-
-                            var marker = new google.maps.Marker({
-                                position: {
-                                    lat: location.coords.latitude,
-                                    lng: location.coords.longitude
-
-                                },
-                                draggable: true,
-                                map: map,
-                                title: 'Ubication'
-
-                            });
-
-                            map.addListener('center_changed', function() {
-                                var center = map.getCenter();
-                                marker.setPosition(center);
-                                $('#latitud').val(center.lat());
-                                $('#longitud').val(center.lng());
-                            });
-
-
-                            $('#latitud').val(location.coords.latitude);
-                            $('#longitud').val(location.coords.longitude);
-                            marker.addListener('dragend', function(event) {
-                                toastGps.show();
-                                $('#latitud').val(this.getPosition().lat());
-                                $('#longitud').val(this.getPosition().lng());
-                            });
-                        }
-                        initMap();
-                    },
-                    errores);
-
-                function errores(err) {
-                    if (err.code == err.TIMEOUT)
-                        alert("Se ha superado el tiempo de espera");
-                    if (err.code == err.PERMISSION_DENIED)
-                        toastError.show();
-                    $("#errorMapa").removeClass("displayNone")
-                    $("#todoBien").addClass("displayNone")
-                    if (err.code == err.POSITION_UNAVAILABLE)
-                        alert("El dispositivo no pudo recuperar la posición actual");
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: center,
+                        zoom: 17,
+                        gestureHandling: 'greedy',
+                        zoomControl: false,
+                        streetViewControl: false,
+                    });
+                    var marker = new google.maps.Marker({
+                        position: {
+                            lat: latitude,
+                            lng: longitud
+                        },
+                        map: map,
+                        title: 'Ubication'
+                    });
+                    document.getElementById('como-llegar').addEventListener('click', function() {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            const directionsUrl =
+                                `https://www.google.com/maps/dir/?api=1&origin=${position.coords.latitude},${position.coords.longitude}&destination=${marker.position.lat()},${marker.position.lng()}`;
+                            window.open(directionsUrl, "_blank");
+                        });
+                    });
                 }
-            };
-        </script>
+                initMap();
+            </script>
+        @else
+            <script src="http://benalman.com/code/projects/jquery-throttle-debounce/jquery.ba-throttle-debounce.js"></script>
+
+            <script>
+                window.onload = function() {
+                    var toastActualizado = document.getElementById('toast-3');
+                    toastGps = new bootstrap.Toast(toastActualizado);
+                    var toastErrorGps = document.getElementById('toast-4');
+                    toastError = new bootstrap.Toast(toastErrorGps);
+                    navigator.geolocation.getCurrentPosition(function(location) {
+                            console.log(location.coords.latitude);
+                            console.log(location.coords.longitude);
+                            var map;
+                            var center = {
+                                lat: location.coords.latitude,
+                                lng: location.coords.longitude
+                            };
+                            let marker;
+
+                            function initMap() {
+                                map = new google.maps.Map(document.getElementById('map'), {
+                                    center: center,
+                                    zoom: 17,
+                                    gestureHandling: 'greedy',
+                                    zoomControl: false,
+                                    streetViewControl: false,
+                                });
+                                var marker = new google.maps.Marker({
+                                    position: {
+                                        lat: location.coords.latitude,
+                                        lng: location.coords.longitude
+                                    },
+                                    draggable: true,
+                                    map: map,
+                                    title: 'Ubication'
+                                });
+                                map.addListener('center_changed', function() {
+                                    var center = map.getCenter();
+                                    marker.setPosition(center);
+                                    $('#latitud').val(center.lat());
+                                    $('#longitud').val(center.lng());
+                                    $('#submitForm').addClass('disabled')
+                                });
+                                map.addListener('center_changed', $.debounce(2000, function(e) {
+                                    var center = map.getCenter();
+                                    $('#submitForm').removeClass('disabled')
+                                    Livewire.emit('enviarCoord', center.lat(), center
+                                        .lng());
+                                    
+                                }))
+                                $('#latitud').val(location.coords.latitude);
+                                $('#longitud').val(location.coords.longitude);
+                                marker.addListener('dragend', function(event) {
+                                    toastGps.show();
+                                    $('#latitud').val(this.getPosition().lat());
+                                    $('#longitud').val(this.getPosition().lng());
+                                });
+                                document.getElementById('como-llegar').addEventListener('click', function() {
+                                    navigator.geolocation.getCurrentPosition(function(position) {
+                                        const directionsUrl =
+                                            `https://www.google.com/maps/dir/?api=1&origin=${position.coords.latitude},${position.coords.longitude}&destination=${marker.position.lat()},${marker.position.lng()}`;
+                                        window.open(directionsUrl, "_blank");
+                                    });
+                                });
+                            }
+                            initMap();
+                        },
+                        errores);
+
+                    function errores(err) {
+                        if (err.code == err.TIMEOUT)
+                            alert("Se ha superado el tiempo de espera");
+                        if (err.code == err.PERMISSION_DENIED)
+                            toastError.show();
+                        $("#errorMapa").removeClass("displayNone")
+                        $("#todoBien").addClass("displayNone")
+                        if (err.code == err.POSITION_UNAVAILABLE)
+                            alert("El dispositivo no pudo recuperar la posición actual");
+                    }
+                };
+            </script>
+        @endif
     @endpush
 </div>
