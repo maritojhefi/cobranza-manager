@@ -156,37 +156,6 @@
                     llegar</button>
             </div>
         </div>
-        <div id="errorMapa" class="displayNone">
-            <div class="card card-style  round-medium " style="height: 380px;">
-                <img src="#" class="card-image " style="height: 430px;">
-                <div class="card-bottom ms-3 mb-2">
-                    <h2 class="font-700 color-white">Concede el permiso</h2>
-                    <p class="color-white mt-n2 mb-0">Haz click en el icono del candado en la parte de la url de tu
-                        navegador, permite el acceso y
-                        recarga la pagina!</p>
-                </div>
-                <div class="card-overlay bg-black opacity-30"></div>
-            </div>
-            <div class="alert me-3 ms-3 rounded-s bg-red-dark " role="alert">
-                <span class="alert-icon"><i class="fa fa-times-circle font-18"></i></span>
-                <h4 class="text-uppercase color-white">Active el GPS</h4>
-                <strong class="alert-icon-text">Necesitamos permiso de su ubicacion.</strong>
-
-                <button type="button" class="close color-white opacity-60 font-16" data-bs-dismiss="alert"
-                    aria-label="Close">×</button>
-            </div>
-        </div>
-        <div id="toast-3" class="toast toast-tiny toast-top bg-blue-dark fade hide" data-bs-delay="1500"
-            data-bs-autohide="true"><i class="fa fa-sync fa-spin me-3"></i>Actualizado!</div>
-        <div id="toast-4" class="toast toast-tiny toast-top bg-red-dark fade hide" data-bs-delay="4000"
-            data-bs-autohide="true"><i class="fa fa-times me-3"></i>Active su GPS</div>
-
-
-
-
-
-
-
         <div class="row h-100 mb-4">
             <div class="col-6 col-md-3 col-lg-2 mb-3">
                 <button type="submit" id="submitForm" class="btn btn-default btn-block">Guardar</button>
@@ -308,7 +277,7 @@
                                     $('#submitForm').removeClass('disabled')
                                     Livewire.emit('enviarCoord', center.lat(), center
                                         .lng());
-                                    
+
                                 }))
                                 $('#latitud').val(location.coords.latitude);
                                 $('#longitud').val(location.coords.longitude);
@@ -333,9 +302,7 @@
                         if (err.code == err.TIMEOUT)
                             alert("Se ha superado el tiempo de espera");
                         if (err.code == err.PERMISSION_DENIED)
-                            toastError.show();
-                        $("#errorMapa").removeClass("displayNone")
-                        $("#todoBien").addClass("displayNone")
+                            alert("Active su gps y conceda los permisos para localizar su ubicacion");
                         if (err.code == err.POSITION_UNAVAILABLE)
                             alert("El dispositivo no pudo recuperar la posición actual");
                     }
