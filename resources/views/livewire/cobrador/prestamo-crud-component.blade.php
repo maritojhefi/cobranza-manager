@@ -12,6 +12,7 @@
                 <div class="form-group form-floating mb-3">
                     <select name="" class="form-control @error('user_id') is-invalid @enderror" id="usuarios"
                         wire:model.debounce.750ms="user_id" placeholder="Usuario">
+                        <option value="">Seleccione usuario</option>
                         @foreach ($usuarios as $user)
                             <option value="{{$user->id}}">{{$user->name.' '.$user->apellido}}</option>
                         @endforeach
