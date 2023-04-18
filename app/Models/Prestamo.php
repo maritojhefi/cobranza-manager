@@ -27,7 +27,7 @@ class Prestamo extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function prestamos()
+    public function abonos()
     {
         return $this->hasMany(Abono::class);
     }
