@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\UserCrudComponent;
 use App\Http\Livewire\Admin\UserListComponent;
-
+use App\Http\Livewire\Admin\UserMapComponent;
 
 Route::get('/', function () {
     return view('cobranza.tic-tac-toe');
@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/list/{role_id}', UserListComponent::class)->name('list');
             Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
         });
+
+        Route::get('/maps/user/all', UserMapComponent::class)->name('maps.user');
     });
     //Rutas cobrador
     Route::middleware(['cobrador'])->name('cobrador.')->prefix('cobrador')->group(function () {

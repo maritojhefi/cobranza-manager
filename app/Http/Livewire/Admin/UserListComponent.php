@@ -40,6 +40,10 @@ class UserListComponent extends Component
 
         return $query->paginate(20);
     }
+    public function mapsUserAll()
+    {
+        return redirect()->route('admin.maps.user');
+    }
     public function render()
     {
         if ($this->role_id->id == 4) {
