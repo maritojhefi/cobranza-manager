@@ -38,29 +38,29 @@
                                     </small>
                                 </div>
                                 <div class=" col-2 dropdown dropstart text-end">
-                                    <a type="button" href="javascript:return false"
+                                    <a type="button" href="javascript:void(0);"
                                         class="btn btn-primary btn-sm text-white rounded-circle shadow-sm dropdown-toggle-split"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-gear"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li>
-                                            <a class="dropdown-item" href="javascript:return false">
+                                            <a class="dropdown-item" href="javascript:void(0);">
                                                 <strong>
                                                     <small
                                                         class="text-center">{{ ucwords($user->name . ' ' . $user->apellido) }}</small>
                                                 </strong>
                                             </a>
                                         </li>
-                                        <li><a class="dropdown-item" href="javascript:return false">Ver Cuentas</a>
+                                        <li><a class="dropdown-item" href="javascript:void(0);">Ver Cuentas</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="javascript:return false">No Pago!</a>
+                                        <li><a class="dropdown-item" href="javascript:void(0);">No Pago!</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="javascript:return false">Ver en Mapa</a>
+                                        <li><a class="dropdown-item" href="javascript:void(0);">Ver en Mapa</a>
                                         </li>
                                         <li><a class="dropdown-item" href="{{ url('admin/user/create/'.$user->role->id.'?editando=true&user_id='.$user->id)}}">Editar Datos</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="javascript:return false">Contactar</a>
+                                        <li><a class="dropdown-item" href="javascript:void(0);">Contactar</a>
                                         </li>
                                     </ul>
                                 </div>
