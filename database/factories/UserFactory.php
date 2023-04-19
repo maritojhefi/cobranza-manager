@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'direccion'=> $this->faker->address(),
             'lat'=> $this->faker->latitude($min = -21, $max = -22),
             'long'=> $this->faker->longitude($min = -64, $max = -65),
-            'estado_id'=> $this->faker->numberBetween($min = 1, $max = 3),
+            'estado_id'=> 1,
             'role_id'=> $this->faker->randomElement([1,3,4]),
         ];
     }

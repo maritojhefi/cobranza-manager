@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function () {
         Route::name('user.')->prefix('user')->group(function () {
             Route::get('/list/{role_id}', UserListComponent::class)->name('list');
             Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
-            Route::get('/pendiente', UserCrudComponent::class)->name('pendiente');
+            Route::get('/pendiente/{role_id}', UserListComponent::class)->name('pendiente');
         });
         Route::name('cobrador.')->prefix('cobrador')->group(function () {
             Route::get('/list/{role_id}', UserListComponent::class)->name('list');
