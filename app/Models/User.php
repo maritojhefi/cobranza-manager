@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     const PATH_FOTO_DEFAULT = '';
-    
+    protected $appends = array('icono', 'retrasos');
     protected $fillable = [
         'id',
         'name',
@@ -78,4 +78,32 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prestamo::class);
     }
+
+    public function getIconoAttribute()
+    {
+        $dias = retrasosPrestamoUser($this->id);
+        if ($dias <= 10) {
+            $icono = asset('assets/images/person-black.png');
+        } elseif ($dias >= 11  &&  $dias <= 20) {
+            $icono = asset('assets/images/person-orange.png');
+        } else if ($dias > 20) {
+            $icono = asset('assets/images/person-red.png');
+        }
+        return $icono;
+    }
+
+    public function getRetrasosAttribute()
+    {
+        $dias = retrasosPrestamoUser($this->id);
+        return $dias;
+    }
+
+    // public function getLatAttribute($value)
+    // {
+    //     return intval($value);
+    // }
+    // public function getLongAttribute($value)
+    // {
+    //     return 5;
+    // }
 }
