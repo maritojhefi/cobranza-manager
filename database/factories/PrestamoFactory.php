@@ -24,11 +24,14 @@ class PrestamoFactory extends Factory
         $diasPorSemana=$this->faker->randomElement([5, 6]);
         $fechaFinal=$diasPorSemana==5?addDays(20):addDays(20,true);
         $cobrador=User::where('role_id',3)->inRandomOrder()->first();
+        $user=User::where('role_id',4)->where('estado_id',1)->inRandomOrder()->first();
+        $user->estado_id=2;
+        $user->save();
         return [
             'cobrador_id'=>$cobrador->id,
             'fecha_final'=>$fechaFinal,
             'dias_por_semana'=>$diasPorSemana,
-            'user_id' => $this->faker->unique()->numberBetween($min = 1, $max = 1000),
+            'user_id' => $user->id,
             'monto_inicial' => $inicial,
             'monto_final' => $final,
             'cuota' => $cuota,

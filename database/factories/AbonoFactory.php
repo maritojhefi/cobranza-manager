@@ -15,7 +15,7 @@ class AbonoFactory extends Factory
      */
     public function definition()
     {
-        $id_prestamo = $this->faker->numberBetween($min = 1, $max = 500);
+        $id_prestamo = $this->faker->numberBetween($min = 1, $max = 30);
         $prestamo = Prestamo::findOrFail($id_prestamo);
         return [
             'prestamo_id' => $id_prestamo,

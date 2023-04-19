@@ -44,7 +44,7 @@
                     </x-elementos.items-sidebar>
 
                     <x-elementos.items-sidebar titulo="Clientes" segmentoLink="user" ruta="debounce" :lista="[
-                        'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history'],
+                        'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history',[4,'pendientes'=>true]],
                         'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task', 4],
                         'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus', 4],
                     ]">

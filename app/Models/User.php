@@ -78,6 +78,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prestamo::class);
     }
+    public function prestamosPendientes()
+    {
+        return $this->hasMany(Prestamo::class)->where('estado_id',2);
+    }
 
     public function getIconoAttribute()
     {
