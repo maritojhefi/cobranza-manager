@@ -158,11 +158,11 @@
         </div>
         <div class="row h-100 mb-4">
             <div class="col-6 col-md-3 col-lg-2 mb-3">
-                <button type="submit" id="submitForm" class="btn btn-default btn-block">Guardar</button>
+                <button type="submit" id="submitForm" class="btn btn-default btn-lg w-100 btn-block">Guardar</button>
             </div>
             <div class="col-6 col-md-3 col-lg-2 mb-3">
                 <a type="submit" href="javascript:history.back();"
-                    class="btn bg-red text-white btn-block">Cancelar</a>
+                    class="btn bg-red text-white btn-lg w-100 btn-block">Cancelar</a>
             </div>
         </div>
     </form>
@@ -177,7 +177,7 @@
                 display: contents
             }
         </style>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y" ></script>
     @endpush
 
 
