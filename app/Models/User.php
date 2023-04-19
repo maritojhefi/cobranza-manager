@@ -110,7 +110,7 @@ class User extends Authenticatable
 
     public function getRetrasosAttribute()
     {
-        $dias = retrasosPrestamoUser($this->id);
+        $dias =retrasosPrestamoUser($this->id);
         return $dias;
     }
 }
