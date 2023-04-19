@@ -84,7 +84,7 @@ class User extends Authenticatable
     }
 
     public function getIconoAttribute()
-    {
+    { 
         $dias = retrasosPrestamoUser($this->id);
         if ($dias <= 10) {
             $icono = asset('assets/images/person-black.png');
@@ -113,13 +113,4 @@ class User extends Authenticatable
         $dias = retrasosPrestamoUser($this->id);
         return $dias;
     }
-
-    // public function getLatAttribute($value)
-    // {
-    //     return intval($value);
-    // }
-    // public function getLongAttribute($value)
-    // {
-    //     return 5;
-    // }
 }
