@@ -1,5 +1,7 @@
 @push('header')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y" async defer></script>
+    <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js" async defer>
+    </script>
     <style>
         #map {
             width: 100%;
@@ -12,10 +14,6 @@
 <div>
     <div class="row">
         <div class="col-12">
-
-            {{-- @foreach ($users as $item)
-    @dd($item->diasRetraso())
-@endforeach --}}
             <div id="map"></div>
         </div>
     </div>
@@ -50,6 +48,7 @@
                         icon: ''
                     });
                     var users = {!! $users !!};
+                    var markers = [];
                     users.forEach((element) => {
                         var contentString =
                             "<div class=''><div class='text-center'style='display: grid; place-items: center;'>" +
@@ -58,14 +57,17 @@
                             "<div class='text-center mt-3'><h5><strong class='text-primary'>" +
                             element.name +
                             "</strong></h5></div>" +
-                            "<div class='text-center'><small class='text-primary col-12'>(" + element.estado.nombre_estado +
+                            "<div class='text-center'><small class='text-primary col-12'>(" + element
+                            .estado.nombre_estado +
                             ")</small></div>" +
                             "<small class='text-primary col-12'>" + element.telf +
                             "</small>" +
-                            "<div class='text-center'><small class='text-primary col-12'>" + element.direccion +
+                            "<div class='text-center'><small class='text-primary col-12'>" + element
+                            .direccion +
                             "</small></div>" +
                             +
-                            "<div class='text-center'><small class='text-danger col-12'>" + element.retrasos +
+                            "<div class='text-center'><small class='text-danger col-12'>" + element
+                            .retrasos +
                             "</small></div>" +
                             "</div>" +
                             "<button class='mr-2 ml-2 mt-4 btn btn-primary'>Ir al Perfil</button>" +
@@ -82,16 +84,22 @@
                                 lat: parseFloat(element.lat),
                                 lng: parseFloat(element.long)
                             },
-                            map,
                             title: element.name,
                             icon: element.icono
                         });
+                        markers.push(marker);
                         marker.addListener("click", () => {
                             infowindow.open({
                                 anchor: marker,
                                 map,
                             });
                         });
+
+                    });
+
+                    var markerCluster = new MarkerClusterer(map, markers, {
+                        imagePath: '{{ asset("assets/images") }}/',
+                        maxZoom: 15
                     });
                 }
                 initMap();
