@@ -26,7 +26,7 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-3">
-                                    <figure class="avatar avatar-50 rounded-10 shadow-sm">
+                                    <figure class="avatar avatar-50 rounded-10" style="box-shadow: 0 0.125rem 1.25rem 0.4rem {{$user->color}} !important;">
                                         <img src="{{ asset('/' . $user->foto) }}" alt="">
                                     </figure>
                                 </div>
