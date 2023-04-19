@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     const PATH_FOTO_DEFAULT = '';
-    protected $appends = array('icono', 'retrasos');
+    protected $appends = array('icono', 'retrasos', 'color');
     protected $fillable = [
         'id',
         'name',
@@ -94,6 +94,18 @@ class User extends Authenticatable
             $icono = asset('assets/images/person-red.png');
         }
         return $icono;
+    }
+    public function getColorAttribute()
+    {
+        $dias = retrasosPrestamoUser($this->id);
+        if ($dias <= 10) {
+            $color = 'black';
+        } elseif ($dias >= 11  &&  $dias <= 20) {
+            $color = 'orange';
+        } else if ($dias > 20) {
+            $color = 'red';
+        }
+        return $color;
     }
 
     public function getRetrasosAttribute()
