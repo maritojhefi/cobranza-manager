@@ -40,7 +40,6 @@ class CobradorGastoComponent extends Component
     public function render()
     {
         $user = User::getCurrentUser();
-
         $fechaActual = Carbon::now()->format('Y-m-d');
         $this->gastoUser = Gasto::where('user_id', $user->id)->whereDate('created_at', $fechaActual)->orderBy('created_at', 'desc')->get();
         return view('livewire.cobrador.cobrador-gasto-component', compact('user', 'fechaActual'))

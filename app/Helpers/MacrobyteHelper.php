@@ -129,3 +129,25 @@ function timeago($date)
     return 'Hace' . ' ' . $diff . ' ' . $strTime[$i] . '(s)';
   }
 }
+function fechaFormateada(int $level, $fecha = null)
+{
+  switch ($level) {
+    case 1:
+      $formato = 'dddd D';
+      break;
+    case 2:
+      $formato = 'dddd D \d\e MMMM ';
+      break;
+    case 3:
+      $formato = 'dddd D \d\e MMMM \d\e\l Y';
+      break;
+    default:
+      $formato = 'dddd D \d\e MMMM \d\e\l Y';
+      break;
+  }
+  if ($fecha != null) {
+    return ucfirst(Carbon::parse($fecha)->locale('es')->isoFormat($formato));
+  } else {
+    return ucfirst(Carbon::now()->locale('es')->isoFormat($formato));
+  }
+}
