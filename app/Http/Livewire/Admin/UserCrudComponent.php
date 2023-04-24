@@ -14,7 +14,7 @@ class UserCrudComponent extends Component
     use WithFileUploads;
     public $role_id;
     public $user;
-    public $name, $apellido, $user_id, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation, $image;
+    public $name, $apellido, $user_id, $telf, $foto, $ci, $direccion, $lat, $long, $editando = false, $usuario, $password, $password_confirmation, $image, $billetera;
 
     protected $listeners = ['enviarCoord' => 'actualizarCoordendas'];
     public function actualizarCoordendas($lat, $long)
@@ -32,6 +32,7 @@ class UserCrudComponent extends Component
             if (!$this->editando) {
                 $this->password = '0000';
                 $this->password_confirmation = '0000';
+                $this->billetera = 0;
             }
         }
     }
@@ -45,6 +46,7 @@ class UserCrudComponent extends Component
         'long' => 'required',
         'password' => 'required|min:1',
         'password_confirmation' => 'required|same:password',
+        'billetera' => 'required',
         'image' => 'nullable|image'
     ];
     public function resetInputs()
@@ -67,8 +69,9 @@ class UserCrudComponent extends Component
                 'direccion' => 'required|string',
                 'lat' => 'required',
                 'long' => 'required',
-                'password' => 'required|min:1',
+                'password' => 'required',
                 'password_confirmation' => 'required|same:password',
+                'billetera' => 'required',
                 'foto' => 'nullable|image'
             ]);
             $user = $this->user;
@@ -87,6 +90,7 @@ class UserCrudComponent extends Component
                 'long' => $this->long,
                 'role_id' => $this->role_id,
                 'estado_id' => Estado::ID_LIMPIO,
+                'billetera' => $this->billetera,
                 'password' => $this->password
             ]);
             if ($this->image) {

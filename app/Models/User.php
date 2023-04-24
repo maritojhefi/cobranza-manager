@@ -38,6 +38,7 @@ class User extends Authenticatable
         'long',
         'estado_id',
         'role_id',
+        'billetera'
     ];
 
     /**
@@ -80,11 +81,11 @@ class User extends Authenticatable
     }
     public function prestamosPendientes()
     {
-        return $this->hasMany(Prestamo::class)->where('estado_id',2);
+        return $this->hasMany(Prestamo::class)->where('estado_id', 2);
     }
 
     public function getIconoAttribute()
-    { 
+    {
         $dias = retrasosPrestamoUser($this->id);
         if ($dias <= 10) {
             $icono = asset('assets/images/person-black.png');
@@ -110,7 +111,16 @@ class User extends Authenticatable
 
     public function getRetrasosAttribute()
     {
-        $dias =retrasosPrestamoUser($this->id);
+        $dias = retrasosPrestamoUser($this->id);
         return $dias;
+    }
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' ' . $this->apellido;
+    }
+
+    public static function getCurrentUser()
+    {
+        return self::findOrFail(auth()->user()->id);
     }
 }

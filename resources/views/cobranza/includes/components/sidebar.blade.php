@@ -14,17 +14,17 @@
                                 </figure>
                             </div>
                             <div class="col px-0 align-self-center">
-                                <p class="mb-1">{{infoUser('name')}}</p>
+                                <p class="mb-1">{{ infoUser('name') }}</p>
                             </div>
 
                             <div class="col-auto">
-                                <form method="post" action="{{route('logout')}}">
+                                <form method="post" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="btn btn-44 btn-light">
                                         <i class="bi bi-box-arrow-right"></i>
                                     </button>
                                 </form>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,11 @@
                     </x-elementos.items-sidebar>
 
                     <x-elementos.items-sidebar titulo="Clientes" segmentoLink="user" ruta="debounce" :lista="[
-                        'Clientes Pendientes' => ['admin.user.pendiente', 'bi bi-clock-history',[4,'pendientes'=>true]],
+                        'Clientes Pendientes' => [
+                            'admin.user.pendiente',
+                            'bi bi-clock-history',
+                            [4, 'pendientes' => true],
+                        ],
                         'Todos los Clientes' => ['admin.user.list', 'bi bi-list-task', 4],
                         'Crear Cliente' => ['admin.user.create', 'bi bi-person-plus', 4],
                     ]">
@@ -70,6 +74,13 @@
                         ]">
                         <i class="bi bi-cash-coin"></i>
                     </x-elementos.items-sidebar>
+
+
+                    <x-elementos.items-sidebar titulo="Gastos" segmentoLink="cobrador"
+                        ruta="cobrador.list.gasto" :lista="[]">
+                        <i class="bi bi-cash-stack"></i>
+                    </x-elementos.items-sidebar>
+
 
                     <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion"
                         ruta="extra.personalizacion" :lista="[]">
