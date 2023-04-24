@@ -29,65 +29,42 @@
         </div>
     </div>
     <div class="row mb-4">
-        <h6>
-            (Hoy) {{ \Carbon\Carbon::now()->formatLocalized('%d de %B de %Y') }}
-        </h6>
-
-
-        {{-- <div class="card mb-3">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="avatar avatar-40 bg-success text-white shadow-sm rounded-10">
-                            <i class="bi bi-cash-stack" style="font-size: 30px;"></i>
-                        </div>
-                    </div>
-                    <div class="col align-self-center ps-0">
-                        <p class="text-color-theme mb-0">{{ ucfirst($gasto->descripcion) }}</p>
-                        <p class="text-muted size-12">{{ $gasto->created_at->format('H:i a') }}</p>
-                    </div>
-                    <div class="col align-self-center text-end">
-                        <p class="mb-0">{{ $gasto->monto }} Bs</p>
-                        <p class="text-muted size-12">
-                            {{ timeago($gasto->created_at) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+        <div class="row mb-2">
+            <h6>
+                (Hoy) {{ fechaFormateada(3) }}
+            </h6>
+        </div>
         <div class="col-12 px-1">
-            {{-- <ul class="list-group list-group-flush bg-none"> --}}
-                @if ($gastoUser->isNotEmpty())
-                    @foreach ($gastoUser as $gasto)
-                        <div class="card mb-3 ml-2 mr-2">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-auto d-flex align-items-center">
-                                        <div class="avatar avatar-40 bg-success text-white shadow-sm rounded-10">
-                                            <i class="bi bi-cash-stack" style="font-size: 30px;"></i>
-                                        </div>
+            @if ($gastoUser->isNotEmpty())
+                @foreach ($gastoUser as $gasto)
+                    <div class="card mb-3 ml-2 mr-2">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-auto d-flex align-items-center">
+                                    <div class="avatar avatar-40 bg-secondary text-white shadow-sm rounded-10">
+                                        <i class="bi bi-cash-stack" style="font-size: 30px;"></i>
                                     </div>
-                                    <div class="col align-self-center ps-0">
-                                        <small class="mb-0">{{ ucfirst($gasto->descripcion) }}</small>
-                                        <p class="text-muted size-12">{{ $gasto->created_at->format('H:i a') }}</p>
-                                    </div>
-                                    <div class="col align-self-center text-end">
-                                        <p class="mb-0">{{ $gasto->monto }} Bs</p>
-                                        <p class="text-muted size-12">
-                                            {{ timeago($gasto->created_at) }}</p>
-                                    </div>
+                                </div>
+                                <div class="col align-self-center ps-0">
+                                    <small class="mb-0">{{ ucfirst($gasto->descripcion) }}</small>
+                                    <p class="text-muted size-12">{{ $gasto->created_at->format('H:i a') }}</p>
+                                </div>
+                                <div class="col align-self-center text-end">
+                                    <p class="mb-0">{{ $gasto->monto }} Bs</p>
+                                    <p class="text-muted size-12">
+                                        {{ timeago($gasto->created_at) }}</p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="card text-center"
-                        style="background-color: rgb(255 255 255 / 0%); border-color: #04134400;">
-                        <div class="card-body">
-                            <h4 class="text-muted ml-2 mr-2">No existen gastos del dia hasta el momento</h4>
-                        </div>
                     </div>
-                @endif
-            {{-- </ul> --}}
+                @endforeach
+            @else
+                <div class="card text-center" style="background-color: rgb(255 255 255 / 0%); border-color: #04134400;">
+                    <div class="card-body">
+                        <h4 class="text-muted ml-2 mr-2">No existen gastos del dia hasta el momento</h4>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>
