@@ -26,13 +26,13 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-3">
-                                    <figure class="avatar avatar-50 rounded-10" style="box-shadow: 0 0.125rem 1.25rem 0.4rem {{$user->color}} !important;">
+                                    <figure class="avatar avatar-50 rounded-10" style="border: 3px solid {{$user->color}} !important;">
                                         <img src="{{ asset('/' . $user->foto) }}" alt="">
                                     </figure>
                                 </div>
                                 <div class="col-4 px-0">
                                     <small>{{ ucwords($user->name . ' ' . $user->apellido) }}<br><small
-                                            class="text-muted">{{ ucfirst($user->estado->nombre_estado) }}</small>
+                                            class="text-muted">{{ ucfirst($user->estado->nombre_estado).' ('.($user->role->nombre_rol).')' }}</small>
                                     </small>
                                 </div>
                                 <div class="col-3">

@@ -114,3 +114,40 @@ function retrasosPrestamoUser($usuario)
     return null;
   }
 }
+function timeago($date)
+{
+  $timestamp = strtotime($date);
+  $strTime = ['segundo', 'minuto', 'hora', 'dia', 'mes', 'año'];
+  $length = ['60', '60', '24', '30', '12', '10'];
+  $currentTime = time();
+  if ($currentTime >= $timestamp) {
+    $diff = time() - $timestamp;
+    for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
+      $diff = $diff / $length[$i];
+    }
+    $diff = round($diff);
+    return 'Hace' . ' ' . $diff . ' ' . $strTime[$i] . '(s)';
+  }
+}
+function fechaFormateada(int $level, $fecha = null)
+{
+  switch ($level) {
+    case 1:
+      $formato = 'dddd D';
+      break;
+    case 2:
+      $formato = 'dddd D \d\e MMMM ';
+      break;
+    case 3:
+      $formato = 'dddd D \d\e MMMM \d\e\l Y';
+      break;
+    default:
+      $formato = 'dddd D \d\e MMMM \d\e\l Y';
+      break;
+  }
+  if ($fecha != null) {
+    return ucfirst(Carbon::parse($fecha)->locale('es')->isoFormat($formato));
+  } else {
+    return ucfirst(Carbon::now()->locale('es')->isoFormat($formato));
+  }
+}

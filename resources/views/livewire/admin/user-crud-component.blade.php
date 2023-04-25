@@ -139,7 +139,22 @@
                         @error('password_confirmation')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
-                        <label class="form-control-label" for="password_confirmation"> <i class=""></i> </label>
+                        <label class="form-control-label" for="password_confirmation">Pasword Confirmation</label>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="row position-relative">
+                        <div class="col-12">
+                            <div class="form-group form-floating">
+                                <input type="text" class="form-control @error('billetera') is-invalid @enderror"
+                                    wire:model.debounce.750ms="billetera" placeholder="billetera" />
+                                @error('billetera')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                                <label class="form-control-label" for="billetera">Entrada (Bs.)</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endif
@@ -158,7 +173,8 @@
         </div>
         <div class="row h-100 mb-4">
             <div class="col-6 col-md-3 col-lg-2 mb-3">
-                <button type="submit" id="submitForm" class="btn btn-default btn-lg w-100 btn-block">Guardar</button>
+                <button type="submit" id="submitForm"
+                    class="btn btn-default btn-lg w-100 btn-block">Guardar</button>
             </div>
             <div class="col-6 col-md-3 col-lg-2 mb-3">
                 <a type="submit" href="javascript:history.back();"
@@ -177,7 +193,7 @@
                 display: contents
             }
         </style>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y" ></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y"></script>
     @endpush
 
 
