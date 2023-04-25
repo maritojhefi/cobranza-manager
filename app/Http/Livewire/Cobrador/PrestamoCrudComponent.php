@@ -41,7 +41,9 @@ class PrestamoCrudComponent extends Component
     public function submit()
     {
         $array = $this->validate();
-        
+        $array['cobrador_id']=1;
+        $array['user_id']=auth()->id();
+
         $prestamo = Prestamo::create($array);
         
         // $toast = [

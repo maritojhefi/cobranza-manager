@@ -107,6 +107,14 @@ class User extends Authenticatable
         }
         return $color;
     }
+    public function getFotoAttribute($value)
+    {
+        if($value==null || $value==null)
+        {
+            return 'assets/img/user'.rand(1,4).'.jpg';
+        }
+        return $value;
+    }
 
     public function getRetrasosAttribute()
     {

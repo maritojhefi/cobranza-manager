@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-10">
             <h4 class="mt-2 mb-2">
-                Lista de {{ $role_id->nombre_rol }}
+                Lista de {{ $role_id->nombre_rol }} ({{$users->total()}})
             </h4>
         </div>
         <div class="col-2 d-flex align-items-end justify-content-end">
