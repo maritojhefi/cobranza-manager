@@ -45,7 +45,7 @@
 
                                     <p class="text-muted size-12 m-0">Retrasos: {{ retrasosPrestamoUser($user->id,$prestamo->id) }} dias</p>
                                     <hr class="m-1 p-0 text-success">
-                                    <p class=" text-primary size-12 m-0">Cuota
+                                    <p class="text-muted size-12 m-0">Cuota
                                         : {{ $prestamo->cuota }} Bs</p>
                                     <p
                                         class="size-10 tag bg-{{ $prestamo->colorEstado() }} text-white border-{{ $prestamo->colorEstado() }} py-1 px-2 float-end mt-1">
