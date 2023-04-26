@@ -75,35 +75,33 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <h3 class="text-color-theme mb-2">Crear Gasto</h3>
-                    <form>
-                        <div class="col-12">
-                            <div class="form-group form-floating  mb-3">
-                                <input type="text" class="form-control" placeholder="Monto" name="monto"
-                                    id="monto">
-                                @error('monto')
-                                    <span class="invalid-feedback">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                                <label for="monto">Monto (Bs)</label>
-                            </div>
+                    <div class="col-12">
+                        <div class="form-group form-floating  mb-3">
+                            <input type="number" step="any" class="form-control" placeholder="Monto" name="monto"
+                                id="monto">
+                            @error('monto')
+                                <span class="invalid-feedback">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                            <label for="monto">Monto (Bs)</label>
                         </div>
-                        <div class="col-12">
-                            <div class="form-group form-floating  mb-3">
-                                {{-- <input type="text" class="form-control @error('descripcion') is-invalid @enderror"
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group form-floating  mb-3">
+                            {{-- <input type="text" class="form-control @error('descripcion') is-invalid @enderror"
                                         placeholder="Descripcion" wire:model.debounce.750ms="descripcion"> --}}
-                                <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="3"
-                                    placeholder="Descripcion"></textarea>
-                                @error('descripcion')
-                                    <span class="invalid-feedback">
-                                        {{ $message }}
-                                    </span>
-                                @enderror
-                                <label for="descripcion">Descripción</label>
-                            </div>
+                            <textarea class="form-control" type="text" name="descripcion" id="descripcion" cols="30" rows="3"
+                                placeholder="Descripcion"></textarea>
+                            @error('descripcion')
+                                <span class="invalid-feedback">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                            <label for="descripcion">Descripción</label>
                         </div>
-                        <button type="button" id="guardar" class="btn btn-default btn-lg w-100 btn-block">Crear</button>
-                    </form>
+                    </div>
+                    <button id="guardar" class="btn btn-default btn-lg w-100 btn-block">Crear</button>
                 </div>
             </div>
         </div>

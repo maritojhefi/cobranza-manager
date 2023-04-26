@@ -55,7 +55,6 @@ class AddAbonoComponent extends Component
                     'icon' => 'error',
                     'title' => $error
                 ];
-               
         }
         $this->emit('toastDispatch', $toast);
     }
