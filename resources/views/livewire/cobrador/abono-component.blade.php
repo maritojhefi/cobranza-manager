@@ -33,22 +33,20 @@
                                         <i class="fa fa-money-bills fs-3 text-secondary"></i>
                                     </div>
                                 </div>
-                                <div class="col align-self-center">
+                                <div class="col align-self-center p-0">
                                     <p class="text-color-theme size-12">ID: {{ $prestamo->idFolio() }}</p>
-                                    <div class="row">
-                                        <strong class="col">{{ $prestamo->monto_final }} Bs</strong>
-                                        <div class="col-auto align-self-center text-end">
-
-                                        </div>
+                                    <div class="row p-0">
+                                        <strong class="col">{{ $prestamo->monto_final }} Bs</strong><br>
+                                        <small class="size-10">{!!$prestamo->diasFaltantes()!!}</small>
                                     </div>
                                 </div>
                                 <div class="col-auto p-1">
 
 
-                                    <p class="text-muted size-12 m-0">Retrasos: {{ $user->prom_retrasos }} dias</p>
+                                    <p class="text-muted size-12 m-0">Retrasos: {{ retrasosPrestamoUser($user->id,$prestamo->id) }} dias</p>
                                     <hr class="m-1 p-0 text-success">
                                     <p class=" text-primary size-12 m-0">Cuota
-                                        : {{ $user->prestamosPendientes->sum('cuota') }} Bs</p>
+                                        : {{ $prestamo->cuota }} Bs</p>
                                     <p
                                         class="size-10 tag bg-{{ $prestamo->colorEstado() }} text-white border-{{ $prestamo->colorEstado() }} py-1 px-2 float-end mt-1">
                                         {{ $prestamo->estado->nombre_estado }}</p>
