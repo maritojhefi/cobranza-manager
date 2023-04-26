@@ -50,10 +50,11 @@
                     var users = {!! $users !!};
                     var markers = [];
                     users.forEach((element) => {
+                        var rutaAbono = '{!! route('cobrador.abono') !!}'
                         var contentString =
                             "<div class=''><div class='text-center'style='display: grid; place-items: center;'>" +
                             "<div class='text-center'>" +
-                            "<img class='mb-2' style='background-repeat: no-repeat; background-position: 50%;border-radius: 50%;background-size: 100% auto;height: 74px;width: 74px;' src='https://cdn.cloudflare.steamstatic.com/steam/apps/570/header.jpg?t=1678300512' alt = 'Grapefruit slice atop a pile of other slices' > " +
+                            "<img class='mb-2' style='background-repeat: no-repeat; background-position: 50%;border-radius: 50%;background-size: 100% auto;height: 74px;width: 74px;' src='{{ asset('') }}"+ element.foto  +"' alt = 'Grapefruit slice atop a pile of other slices' > " +
                             "<div class='text-center mt-3'><h5><strong class='text-primary'>" +
                             element.name +
                             "</strong></h5></div>" +
@@ -70,8 +71,18 @@
                             .retrasos +
                             "</small></div>" +
                             "</div>" +
-                            "<button class='mr-2 ml-2 mt-4 btn btn-primary'>Ir al Perfil</button>" +
+                            "<div class='d-flex align-items-center justify-content-center' style='gap: 10px;'><a type='button' href='https://api.whatsapp.com/send?phone=" +
+                            element.telf +
+                            "' class='mr-2 ml-2 mt-4 btn btn-success'><i class='bi bi-whatsapp'></i></a> <a type='button' href='" +
+                            rutaAbono + "?user_id=" + element.id +
+                            "' class='mr-2 ml-2 mt-4 btn btn-danger'><i class='bi bi-card-checklist'></i></a><a type='button' href='https://www.google.com/maps/dir/?api=1&origin=" +
+                            location.coords.latitude + "," + location.coords.longitude +
+                            "&destination=" + element.lat + "," + element.long +
+                            "' class='mr-2 ml-2 mt-4 btn btn-info'><i class='bi bi-map'></i></a></div>" +
                             "</div></div>";
+
+
+
                         var infowindow = new google.maps.InfoWindow({
                             content: contentString,
                             ariaLabel: {
@@ -98,7 +109,7 @@
                     });
 
                     var markerCluster = new MarkerClusterer(map, markers, {
-                        imagePath: '{{ asset("assets/images") }}/',
+                        imagePath: '{{ asset('assets/images') }}/',
                         maxZoom: 15
                     });
                 }

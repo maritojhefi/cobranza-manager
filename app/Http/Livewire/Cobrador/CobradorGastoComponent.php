@@ -11,31 +11,42 @@ class CobradorGastoComponent extends Component
 {
     public $gastoUser, $monto, $descripcion, $gasto;
     protected $listeners = ['guardarGasto' => 'guardarGasto'];
-    protected $rules = [
-        'monto' => 'required|numeric',
-        'descripcion' => 'required|string',
-    ];
     public function resetInputs()
     {
         $this->reset();
     }
     public function guardarGasto($monto, $descripcion)
     {
-        $this->monto = $monto;
-        $this->descripcion = $descripcion;
-        $this->validate();
-        $this->gasto = Gasto::create([
-            'user_id' => User::getCurrentUser()->id,
-            'monto' => $monto,
-            'descripcion' => $descripcion,
+
+        $error = validar([
+            'monto' => [
+                $monto,
+                'required|numeric|min:1',
+                ['numeric' => 'Ingrese un numero valido para el monto', 'monto.min' => 'El monto debe ser mayor a 0']
+            ],
+            'descripcion' => [
+                $descripcion,
+                'required|string|min:5',
+                ['descripcion.min' => 'La descripcion debe contener al menos 5 caracteres']
+            ]
         ]);
-        $this->gasto->save();
-        $toast = [
-            'icon' => 'success',
-            'title' => 'Gasto Creado!'
-        ];
-        // $this->emit('toastDispatch', $toast);
-        return redirect()->route('cobrador.list.gasto')->with('success', 'Gasto Creado!');
+        if (!$error) {
+            $this->monto = $monto;
+            $this->descripcion = $descripcion;
+            $this->gasto = Gasto::create([
+                'user_id' => User::getCurrentUser()->id,
+                'monto' => $monto,
+                'descripcion' => $descripcion,
+            ]);
+            $this->gasto->save();
+            return redirect()->route('cobrador.list.gasto')->with('success', 'Gasto Creado!');
+        } else {
+            $toast = [
+                'icon' => 'error',
+                'title' => $error
+            ];
+        }
+        $this->emit('toastDispatch', $toast);
     }
     public function render()
     {
