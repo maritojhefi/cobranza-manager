@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     const PATH_FOTO_DEFAULT = '';
-    protected $appends = array('icono', 'retrasos', 'color');
+    protected $appends = array('icono', 'retrasos', 'color','full_name');
     protected $fillable = [
         'id',
         'name',
@@ -110,9 +110,9 @@ class User extends Authenticatable
     }
     public function getFotoAttribute($value)
     {
-        if($value==null || $value==null)
+        if($value==null || $value=='')
         {
-            return 'assets/img/user'.rand(1,4).'.jpg';
+            return 'assets/img/person.png';
         }
         return $value;
     }

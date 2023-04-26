@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\Cobrador\InicioController;
-use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Cobrador\AbonoComponent;
+use App\Http\Livewire\Cobrador\AddAbonoComponent;
+use App\Http\Controllers\Cobrador\InicioController;
+use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 
 
 Route::get('/admin/debounce', function () {
@@ -19,6 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
         Route::get('/inicio', [InicioController::class,'index'])->name('inicio');
         Route::get('/prestamos', PrestamoCrudComponent::class)->name('prestamo');
+        Route::get('/abono', AbonoComponent::class)->name('abono');
+        Route::get('/abono/add/{id_prestamo}', AddAbonoComponent::class)->name('abono.add');
     });
 });
 //Rutas ajax

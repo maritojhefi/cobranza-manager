@@ -97,8 +97,6 @@ class UserCrudComponent extends Component
                 $filename = time() . "." . $this->image->extension();
                 $rutaFoto = $this->image->storeAs('/profiles',  $filename, 'publicdisk');
                 $this->user->foto = $rutaFoto;
-            } else {
-                $this->user->foto = imageUser(false);
             }
             $this->user->save();
 

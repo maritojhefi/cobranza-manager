@@ -55,7 +55,7 @@
                                                 </strong>
                                             </a>
                                         </li>
-                                        <li><a class="dropdown-item" href="javascript:void(0);">Ver Cuentas</a>
+                                        <li><a class="dropdown-item" href="{{route('cobrador.abono',['user_id'=>$user->id])}}">Ver Cuentas</a>
                                         </li>
                                         <li><a class="dropdown-item" href="javascript:void(0);">No Pago!</a>
                                         </li>

@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Abono;
 use App\Models\Prestamo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -38,7 +39,7 @@ function imageUser($allPath = true)
     return 'assets/logos/logo.png';
   }
 }
-function addDays($days, $addSabado = false, $format = "Y-m-d")
+function addDays($days, $addSabado = true, $format = "Y-m-d")
 {
   $array = [];
   if ($addSabado) {
@@ -86,9 +87,14 @@ function retrasosPrestamos()
   return $retrasos;
 }
 
-function retrasosPrestamoUser($usuario)
+function retrasosPrestamoUser($usuario, $idPrestamo = null)
 {
-  $prestamo = Prestamo::where([['user_id', $usuario], ['estado_id', 2]])->first();
+  if ($idPrestamo) {
+    $prestamo = Prestamo::where([['user_id', $usuario], ['estado_id', 2], ['id', $idPrestamo]])->first();
+  } else {
+    $prestamo = Prestamo::where([['user_id', $usuario], ['estado_id', 2]])->first();
+  }
+
   if ($prestamo) {
     $diasSemana = $prestamo->dias_por_semana;
     $fechaCreadoCarbon = Carbon::parse($prestamo->created_at)->addDays(1);
@@ -150,4 +156,59 @@ function fechaFormateada(int $level, $fecha = null)
   } else {
     return ucfirst(Carbon::now()->locale('es')->isoFormat($formato));
   }
+}
+function getDiasHabiles($fechainicio, $fechafin, $diasferiados = array())
+{
+  // Convirtiendo en timestamp las fechas
+  $fechainicio = strtotime($fechainicio);
+  $fechafin = strtotime($fechafin);
+
+  // Incremento en 1 dia
+  $diainc = 24 * 60 * 60;
+
+  // Arreglo de dias habiles, inicianlizacion
+  $diashabiles = array();
+
+  // Se recorre desde la fecha de inicio a la fecha fin, incrementando en 1 dia
+  for ($midia = $fechainicio; $midia <= $fechafin; $midia += $diainc) {
+    // Si el dia indicado, no es sabado o domingo es habil
+    if (!in_array(date('N', $midia), array(7))) { // DOC: http://www.php.net/manual/es/function.date.php
+      // Si no es un dia feriado entonces es habil
+      if (!in_array(date('Y-m-d', $midia), $diasferiados)) {
+        array_push($diashabiles, date('Y-m-d', $midia));
+      }
+    }
+  }
+
+  return $diashabiles;
+}
+function validar(array $array)
+{
+  $arrayItems=[];
+  $arrayValidacion=[];
+  $mensajesPersonalizados=[];
+  foreach($array as $key=>$val)
+  {
+    $arrayItems[$key]=$val[0];
+    $arrayValidacion[$key]=$val[1];
+    if(isset($val[2]))
+    {
+      foreach($val[2] as $llave=>$regla)
+      {
+        $mensajesPersonalizados[$llave]=$regla;
+      }
+     
+    }
+    
+  }
+  $validator = Validator::make($arrayItems,$arrayValidacion,$mensajesPersonalizados);
+  if ($validator->fails()) {
+    // dd($validator);
+    return $validator->errors()->messages();
+  }
+  else
+  {
+    return null;
+  }
+  
 }

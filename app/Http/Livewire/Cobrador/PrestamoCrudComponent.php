@@ -21,11 +21,13 @@ class PrestamoCrudComponent extends Component
         'monto_final' => 'required',
         'cuota' => 'required',
         'interes' => 'required|numeric',
-        'dias' => 'required|integer'
+        'dias' => 'required|integer',
+        'fecha_final'=>'required|date'
     ];
 
     public function updated($propertyName)
     {
+        
         $this->validateOnly($propertyName);
     }
     public function setUserId($user_id)
@@ -41,9 +43,7 @@ class PrestamoCrudComponent extends Component
     public function submit()
     {
         $array = $this->validate();
-        $array['cobrador_id']=1;
-        $array['user_id']=auth()->id();
-
+        $array['cobrador_id']=auth()->id();
         $prestamo = Prestamo::create($array);
         
         // $toast = [
@@ -57,7 +57,7 @@ class PrestamoCrudComponent extends Component
     {
         $usuarios = User::select('id', 'name', 'apellido')->where('role_id', 4)->get();
         $this->fecha_final = addDays($this->dias);
-        $this->monto_final = $this->monto_inicial + ($this->monto_inicial * ($this->interes / 100));
+        $this->monto_final = (double)$this->monto_inicial + ((double)$this->monto_inicial * ((double)$this->interes / 100));
         // dd($this->monto_final,$this->dias);
         $this->cuota = round(((double)$this->monto_final / (double)$this->dias), 1);
         return view('livewire.cobrador.prestamo-crud-component', compact('usuarios'))

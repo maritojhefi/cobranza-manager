@@ -13,7 +13,7 @@
 
 <!-- bootstrap icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- swiper carousel css -->
 {{-- <link rel="stylesheet" href="{{asset('assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css')}}"> --}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
