@@ -100,11 +100,11 @@ class User extends Authenticatable
     {
         $dias = retrasosPrestamoUser($this->id);
         if ($dias <= 10) {
-            $color = 'black';
+            $color = '#464749';
         } elseif ($dias >= 11  &&  $dias <= 20) {
-            $color = 'orange';
+            $color = '#ff9800';
         } else if ($dias > 20) {
-            $color = 'red';
+            $color = '#f2574b';
         }
         return $color;
     }

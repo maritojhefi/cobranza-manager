@@ -4,7 +4,7 @@
             <div class="row mb-3">
                 <div class="col-auto">
                     <div class="avatar avatar-44 shadow-sm rounded-10">
-                        <img src="assets/img/user4.jpg" alt="">
+                        <img src="{{asset($user->foto)}}" alt="">
                     </div>
                 </div>
                 <div class="col align-self-center ps-0">
@@ -12,7 +12,7 @@
                     <p class="text-muted small">CI: {{ $user->ci }}</p>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ route('cobrador.abono') }}" class="btn btn-default btn-44 shadow-sm">
+                    <a href="{{ route('cobrador.prestamo',['user_id'=>$user->id]) }}" class="btn btn-default btn-44 shadow-sm">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -29,8 +29,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-auto">
-                                    <div class="avatar avatar-60 shadow-sm rounded-10  text-white">
-                                        <img src="{{ asset($user->foto) }}" alt="">
+                                    <div class="avatar avatar-60 shadow-sm rounded-10">
+                                        <i class="fa fa-money-bills fs-3 text-secondary"></i>
                                     </div>
                                 </div>
                                 <div class="col align-self-center ps-0">
@@ -52,7 +52,13 @@
                             </div>
                         </div>
 
-
+                        <div class="row mx-0">
+                            <div class="col-12">
+                                <div class="progress bg-none h-5 " >
+                                    <div class="progress-bar bg-{{$prestamo->colorProgresoBar()}} " style="width: {{$prestamo->porcentajeProgreso()}}%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </a>
             @endforeach

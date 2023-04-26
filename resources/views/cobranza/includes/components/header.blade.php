@@ -13,9 +13,9 @@
                 </div>
             </div>
             <div class="col-auto">
-                <a href="notifications.html" target="_self" class="btn btn-light btn-44">
-                    <i class="bi bi-bell"></i>
-                    <span class="count-indicator"></span>
+                <a href="javascript:history.back();" target="_self" class="btn btn-light btn-44">
+                    <i class="fa fa-arrow-left"></i>
+                    {{-- <span class="count-indicator"></span> --}}
                 </a>
             </div>
         </div>

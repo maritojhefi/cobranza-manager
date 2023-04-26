@@ -112,7 +112,7 @@
     <div class="row mb-4">
         <div class="col-12 ">
             <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalAbono"
-                class="btn btn-default btn-lg shadow-sm w-100">
+                class="btn btn-primary btn-lg shadow-sm w-100">
                 Abonar
             </a>
         </div>

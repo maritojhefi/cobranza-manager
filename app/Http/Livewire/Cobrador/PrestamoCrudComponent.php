@@ -51,7 +51,7 @@ class PrestamoCrudComponent extends Component
         //     'title' => 'Prestamo creado exitosamente!'
         // ];
         // $this->emit('toastDispatch', $toast);
-        return redirect()->route('cobrador.inicio')->with('success','Prestamo creado exitosamente!');
+        return redirect()->route('cobrador.abono',['user_id'=>$this->user_id])->with('success','Prestamo creado exitosamente!');
     }
     public function render()
     {

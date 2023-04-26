@@ -204,7 +204,10 @@ function validar(array $array)
   $validator = Validator::make($arrayItems,$arrayValidacion,$mensajesPersonalizados);
   if ($validator->fails()) {
     // dd($validator);
-    return $validator->errors()->messages();
+    foreach ($validator->errors()->messages() as $key => $mensaje) {
+      return $mensaje;
+    }
+    
   }
   else
   {
