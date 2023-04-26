@@ -27,7 +27,7 @@ class AddAbonoComponent extends Component
             ],
             'fecha' => [
                 $fecha,
-                'required|date|after:'.$this->prestamo->created_at,
+                'required|date|after:' . $this->prestamo->created_at,
                 ['after' => 'La fecha no puede ser menor al dia de creacion del prestamo']
             ]
         ]);
@@ -37,10 +37,9 @@ class AddAbonoComponent extends Component
                 'fecha' => $fecha,
                 'prestamo_id' => $this->prestamo->id,
             ]);
-            $usuario=User::find($this->prestamo->user_id);
-            if($this->prestamo->dias>=$this->prestamo->abonos->count())
-            {
-                $this->prestamo->estado_id=3;
+            $usuario = User::find($this->prestamo->user_id);
+            if ($this->prestamo->abonos->count() >= $this->prestamo->dias) {
+                $this->prestamo->estado_id = 3;
                 $this->prestamo->save();
             }
             // $toast = [
@@ -48,21 +47,20 @@ class AddAbonoComponent extends Component
             //     'title' => 'Abono creado exitosamente!'
             // ];
             // $this->emit('resetModal');
-            return redirect()->route('cobrador.abono.add',$this->prestamo->id)->with('success','Abono creado exitosamente!');
+            return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('success', 'Abono creado exitosamente!');
         } else {
-            
-                $toast = [
-                    'icon' => 'error',
-                    'title' => $error
-                ];
-               
+
+            $toast = [
+                'icon' => 'error',
+                'title' => $error
+            ];
         }
         $this->emit('toastDispatch', $toast);
     }
     public function render()
     {
         $array = [];
-        $dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id,$this->prestamo->id)+1));
+        $dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
         $registros = $this->prestamo->abonos;
         foreach ($dias as $dia) {
             $fechasAbonadas = $registros->where('fecha', $dia);
