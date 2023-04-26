@@ -46,8 +46,8 @@
                                     aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <div class="mt-2">
-                                <small> {{ fechaFormateada(2, $prestamo->created_at->format('d-m-Y')) }}</small><small
-                                    class="float-end mt-1">{{ fechaFormateada(2, $prestamo->fecha_final) }}</small>
+                                <small> {{ fechaFormateada(4, $prestamo->created_at->format('d-m-Y')) }}</small><small
+                                    class="float-end mt-1">{{ fechaFormateada(4, $prestamo->fecha_final) }}</small>
 
                             </div>
 

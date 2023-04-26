@@ -126,7 +126,10 @@ class User extends Authenticatable
     {
         return $this->name . ' ' . $this->apellido;
     }
-
+    public function getPromRetrasosAttribute($value)
+    {
+        return floatval(number_format($value,1));
+    }
     public static function getCurrentUser()
     {
         return self::findOrFail(auth()->user()->id);

@@ -64,20 +64,25 @@
             <div class="card shadow-sm mb-4">
                 <ul class="list-group list-group-flush bg-none">
                     @foreach ($users as $user)
-                        <li class="list-group-item">
+                        <li class="list-group-item" >
                             <div class="row">
-                                <div class="col-3">
+                                <div onclick="location.href='{{route('cobrador.abono', ['user_id' => $user->id])}}'" class="col-2 p-1">
                                     <figure class="avatar avatar-50 "
                                         style="border: 3px solid {{ $user->color }} !important;border-radius:50%">
                                         <img src="{{ asset('/' . $user->foto) }}" alt="">
                                     </figure>
                                 </div>
-                                <div class="col-4 px-0">
-                                    <small>{{ ucwords($user->full_name) }}
-                                    </small>
+                                <div onclick="location.href='{{route('cobrador.abono', ['user_id' => $user->id])}}'" class="col-4 size-12" style="padding-left: 7px">
+                                    <strong>{{ ucwords($user->full_name) }}
+                                    </strong>
                                 </div>
-                                <div class="col-3">
-
+                                <div class="col-4 p-0">
+                                    <p class="text-muted size-10 m-0">Pendientes: {{$user->prestamosPendientes->count()}}</p>
+                                    <hr class="m-1 p-0">
+                                    <p class="text-muted size-10 m-0">Prom. Retraso:{{$user->prom_retrasos}} dias</p>
+                                    <hr class="m-1 p-0 text-success">
+                                    <p class=" text-success size-10 m-0">Deuda hoy:{{$user->prestamosPendientes->sum('cuota')}} Bs</p>
+                                    
                                 </div>
                                 <div class=" col-2 dropdown dropstart text-end">
                                     <a type="button" href="javascript:void(0);"

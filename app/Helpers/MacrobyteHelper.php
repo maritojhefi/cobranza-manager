@@ -147,6 +147,12 @@ function fechaFormateada(int $level, $fecha = null)
     case 3:
       $formato = 'dddd D \d\e MMMM \d\e\l Y';
       break;
+    case 4:
+      $formato = 'D \d\e MMMM';
+      break;
+    case 5:
+      $formato = 'D \d\e MMMM \d\e\l Y';
+      break;
     default:
       $formato = 'dddd D \d\e MMMM \d\e\l Y';
       break;
@@ -184,34 +190,25 @@ function getDiasHabiles($fechainicio, $fechafin, $diasferiados = array())
 }
 function validar(array $array)
 {
-  $arrayItems=[];
-  $arrayValidacion=[];
-  $mensajesPersonalizados=[];
-  foreach($array as $key=>$val)
-  {
-    $arrayItems[$key]=$val[0];
-    $arrayValidacion[$key]=$val[1];
-    if(isset($val[2]))
-    {
-      foreach($val[2] as $llave=>$regla)
-      {
-        $mensajesPersonalizados[$llave]=$regla;
+  $arrayItems = [];
+  $arrayValidacion = [];
+  $mensajesPersonalizados = [];
+  foreach ($array as $key => $val) {
+    $arrayItems[$key] = $val[0];
+    $arrayValidacion[$key] = $val[1];
+    if (isset($val[2])) {
+      foreach ($val[2] as $llave => $regla) {
+        $mensajesPersonalizados[$llave] = $regla;
       }
-     
     }
-    
   }
-  $validator = Validator::make($arrayItems,$arrayValidacion,$mensajesPersonalizados);
+  $validator = Validator::make($arrayItems, $arrayValidacion, $mensajesPersonalizados);
   if ($validator->fails()) {
     // dd($validator);
     foreach ($validator->errors()->messages() as $key => $mensaje) {
       return $mensaje;
     }
-    
-  }
-  else
-  {
+  } else {
     return null;
   }
-  
 }
