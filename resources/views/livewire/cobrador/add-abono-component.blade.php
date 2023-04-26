@@ -41,7 +41,7 @@
                                 </button>
                             </div>
                             <div class="progress m-2">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-{{$prestamo->colorProgresoBar()}}"
                                     style="width: {{ $prestamo->porcentajeProgreso() }}%" role="progressbar"
                                     aria-valuemin="0" aria-valuemax="100"></div>
                             </div>

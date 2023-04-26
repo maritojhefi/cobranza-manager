@@ -87,4 +87,25 @@ class Prestamo extends Model
         
         return number_format($this->abonos->count()*100/$this->dias);
     }
+    public function colorProgresoBar()
+    {
+        if($this->porcentajeProgreso()<20)
+        {
+            return 'danger';
+        }
+        else if($this->porcentajeProgreso()>=20 && $this->porcentajeProgreso()<=50)
+        {
+            return 'warning';
+        }
+        else if($this->porcentajeProgreso()>50 && $this->porcentajeProgreso()<=75)
+        {
+            return 'info';
+        }
+        else
+        {
+            return 'success';
+        }
+        
+    }
+    
 }

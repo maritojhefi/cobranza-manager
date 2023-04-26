@@ -67,20 +67,21 @@ class UserListComponent extends Component
         if($this->pendientes)
         {
             if ($this->role_id->id == 4) {
-                $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
-            } else if ($this->role_id->id == 3) {
-                $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
-            }
-            $users = $this->buscarUsuarios();
-        }
-        else
-        {
-            if ($this->role_id->id == 4) {
                 $users = User::has('prestamosPendientes')->where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
             } else if ($this->role_id->id == 3) {
                 $users = User::has('prestamosPendientes')->where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
             }
             $users = $this->buscarUsuariosPendientes();
+            
+        }
+        else
+        {
+            if ($this->role_id->id == 4) {
+                $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
+            } else if ($this->role_id->id == 3) {
+                $users = User::where('role_id', $this->role_id->id)->orderBy('created_at', 'desc')->paginate(20);
+            }
+            $users = $this->buscarUsuarios();
         }
        
         
