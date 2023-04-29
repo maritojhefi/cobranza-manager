@@ -12,10 +12,10 @@ class AbonoObserver
      * @param  \App\Models\Abono  $abono
      * @return void
      */
-    public function created(Abono $abono)
+    public function creating(Abono $abono)
     {
         
-        $abono->caja_id=getCurrentCajaId();
+        $abono->caja_id=getCurrentCajaId($abono->prestamo->cobrador_id);
     }
 
     /**

@@ -14,7 +14,7 @@ class EstadosSeeder extends Seeder
      */
     public function run()
     {
-        $array=[Estado::ESTADO_LIMPIO,Estado::ESTADO_PENDIENTE,Estado::ESTADO_FINALIZADO];
+        $array=[Estado::ESTADO_LIMPIO,Estado::ESTADO_PENDIENTE,Estado::ESTADO_FINALIZADO,Estado::ESTADO_ACTIVO];
         foreach($array as $estado)
         {
             Estado::create([

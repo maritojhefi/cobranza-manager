@@ -12,9 +12,9 @@ class Estado extends Model
     const ESTADO_PENDIENTE = "pendiente";
     const ESTADO_FINALIZADO = "finalizado";
     const ESTADO_LIMPIO = "sin prestamos";
+    const ESTADO_ACTIVO = "activo";
 
-
-
+    const ID_ACTIVO = 4;
     const ID_PENDIENTE = 2;
     const ID_FINALIZADO = 3;
     const ID_LIMPIO = 1;

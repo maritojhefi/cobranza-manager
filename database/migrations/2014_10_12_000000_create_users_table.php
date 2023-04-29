@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('role_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('estado_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('foto', 100)->nullable()->default(User::PATH_FOTO_DEFAULT);
-            $table->double('billetera')->nullable();
+            $table->double('billetera')->default(0);
             $table->string('ci', 100)->unique()->nullable();
             $table->string('telf', 100)->unique()->nullable();
             $table->string('direccion', 100)->nullable();

@@ -22,7 +22,8 @@ class Prestamo extends Model
         'dias',
         'dias_por_semana',
         'retrasos',
-        'estado_id'
+        'estado_id',
+        'caja_id'
     ];
     public function user()
     {

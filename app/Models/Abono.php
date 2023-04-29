@@ -14,7 +14,8 @@ class Abono extends Model
         'monto_abono',
         'fecha',
         'long',
-        'lat'
+        'lat',
+        'caja_id'
     ];
     public function prestamo()
     {

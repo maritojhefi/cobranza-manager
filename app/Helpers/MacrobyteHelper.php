@@ -1,10 +1,13 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Abono;
-use App\Models\CajaSemanal;
+use App\Models\Gasto;
+use App\Models\Estado;
 use App\Models\Prestamo;
+use App\Models\CajaSemanal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -213,19 +216,43 @@ function validar(array $array)
     return null;
   }
 }
-function getCurrentCajaId(int $userId)
+
+function getCurrentCajaId(int $cobradorId)
 {
-  $caja = CajaSemanal::last();
+  $fechas = startEndWeek(Carbon::now());
+  $caja = CajaSemanal::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('cobrador_id', $cobradorId)->first();
   if (!$caja) {
-    $user = User::find($userId);
-    $caja = CajaSemanal::create([
-      'fecha_inicial' => '',
-      'monto_inicial',
-      'fecha_final',
-      'monto_final',
-      'estado_id',
-      'cobrador_id'
-    ]);
+    $user = User::find($cobradorId);
+    if($user)
+    {
+      $caja = CajaSemanal::create([
+        'fecha_inicial' => $fechas[0],
+        'monto_inicial' => $user->billetera,
+        'fecha_final' => $fechas[1],
+        'estado_id' => Estado::ID_ACTIVO,
+        'cobrador_id'=> $cobradorId
+      ]);
+    }
+    else
+    {
+      return null;
+    }
   }
   return $caja->id;
+}
+function startEndWeek($date)
+{
+  $fecha = Carbon::parse($date);
+  $inicioSemana = $fecha->startOfWeek(Carbon::MONDAY)->format('Y-m-d H:i:s');
+  $finSemana = $fecha->endOfWeek(Carbon::SATURDAY)->format('Y-m-d H:i:s');
+  return [
+    $inicioSemana,
+    $finSemana,
+  ];
+}
+function getWeekRecordsGasto($fecha, $usuario)
+{
+  $fechas = startEndWeek($fecha);
+  $gastos = Gasto::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('user_id', $usuario)->get();
+  return $gastos;
 }

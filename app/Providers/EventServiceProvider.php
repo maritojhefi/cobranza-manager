@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Abono;
+use App\Models\Gasto;
+use App\Models\Prestamo;
+use App\Observers\AbonoObserver;
+use App\Observers\GastoObserver;
+use App\Observers\PrestamoObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +33,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Gasto::observe(GastoObserver::class);
+        Prestamo::observe(PrestamoObserver::class);
+        Abono::observe(AbonoObserver::class);
     }
 }

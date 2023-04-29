@@ -112,7 +112,6 @@ class UserCrudComponent extends Component
                 $this->user->foto = $rutaFoto;
             }
             $this->user->save();
-
             return redirect()->route('admin.user.list', $this->role_id)->with('success', 'Se creo el nuevo registro');
         }
     }

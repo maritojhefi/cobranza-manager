@@ -39,7 +39,7 @@ class CobradorGastoComponent extends Component
                 'descripcion' => $descripcion,
             ]);
             $this->gasto->save();
-            return redirect()->route('cobrador.list.gasto')->with('success', 'Gasto Creado!');
+            return redirect()->route('cobrador.gasto.create')->with('success', 'Gasto Creado!');
         } else {
             $toast = [
                 'icon' => 'error',

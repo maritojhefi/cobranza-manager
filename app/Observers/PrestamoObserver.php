@@ -12,9 +12,11 @@ class PrestamoObserver
      * @param  \App\Models\Prestamo  $prestamo
      * @return void
      */
-    public function created(Prestamo $prestamo)
+    public function creating(Prestamo $prestamo)
     {
-        //
+       
+        $prestamo->caja_id=getCurrentCajaId($prestamo->cobrador_id);
+       
     }
 
     /**

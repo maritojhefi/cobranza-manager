@@ -12,9 +12,9 @@ class GastoObserver
      * @param  \App\Models\Gasto  $gasto
      * @return void
      */
-    public function created(Gasto $gasto)
+    public function creating(Gasto $gasto)
     {
-        //
+        $gasto->caja_id=getCurrentCajaId($gasto->user_id);
     }
 
     /**
