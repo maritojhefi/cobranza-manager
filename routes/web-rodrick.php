@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\UserMapComponent;
 use App\Http\Livewire\Admin\UserCrudComponent;
 use App\Http\Livewire\Admin\UserListComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoComponent;
+use App\Http\Livewire\Cobrador\CobradorGastoReportComponent;
 
 Route::get('/', function () {
     return view('cobranza.tic-tac-toe');
@@ -25,8 +26,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/list/{role_id}', UserListComponent::class)->name('list');
             Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
         });
-
         Route::get('/maps/user/all', UserMapComponent::class)->name('maps.user');
+
     });
     //Rutas cobrador
     Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
@@ -35,8 +36,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
             Route::get('/pendiente/{role_id}', UserListComponent::class)->name('pendiente');
         });
-
-        Route::get('/cobrador/gasto', CobradorGastoComponent::class)->name('list.gasto');
+        Route::name('gasto.')->prefix('gasto')->group(function () {
+            Route::get('/nuevo', CobradorGastoComponent::class)->name('create');
+            Route::get('/reporte', CobradorGastoReportComponent::class)->name('report');
+        });
     });
 });
 //Rutas ajax

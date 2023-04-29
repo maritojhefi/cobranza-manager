@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Abono;
+use App\Models\Gasto;
 use App\Models\Prestamo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -211,4 +212,20 @@ function validar(array $array)
   } else {
     return null;
   }
+}
+function gastoSemana($date)
+{
+  $fecha = Carbon::parse($date);
+  $inicioSemana = $fecha->startOfWeek(Carbon::MONDAY)->format('Y-m-d H:i:s');
+  $finSemana = $fecha->endOfWeek(Carbon::SATURDAY)->format('Y-m-d H:i:s');
+  return [
+    $inicioSemana,
+    $finSemana,
+  ];
+}
+function getWeekRecordsGasto($fecha, $usuario)
+{
+  $fechas = gastoSemana($fecha);
+  $gastos = Gasto::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('user_id', $usuario)->get();
+  return $gastos;
 }

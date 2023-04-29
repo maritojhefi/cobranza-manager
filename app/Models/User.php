@@ -22,7 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     const PATH_FOTO_DEFAULT = '';
-    protected $appends = array('icono', 'retrasos', 'color','full_name');
+    protected $appends = array('icono', 'retrasos', 'color', 'full_name');
     protected $fillable = [
         'id',
         'name',
@@ -110,8 +110,7 @@ class User extends Authenticatable
     }
     public function getFotoAttribute($value)
     {
-        if($value==null || $value=='')
-        {
+        if ($value == null || $value == '') {
             return 'assets/img/person.png';
         }
         return $value;
@@ -128,10 +127,11 @@ class User extends Authenticatable
     }
     public function getPromRetrasosAttribute($value)
     {
-        return floatval(number_format($value,1));
+        return floatval(number_format($value, 1));
     }
     public static function getCurrentUser()
     {
         return self::findOrFail(auth()->user()->id);
     }
+    
 }
