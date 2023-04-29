@@ -8,7 +8,7 @@
     <title>{{ env('APP_NAME') }}</title>
 </head>
 
-<body class="body-scroll" data-page="index" unselectable="on" onselectstart="return false;" onmousedown="return false;">
+<body class="body-scroll" data-page="index">
     @include('cobranza.includes.components.loader')
     @hasSection('auth')
         @yield('auth')

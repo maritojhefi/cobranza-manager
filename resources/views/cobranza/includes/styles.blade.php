@@ -27,15 +27,12 @@
 <!-- Or for RTL support -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
 <style>
-    body{
+    span, label, small,h1,h2,h3,h4,h5,h6,strong {
         -moz-user-select: none; 
         -webkit-user-select: none; 
         -ms-user-select:none; 
         user-select:none;
         -o-user-select:none
     }
- unselectable=on
- onselectstart=return false;
- onmousedown="return false;
 </style>
 @livewireStyles
