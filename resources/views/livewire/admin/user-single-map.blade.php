@@ -1,3 +1,5 @@
+@extends('cobranza.master')
+
 @push('header')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC059fhEiwhAxE0iFJ2mDLac1HPtOWLY4Y" async defer></script>
     <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js" async defer>
@@ -11,53 +13,54 @@
         }
     </style>
 @endpush
-<div>
-    <div class="row">
-        <div class="col-12">
-            <div id="map"></div>
+@section('content')
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
-</div>
+@endsection
 @push('footer')
     <script>
         window.onload = function() {
-
-
-
-
-            var toastActualizado = document.getElementById('toast-3');
-            toastGps = new bootstrap.Toast(toastActualizado);
-            var toastErrorGps = document.getElementById('toast-4');
-            toastError = new bootstrap.Toast(toastErrorGps);
             navigator.geolocation.getCurrentPosition(function(location) {
                 var map;
                 var center = {
                     lat: location.coords.latitude,
                     lng: location.coords.longitude
                 };
+                var marker;
 
-
-
-            var marker;
-
-            function initMap() {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: center,
-                    zoom: 17,
-                    gestureHandling: 'greedy',
-                    zoomControl: false,
-                    streetViewControl: false,
-                });
-                var nombre = {!! $users->getFullNameAttribute() !!};
-                var foto = {!! $user->foto !!}
-                var telf = {!! $user->telf !!}
-                var estado = {!! $user->estado->nombre_estado !!}
-                var direccion = {!! $user->direccion !!}
-                var latitude = {!! $user->lat !!}
-                var longitude = {!! $user->long !!}
-                var icono = {!! $user->icono() !!}
-                var markers = [];
-                users.forEach((element) => {
+                function initMap() {
+                    var nombre = '{!! $user->name !!}';
+                    var id = {!! $user->id !!}
+                    var foto = '{!! $user->foto !!}'
+                    var telf = '{!! $user->telf !!}'
+                    var estado = '{!! $user->estado->nombre_estado !!}'
+                    var direccion = '{!! $user->direccion !!}'
+                    var latitude = {!! $user->lat !!}
+                    var longitude = {!! $user->long !!}
+                    var icono = '{!! $user->icono !!}'
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: {
+                            lat: latitude,
+                            lng: longitude
+                        },
+                        zoom: 17,
+                        gestureHandling: 'greedy',
+                        zoomControl: false,
+                        streetViewControl: false,
+                    });
+                    new google.maps.Marker({
+                        position: {
+                            lat: latitude,
+                            lng: longitude
+                        },
+                        map,
+                        title: "Hello World!",
+                    });
                     var rutaAbono = '{!! route('cobrador.abono') !!}'
                     var contentString =
                         "<div class=''><div class='text-center'style='display: grid; place-items: center;'>" +
@@ -78,7 +81,7 @@
                         "<div class='d-flex align-items-center justify-content-center' style='gap: 10px;'><a type='button' href='https://api.whatsapp.com/send?phone=" +
                         telf +
                         "' class='mr-2 ml-2 mt-4 btn btn-success'><i class='bi bi-whatsapp'></i></a> <a type='button' href='" +
-                        rutaAbono + "?user_id=" + element.id +
+                        rutaAbono + "?user_id=" + id +
                         "' class='mr-2 ml-2 mt-4 btn btn-danger'><i class='bi bi-card-checklist'></i></a><a type='button' href='https://www.google.com/maps/dir/?api=1&origin=" +
                         location.coords.latitude + "," + location.coords.longitude +
                         "&destination=" + latitude + "," + longitude +
@@ -91,29 +94,8 @@
                             lng: parseFloat(longitude)
                         },
                     });
-                    var marker = new google.maps.Marker({
-                        position: {
-                            lat: parseFloat(latitude),
-                            lng: parseFloat(longitude)
-                        },
-                        icon: icono
-                    });
-                    markers.push(marker);
-                    marker.addListener("click", () => {
-                        infowindow.open({
-                            anchor: marker,
-                            map,
-                        });
-                    });
-
-                });
-
-                var markerCluster = new MarkerClusterer(map, markers, {
-                    imagePath: '{{ asset('assets/images') }}/',
-                    maxZoom: 15
-                });
-            }
-               initMap();
+                }
+                initMap();
             });
         }
     </script>
