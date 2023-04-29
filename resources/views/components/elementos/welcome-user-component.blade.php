@@ -6,6 +6,6 @@
     </div>
     <div class="col align-self-center ps-0">
         <h4 class="text-color-theme"><span class="fw-normal">Hola</span>, {{infoUser('name')?infoUser('name'):'desconocido'}}</h4>
-        <p class="text-muted">Buen dia!</p>
+        <p class="text-muted">Bienvenido!</p>
     </div>
 </div>
