@@ -16,6 +16,7 @@ class CreateGastosTable extends Migration
         Schema::create('gastos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('caja_id')->constrained('caja_semanals')->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('monto')->nullable()->default(0);
             $table->string('descripcion')->nullable();
             $table->timestamps();

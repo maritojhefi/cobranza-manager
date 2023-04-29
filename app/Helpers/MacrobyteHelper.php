@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Abono;
+use App\Models\CajaSemanal;
 use App\Models\Prestamo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -211,4 +212,20 @@ function validar(array $array)
   } else {
     return null;
   }
+}
+function getCurrentCajaId(int $userId)
+{
+  $caja = CajaSemanal::last();
+  if (!$caja) {
+    $user = User::find($userId);
+    $caja = CajaSemanal::create([
+      'fecha_inicial' => '',
+      'monto_inicial',
+      'fecha_final',
+      'monto_final',
+      'estado_id',
+      'cobrador_id'
+    ]);
+  }
+  return $caja->id;
 }

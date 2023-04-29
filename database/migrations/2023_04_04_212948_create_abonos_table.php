@@ -16,6 +16,7 @@ class CreateAbonosTable extends Migration
         Schema::create('abonos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prestamo_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('caja_id')->constrained('caja_semanals')->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('monto_abono')->unsigned()->default(0);
             $table->date('fecha')->nullable();
             $table->string('lat', 100)->nullable();

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CajaSemanal;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -39,5 +40,6 @@ class UsuariosSeeder extends Seeder
             'estado_id'=>1,
             'role_id'=>1
         ]);
+        
     }
 }

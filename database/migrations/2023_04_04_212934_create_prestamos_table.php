@@ -18,6 +18,7 @@ class CreatePrestamosTable extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('cobrador_id')->constrained('users');
             $table->foreignId('estado_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('caja_id')->constrained('caja_semanals')->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('monto_inicial')->unsigned()->default(0);
             $table->decimal('monto_final')->unsigned()->default(0);
             $table->decimal('cuota')->unsigned()->default(0);

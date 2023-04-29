@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadosSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(UsuariosSeeder::class);
-        User::factory(200)->create();
-        Prestamo::factory(30)->create();
-        Abono::factory(300)->create();
+        // User::factory(200)->create();
+        // Prestamo::factory(30)->create();
+        // Abono::factory(300)->create();
         
     }
 }

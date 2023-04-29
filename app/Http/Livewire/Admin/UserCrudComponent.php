@@ -35,6 +35,10 @@ class UserCrudComponent extends Component
                 $this->billetera = 0;
             }
         }
+        if (isset($this->user_id)) {
+            $this->user = User::find($this->user_id);
+            $this->fill($this->user);
+        }
     }
     protected $rules = [
         'name' => 'required|string',
@@ -56,7 +60,9 @@ class UserCrudComponent extends Component
     }
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName);
+        if (!$this->editando) {
+            $this->validateOnly($propertyName);
+        }
     }
     public function submit()
     {
@@ -67,13 +73,20 @@ class UserCrudComponent extends Component
                 'telf' => 'required|string|unique:users,telf,' . $this->user->id,
                 'ci' => 'required|string|unique:users,ci,' . $this->user->id,
                 'direccion' => 'required|string',
-                'lat' => 'required',
-                'long' => 'required',
-                'password' => 'required',
-                'password_confirmation' => 'required|same:password',
-                'billetera' => 'required',
-                'foto' => 'nullable|image'
+                // 'lat' => 'required',
+                // 'long' => 'required',
+                // 'password' => 'required',
+                // 'password_confirmation' => 'required|same:password',
+                // 'billetera' => 'required',
+                // 'image' => 'nullable|image'
             ]);
+
+            if ($this->image) {
+                Storage::disk('publicdisk')->delete($this->user->foto);
+                $filename = time() . "." . $this->image->extension();
+                $rutaFoto = $this->image->storeAs('/profiles',  $filename, 'publicdisk');
+                $this->user->foto = $rutaFoto;
+            }
             $user = $this->user;
             $user->fill($array);
             $user->save();
@@ -105,10 +118,7 @@ class UserCrudComponent extends Component
     }
     public function render()
     {
-        if (isset($this->user_id)) {
-            $this->user = User::find($this->user_id);
-            $this->fill($this->user);
-        }
+
         return view('livewire.admin.user-crud-component')
             ->extends('cobranza.master')
             ->section('content');
