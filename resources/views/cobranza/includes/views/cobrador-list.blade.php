@@ -104,7 +104,7 @@
                                         </a>
                                     </li>
                                     <li><a class="dropdown-item" 
-                                            href="{{ route('admin.user.single.map', $user->id) }}">Ver en Mapa</a>
+                                            href="{{ route('admin.single.map', $user->id) }}">Ver en Mapa</a>
                                     </li>
                                     <li><a class="dropdown-item"
                                             href="https://api.whatsapp.com/send?phone={{ $user->telf }}">Contactar</a>

@@ -81,7 +81,7 @@ class User extends Authenticatable
     }
     public function prestamosPendientes()
     {
-        return $this->hasMany(Prestamo::class)->where('estado_id', 2);
+        return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('cobrador_id', auth()->id());
     }
 
     public function getIconoAttribute()

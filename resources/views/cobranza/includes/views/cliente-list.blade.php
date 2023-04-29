@@ -64,67 +64,106 @@
                 @foreach ($users as $user)
                     <li class="list-group-item">
                         <div class="row">
-                            <div onclick="location.href='{{ route('cobrador.abono', ['user_id' => $user->id]) }}'"
-                                class="col-2 p-1">
-                                <figure class="avatar avatar-50 "
-                                    style="border: 3px solid {{ $user->color }} !important;border-radius:50%">
-                                    <img src="{{ asset('/' . $user->foto) }}" alt="">
-                                </figure>
-                            </div>
-                            <div onclick="location.href='{{ route('cobrador.abono', ['user_id' => $user->id]) }}'"
-                                class="col-4 size-12" style="padding-left: 7px">
-                                <strong>{{ ucwords($user->full_name) }}
-                                </strong>
-                            </div>
-                            <div class="col-4 p-0">
-                                <p class="text-muted size-10 m-0">Pendientes:
-                                    {{ $user->prestamosPendientes->count() }}</p>
-                                <hr class="m-1 p-0">
-                                <p class="text-muted size-10 m-0">Prom. Retraso:{{ $user->prom_retrasos }} dias
-                                </p>
-                                <hr class="m-1 p-0 text-success">
-                                <p class=" text-success size-10 m-0">Deuda
-                                    hoy:{{ $user->prestamosPendientes->sum('cuota') }} Bs</p>
-                            </div>
-                            <div class=" col-2 dropdown dropstart text-end">
-                                <a type="button" href="javascript:void(0);"
-                                    class="btn btn-primary btn-sm text-white rounded-circle shadow-sm dropdown-toggle-split"
-                                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-gear"></i>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0);">
-                                            <strong>
-                                                <small
-                                                    class="text-center">{{ ucwords($user->name . ' ' . $user->apellido) }}</small>
-                                            </strong>
-                                        </a>
-                                    </li>
-                                    <li><a class="dropdown-item"
-                                            href="{{ route('cobrador.abono', ['user_id' => $user->id]) }}">Ver
-                                            Cuentas</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">No Pago!</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Ver en Mapa</a>
-                                    </li>
-                                    <li><a class="dropdown-item"
-                                            href="{{ url('admin/user/create/' . $user->role->id . '?editando=true&user_id=' . $user->id) }}">Editar
-                                            Datos</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Contactar</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
+                            @if ($pendientes == false)
+                                <div class="col-2 p-1">
+                                @else
+                                    <div onclick="location.href='{{ route('cobrador.abono', ['user_id' => $user->id]) }}'"
+                                        class="col-2 p-1">
+                            @endif
 
+                            <figure class="avatar avatar-50 "
+                                style="border: 3px solid {{ $user->color }} !important;border-radius:50%">
+                                <img src="{{ asset('/' . $user->foto) }}" alt="">
+                            </figure>
+                        </div>
+                        @if ($pendientes == false)
+                            <div class="col-4 size-12" style="padding-left: 7px">
+                            @else
+                                <div onclick="location.href='{{ route('cobrador.abono', ['user_id' => $user->id]) }}'"
+                                    class="col-4 size-12" style="padding-left: 7px">
+                        @endif
+
+                        <strong>{{ ucwords($user->full_name) }}
+                        </strong>
         </div>
-        <div class="row table table-responsive">
-            {{ $users->links() }}
+        <div class="col-4 p-0">
+            <p class="text-muted size-10 m-0">Pendientes:
+                {{ $user->prestamosPendientes->count() }}</p>
+            <hr class="m-1 p-0">
+            <p class="text-muted size-10 m-0">Prom. Retraso:{{ $user->prom_retrasos }} dias
+            </p>
+            <hr class="m-1 p-0 text-success">
+            <p class=" text-success size-10 m-0">Deuda
+                hoy:{{ $user->prestamosPendientes->sum('cuota') }} Bs</p>
         </div>
+
+        @if ($pendientes == true)
+            <div class=" col-2 dropdown dropstart text-end">
+                <a type="button" href="javascript:void(0);"
+                    class="btn btn-primary btn-sm text-white rounded-circle shadow-sm dropdown-toggle-split"
+                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-gear"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" href="javascript:void(0);">
+                            <strong>
+                                <small class="text-center">{{ ucwords($user->name . ' ' . $user->apellido) }}</small>
+                            </strong>
+                        </a>
+                    </li>
+                    <li><a class="dropdown-item" href="{{ route('cobrador.abono', ['user_id' => $user->id]) }}">Ver
+                            Cuentas</a>
+                    </li>
+                    {{-- <li><a class="dropdown-item" href="javascript:void(0);">No Pago!</a>
+                                    </li> --}}
+                    <li><a class="dropdown-item" href="{{ route('admin.single.map', $user->id) }}">Ver
+                            en Mapa</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                            href="https://api.whatsapp.com/send?phone={{ $user->telf }}">Contactar</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                            href="{{ url('admin/user/create/' . $user->role->id . '?editando=true&user_id=' . $user->id) }}">Editar
+                            Datos</a>
+                    </li>
+                    <li><a class="dropdown-item show_confirm" id="{{ $user->id }}">Eliminar
+                            Usuario</a>
+                    </li>
+                </ul>
+            </div>
+        @endif
+
     </div>
+    </li>
+    @endforeach
+    </ul>
+
+</div>
+<div class="row table table-responsive">
+    {{ $users->links() }}
+</div>
+</div>
+@push('footer')
+    <script type="text/javascript">
+        $('.show_confirm').click(function(event) {
+            var id = $(this).attr('id');
+            event.preventDefault();
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "Esta acción no se puede revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('eliminarUsuario', id);
+                }
+            })
+        });
+    </script>
+@endpush
 </div>

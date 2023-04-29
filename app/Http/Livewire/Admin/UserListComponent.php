@@ -65,17 +65,30 @@ class UserListComponent extends Component
     }
     public function eliminarUsuario(User $user)
     {
+        if ($user->role_id == 4) {
+            $tipo = 'cliente';
+        } elseif ($user->role_id == 3) {
+            $tipo = 'cobrador';
+        }
         try {
-            $user->delete();
-            $toast = [
-                'icon' => 'info',
-                'title' => 'Se elimino al cobrador'
-            ];
-            $this->emit('toastDispatch', $toast);
+            if ($user->prestamosPendientes->count() > 0 ) {
+                $toast = [
+                    'icon' => 'error',
+                    'title' => 'No se pudo eliminar al ' . $tipo . ', tiene prestamos pendientes'
+                ];
+                $this->emit('toastDispatch', $toast);
+            } else {
+                $user->delete();
+                $toast = [
+                    'icon' => 'info',
+                    'title' => 'Se elimino al' . $tipo
+                ];
+                $this->emit('toastDispatch', $toast);
+            }
         } catch (\Throwable $th) {
             $toast = [
                 'icon' => 'error',
-                'title' => 'No se pudo eliminar al cobrador, áun tiene deudas pendientes'
+                'title' => 'No se pudo eliminar al ' . $tipo . ', áun tiene pendientes'
             ];
             $this->emit('toastDispatch', $toast);
         }

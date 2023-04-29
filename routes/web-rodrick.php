@@ -28,6 +28,11 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::get('/maps/user/all', UserMapComponent::class)->name('maps.user');
 
+
+        Route::get('/user/map/single/{idUser}', function ($idUser) {
+            $user = User::find($idUser);
+            return view('livewire.admin.user-single-map', compact('user'));
+        })->name('single.map');
     });
     //Rutas cobrador
     Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
