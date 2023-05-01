@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\CajaSemanal;
 use App\Models\User;
 use App\Models\Prestamo;
 
@@ -20,6 +21,7 @@ class PrestamoObserver
     public function created(Prestamo $prestamo)
     {
         User::find($prestamo->cobrador_id)->decrement('billetera', $prestamo->monto_inicial);
+        CajaSemanal::find(getCurrentCaja($prestamo->cobrador_id)->id)->decrement('monto_final', $prestamo->monto_inicial);
     }
     /**
      * Handle the Prestamo "updated" event.

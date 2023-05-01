@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Abono;
+use App\Models\CajaSemanal;
 
 class AbonoObserver
 {
@@ -21,6 +22,7 @@ class AbonoObserver
     public function created(Abono $abono)
     {
         User::find($abono->prestamo->cobrador_id)->increment('billetera',$abono->monto_abono);
+        CajaSemanal::find(getCurrentCaja($abono->prestamo->cobrador_id)->id)->increment('monto_final',$abono->monto_abono);
 
     }
     /**

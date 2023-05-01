@@ -10,7 +10,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->segment(2) == 'reporte' ? 'active' : '' }}" href="{{route('cobrador.reporte')}}">
+                <a class="nav-link {{ request()->segment(2) == 'reporte' ? 'active' : '' }}" href="{{route('cobrador.reporte',getCurrentCaja(auth()->id()))}}">
                     <span>
                         <i class="nav-icon bi bi-laptop"></i>
                         <span class="nav-text">Reportes</span>

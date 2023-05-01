@@ -78,12 +78,19 @@
                                 'Nuevo' => ['cobrador.gasto.create', 'bi bi-plus'],
                                 'Historial' => ['cobrador.gasto.report', 'bi bi-cash-stack'],
                             ]">
-                            <i class="bi bi-person-circle"></i>
+                            <i class="fa fa-cart-arrow-down"></i>
+                        </x-elementos.items-sidebar>
+                        <x-elementos.items-sidebar titulo="Reportes" segmentoLink="reporte" ruta="debounce"
+                            :lista="[
+                                'Reporte de hoy' => ['cobrador.reporte', 'fa fa-calendar',getCurrentCaja(auth()->id())->id],
+                                'Historial' => ['cobrador.lista.reporte', 'fa fa-list-check'],
+                            ]">
+                            <i class="fa fa-chart-simple"></i>
                         </x-elementos.items-sidebar>
                     @endif
                     <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion"
                         ruta="extra.personalizacion" :lista="[]">
-                        <i class="bi bi-person"></i>
+                        <i class="fa fa-palette"></i>
                     </x-elementos.items-sidebar>
 
                     <x-elementos.items-sidebar titulo="Cambiar Contraseña" segmentoLink="cobrador"

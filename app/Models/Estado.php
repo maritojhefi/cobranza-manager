@@ -26,4 +26,19 @@ class Estado extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function getNombreEstadoAttribute($value)
+    {
+        return ucfirst($value);
+    }
+    public function colorEstado()
+    {
+        switch ($this->id) {
+            case 4:
+                return 'success';
+            case 2:
+                return 'warning';
+            default:
+                return 'warning';
+        }
+    }
 }

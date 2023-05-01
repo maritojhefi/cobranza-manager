@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Abono;
+use App\Models\Gasto;
+use App\Models\Prestamo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CajaSemanal extends Model
 {
@@ -16,4 +19,20 @@ class CajaSemanal extends Model
         'estado_id',
         'cobrador_id'
     ];
+    public function abonos()
+    {
+        return $this->hasMany(Abono::class,'caja_id');
+    }
+    public function prestamos()
+    {
+        return $this->hasMany(Prestamo::class,'caja_id');
+    }
+    public function gastos()
+    {
+        return $this->hasMany(Gasto::class,'caja_id');
+    }
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
+    }
 }

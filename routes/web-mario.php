@@ -6,6 +6,7 @@ use App\Http\Livewire\Cobrador\AbonoComponent;
 use App\Http\Livewire\Cobrador\AddAbonoComponent;
 use App\Http\Controllers\Cobrador\InicioController;
 use App\Http\Livewire\Cobrador\BilleteraComponent;
+use App\Http\Livewire\Cobrador\ListReporteComponent;
 use App\Http\Livewire\Cobrador\MetasComponent;
 use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 use App\Http\Livewire\Cobrador\ReporteComponent;
@@ -27,7 +28,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/abono/add/{id_prestamo}', AddAbonoComponent::class)->name('abono.add');
         Route::get('/metas', MetasComponent::class)->name('metas');
         Route::get('/billetera', BilleteraComponent::class)->name('billetera');
-        Route::get('/reporte', ReporteComponent::class)->name('reporte');
+        Route::get('/reporte/{cajaSemanal}', ReporteComponent::class)->name('reporte');
+        Route::get('/reporte/lista/all', ListReporteComponent::class)->name('lista.reporte');
     });
 });
 //Rutas ajax
