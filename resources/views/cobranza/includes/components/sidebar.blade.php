@@ -57,8 +57,9 @@
 
                     <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
                         :lista="[
-                            'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task', 3],
+                            'Lista de Cobradores' => ['admin.cobrador.list', 'fa fa-list-ol', 3],
                             'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus', 3],
+                            'Historial' => ['admin.cobrador.historial', 'fa fa-list-check'],
                         ]">
                         <i class="bi bi-person-circle"></i>
                     </x-elementos.items-sidebar>
@@ -71,11 +72,10 @@
                         <i class="bi bi-cash-coin"></i>
                     </x-elementos.items-sidebar>
 
-                    <x-elementos.items-sidebar titulo="Gastos" segmentoLink="gasto" ruta="debounce"
-                        :lista="[
-                            'Nuevo' => ['cobrador.gasto.create', 'bi bi-plus'],
-                            'Historial' => ['cobrador.gasto.report', 'bi bi-cash-stack'],
-                        ]">
+                    <x-elementos.items-sidebar titulo="Gastos" segmentoLink="gasto" ruta="debounce" :lista="[
+                        'Nuevo' => ['cobrador.gasto.create', 'bi bi-plus'],
+                        'Historial' => ['cobrador.gasto.report', 'bi bi-cash-stack'],
+                    ]">
                         <i class="bi bi-person-circle"></i>
                     </x-elementos.items-sidebar>
 
