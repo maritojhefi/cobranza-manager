@@ -161,14 +161,14 @@
                                     </div>
                                 </div>
                                 <div class="col align-self-center ps-0">
-                                    <p class="mb-0 text-color-theme size-12">{{ fechaFormateada(2, $dia->fecha) }}</p>
+                                    <p class="mb-0 text-color-theme size-10">{{ fechaFormateada(2, $dia->fecha) }}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <small class="size-12">Cobrado:</small>
+                                <div class="col-auto">
+                                    <small class="size-10">Cobrado:</small>
                                 </div>
-                                <div class="col-6 align-self-center text-end">
+                                <div class="col-auto align-self-center text-end size-12">
                                     <small
                                         class="">{{ $cajaSemanal->abonos->where('fecha', $dia->fecha)->sum('monto_abono') }}
                                         Bs</small>
@@ -176,10 +176,10 @@
                             </div>
                             <hr class="p-0 m-0">
                             <div class="row">
-                                <div class="col-6">
-                                    <small class="size-12">Prestado:</small>
+                                <div class="col-auto">
+                                    <small class="size-10">Prestado:</small>
                                 </div>
-                                <div class="col-6 align-self-center text-end">
+                                <div class="col-auto align-self-center text-end size-12">
                                     @php
                                         $date = Carbon\Carbon::parse($dia->fecha);
                                     @endphp
@@ -192,10 +192,10 @@
                             </div>
                             <hr class="p-0 m-0">
                             <div class="row">
-                                <div class="col-6">
-                                    <small class="size-12">Gastado:</small>
+                                <div class="col-auto">
+                                    <small class="size-10">Gastado:</small>
                                 </div>
-                                <div class="col-6 align-self-center text-end">
+                                <div class="col-auto align-self-center text-end size-12">
                                     @php
                                         $date = Carbon\Carbon::parse($dia->fecha);
                                     @endphp
