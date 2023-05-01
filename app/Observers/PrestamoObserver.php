@@ -18,7 +18,10 @@ class PrestamoObserver
         $prestamo->caja_id=getCurrentCaja($prestamo->cobrador_id)->id;
        
     }
+    public function created(Prestamo $prestamo)
+    {
 
+    }
     /**
      * Handle the Prestamo "updated" event.
      *

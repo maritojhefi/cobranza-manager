@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-auto">
                                 <figure class="avatar avatar-44 rounded-15">
-                                    <img src="{{ imageUser() }}" alt="">
+                                    <img src="{{ asset('').auth()->user()->foto }}" alt="">
                                 </figure>
                             </div>
                             <div class="col px-0 align-self-center">
@@ -28,7 +28,10 @@
                             </div>
                         </div>
                     </div>
+                    @if (auth()->user()->role_id==3)
                     <x-resumen-sidebar />
+                    @endif
+                    
                 </div>
             </div>
         </div>
@@ -44,8 +47,9 @@
                     @if (auth()->user()->role_id == 1)
                         <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
                             :lista="[
-                                'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task', 3],
+                                'Lista de Cobradores' => ['admin.cobrador.list', 'fa fa-list-ol', 3],
                                 'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus', 3],
+                                'Historial' => ['admin.cobrador.historial', 'fa fa-list-check'],
                             ]">
                             <i class="bi bi-person-circle"></i>
                         </x-elementos.items-sidebar>

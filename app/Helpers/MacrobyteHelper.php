@@ -244,7 +244,7 @@ function startEndWeek($date)
 {
   $fecha = Carbon::parse($date);
   $inicioSemana = $fecha->startOfWeek(Carbon::MONDAY)->format('Y-m-d H:i:s');
-  $finSemana = $fecha->endOfWeek(Carbon::SATURDAY)->format('Y-m-d H:i:s');
+  $finSemana = $fecha->endOfWeek(Carbon::SUNDAY)->format('Y-m-d H:i:s');
   return [
     $inicioSemana,
     $finSemana,
@@ -256,9 +256,17 @@ function getWeekRecordsGasto($fecha, $usuario)
   $gastos = Gasto::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('user_id', $usuario)->get();
   return $gastos;
 }
-function getAbonosToday()
+function getAbonosToday($idCobrador=null)
 {
-  $abonos=Abono::where('fecha',Carbon::today())->where('caja_id',getCurrentCaja(auth()->id())->id)->sum('monto_abono');
+  if($idCobrador)
+  {
+    $abonos=Abono::where('fecha',Carbon::today())->where('caja_id',getCurrentCaja($idCobrador)->id)->sum('monto_abono');
+  }
+  else
+  {
+    $abonos=Abono::where('fecha',Carbon::today())->sum('monto_abono');
+  }
+  
   return floatval($abonos);
 }
 
@@ -271,13 +279,39 @@ function getCobroTotalToday()
 function getCobrosRestantesToday()
 {
   
-  return getCobroTotalToday()-getAbonosToday();
+  return getCobroTotalToday()-getAbonosToday(auth()->id());
 }
-
+function getPorcentajeCobroToday()
+{
+    $total=getCobroTotalToday();
+    if($total>0)
+    {
+      $abonado=getAbonosToday(auth()->id());
+      return floatval((double)$abonado*100/(double)$total);
+    }
+    else{
+      return 0;
+    }
+   
+ 
+}
 function getAbonosUser(int $prestamoId, $fecha)
 {
   
   $abonos=Abono::where('fecha',$fecha)->where('prestamo_id',$prestamoId)->sum('monto_abono');
+  return floatval($abonos);
+}
+function getAbonosCobradorSemana(int $idCobrador,$cantidad=false)
+{
+  if($cantidad)
+  {
+    $abonos=Abono::where('caja_id',getCurrentCaja($idCobrador)->id)->count();
+  }
+  else
+  {
+    $abonos=Abono::where('caja_id',getCurrentCaja($idCobrador)->id)->sum('monto_abono');
+  }
+  
   return floatval($abonos);
 }
 function getAllAbonosUser(int $userId,$fecha)
@@ -293,4 +327,9 @@ function getAllAbonosUser(int $userId,$fecha)
    
   }
   return floatval($total);
+}
+function totalPrestadoToday()
+{
+  $prestado=Prestamo::where('created_at',Carbon::now())->sum('monto_inicial');
+  return $prestado;
 }

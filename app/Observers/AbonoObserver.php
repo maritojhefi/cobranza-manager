@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\User;
 use App\Models\Abono;
 
 class AbonoObserver
@@ -17,7 +18,11 @@ class AbonoObserver
         
         $abono->caja_id=getCurrentCaja($abono->prestamo->cobrador_id)->id;
     }
+    public function created(Abono $abono)
+    {
+        User::find($abono->prestamo->cobrador_id)->increment('billetera',$abono->monto_abono);
 
+    }
     /**
      * Handle the Abono "updated" event.
      *

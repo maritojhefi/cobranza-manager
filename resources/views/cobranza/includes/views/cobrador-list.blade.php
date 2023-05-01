@@ -106,8 +106,11 @@
                                             </strong>
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item" 
-                                            href="{{ route('admin.single.map', $user->id) }}">Ver en Mapa</a>
+                                    <li><a class="dropdown-item" href="{{ route('admin.single.map', $user->id) }}">Ver
+                                            en Mapa</a>
+                                    </li>
+                                    <li><a class="dropdown-item" id="aumento" href="javascript:void(0)"
+                                            value={{ $user->id }}>Aumentar Monto</a>
                                     </li>
                                     <li><a class="dropdown-item"
                                             href="https://api.whatsapp.com/send?phone={{ $user->telf }}">Contactar</a>
@@ -116,6 +119,11 @@
                                             href="{{ url('admin/user/create/' . $user->role->id . '?editando=true&user_id=' . $user->id) }}">Editar
                                             Datos</a>
                                     </li>
+
+                                    <li><a class="dropdown-item" id="password" href="javascript:void(0)"
+                                            value={{ $user->id }}>Cambiar Contraseña del Cobrador</a>
+                                    </li>
+
                                     <li><a class="dropdown-item show_confirm" id="{{ $user->id }}">Eliminar
                                             Cobrador</a>
                                     </li>
@@ -125,13 +133,141 @@
                     </li>
                 @endforeach
             </ul>
-
         </div>
         <div class="row table table-responsive">
             {{ $users->links() }}
         </div>
     </div>
+
+    @push('modals')
+        <div class="modal fade" id="mostrarModalPassword" tabindex="-1" aria-labelledby="mostrarModalPasswordLabel"
+            style="display: none;" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h3 class="text-color-theme mb-2">Cambio de contraseña</h3>
+                        <div class="col-12">
+                            <p class="">Se cambiara la contraseña de :</p>
+                            <div class="tabla" style="text-align: initial;">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <p class="text-color-theme user"></p>
+                                    </div>
+                                    ID :
+                                    <div class="col-auto text-end">
+                                        <p class="text-muted id-user"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-floating  mb-3">
+                                <input type="password" class="form-control" placeholder="Monto a Aumentar"
+                                    name="password" id="password-input">
+                                <label for="password">Contraseña</label>
+                            </div>
+                            <div class="form-group form-floating  mb-3">
+                                <input type="password" class="form-control" placeholder="Monto a Aumentar"
+                                    name="password" id="password-confirmation-input">
+                                <label for="password_confirmation">Confirmacion de la Contraseña</label>
+                            </div>
+                        </div>
+                        <button id="guardar-password" class="btn btn-default btn-lg w-100 btn-block">Guardar
+                            Contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalCreateAumento" tabindex="-1" aria-labelledby="modalCreateAumentoLabel"
+            style="display: none;" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h3 class="text-color-theme mb-2">Crear Aumento</h3>
+                        <div class="col-12">
+                            <p class="">Se esta incrementando el monto de dinero para :</p>
+                            <div class="tabla" style="text-align: initial;">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <p class="text-color-theme user"></p>
+                                    </div>
+                                    ID :
+                                    <div class="col-auto text-end">
+                                        <p class="text-muted id-user"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <p class="text-color-theme">Monto Actual (Bs)</p>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <p class="text-muted monto-actual"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <p class="text-color-theme">Incremento (Bs)</p>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <p class="text-muted monto-aumento"></p>
+                                    </div>
+                                </div>
+                                <div class="row mb-4 fw-medium ">
+                                    <div class="col">
+                                        <p class="text-color-theme">Total (Bs)</p>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <p class="text-muted monto-total"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-floating  mb-3">
+                                <input type="number" step="any" class="form-control" placeholder="Monto a Aumentar"
+                                    name="aumento" id="aumento-input">
+                                @error('aumento')
+                                    <span class="invalid-feedback">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                                <label for="monto">Aumento en (Bs)</label>
+                            </div>
+                        </div>
+                        <button id="guardar-aumento" class="btn btn-default btn-lg w-100 btn-block">Crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endpush
     @push('footer')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+        <script>
+            var calculoMontoDebounced = _.debounce(function() {
+                Livewire.emit('calculoMonto', $('#aumento-input').val(), $('.id-user').html());
+            }, 500);
+            $('#aumento-input').on('keyup', calculoMontoDebounced);
+            Livewire.on('montosAumento', data => {
+                $('.monto-aumento').html(data[0]);
+                $('.monto-total').html(data[1]);
+            });
+        </script>
+        <script>
+            $('#aumento').click(function() {
+                Livewire.emit('aumentoUser', $('#aumento').attr('value'));
+            });
+            Livewire.on('mostrarModalAumento', data => {
+                $('#modalCreateAumento').modal('show');
+                $('.user').html(data.name + ' ' + data.apellido);
+                $('.id-user').html(data.id);
+                $('.monto-actual').html(data.billetera);
+            });
+
+            $('#password').click(function() {
+                Livewire.emit('cambioPassword', $('#password').attr('value'));
+            });
+            Livewire.on('mostrarModalPassword', data => {
+                $('#mostrarModalPassword').modal('show');
+                $('.user').html(data.name + ' ' + data.apellido);
+                $('.id-user').html(data.id);
+            });
+        </script>
         <script type="text/javascript">
             $('.show_confirm').click(function(event) {
                 var id = $(this).attr('id');
@@ -148,6 +284,58 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Livewire.emit('eliminarUsuario', id);
+                    }
+                })
+            });
+        </script>
+        <script type="text/javascript">
+            $('#guardar-aumento').click(function(event) {
+                var id = $('.id-user').html();
+                var montoActual = $('.monto-actual').html();
+                var montoAumento = $('.monto-aumento').html();
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "Esta acción no se puede revertir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#modalCreateAumento').modal('hide');
+                        Livewire.emit('guardarAumento', id, montoActual, montoAumento);
+                        $('.monto-aumento').html(' ');
+                        $('.monto-total').html(' ');
+                        $('#aumento-input').val(' ');
+                    }
+                })
+            });
+
+
+
+            $('#guardar-password').click(function(event) {
+                var id = $('.id-user').html();
+                var password = $('#password-input').val();
+                var password_confirmation = $('#password-confirmation-input').val();
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "Esta acción no se puede revertir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#mostrarModalPassword').modal('hide');
+                        Livewire.emit('guardarPassword', id, password, password_confirmation);
+                        $('#password-input').val('');
+                        $('#password-confirmation-input').val('');
                     }
                 })
             });

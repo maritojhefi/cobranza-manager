@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\User;
 use App\Models\Gasto;
 
 class GastoObserver
@@ -16,7 +17,10 @@ class GastoObserver
     {
         $gasto->caja_id=getCurrentCaja($gasto->user_id)->id;
     }
-
+    public function created(Gasto $gasto)
+    {
+        User::find($gasto->user_id)->decrement('billetera',$gasto->monto);
+    }
     /**
      * Handle the Gasto "updated" event.
      *

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Elementos;
 
+use App\Models\User;
 use Illuminate\View\Component;
 
 class ChartTarjetasResumenComponent extends Component
@@ -23,6 +24,7 @@ class ChartTarjetasResumenComponent extends Component
      */
     public function render()
     {
-        return view('components.elementos.chart-tarjetas-resumen-component');
+        $user=User::find(auth()->id());
+        return view('components.elementos.chart-tarjetas-resumen-component',compact('user'));
     }
 }

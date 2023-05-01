@@ -1,105 +1,75 @@
 <div>
     <div class="row mb-3">
         <div class="col">
-            <h6 class="title">Cobradores</h6>
+            <h6 class="title">Cobradores recientes:</h6>
         </div>
         <div class="col-auto">
-            <a href="{{route('cobrador.user.list',3)}}" class="small">Ver todos</a>
+            <a href="{{ route('cobrador.user.list', 3) }}" class="small">Ver todos</a>
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-12 px-0">
-            <!-- swiper users connections -->
-            <div class="swiper-container connectionwiper swiper-container-initialized swiper-container-horizontal">
-                <div class="swiper-wrapper" id="swiper-wrapper-e910fa037bf1c126a" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                    <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user4.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">Nicolas</p>
-                            </div>
-                        </a>
-                    </div>
+        @foreach ($cobradores as $cobrador)
+        <div class="col-4" >
+            <a href="javascript:void(0);" class="card text-center">
+                <div class="card-body">
+                    <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
+                        <img src="{{asset($cobrador->foto)}}" alt="">
+                    </figure>
+                    <p class="text-color-theme size-12 small">{{$cobrador->name}}</p>
+                </div>
+            </a>
+        </div>
+        @endforeach
+       
 
-                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user2.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">Shelvey</p>
-                            </div>
-                        </a>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <h6 class="title">Resumen<br><small class="fw-normal text-muted">Hoy, {{fechaFormateada(2)}}</small>
+            </h6>
+        </div>
+       
+    </div>
+    <div class="col-12 px-0">
+        <ul class="list-group list-group-flush bg-none">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="avatar avatar-50 shadow rounded-10 ">
+                            <i class="bi bi-arrow-down-left-circle size-32 text-success"></i>
+                            
+                        </div>
                     </div>
-
-                    <div class="swiper-slide" role="group" aria-label="3 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user3.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">Amenda</p>
-                            </div>
-                        </a>
+                    <div class="col align-self-center ps-0">
+                        <p class="text-color-theme mb-0">Cobrado:</p>
+                        <p class="text-muted size-12">Hoy</p>
                     </div>
-
-                    <div class="swiper-slide" role="group" aria-label="4 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user1.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">RXL15</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="swiper-slide" role="group" aria-label="5 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user4.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">Nicolas</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="swiper-slide" role="group" aria-label="6 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user2.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">Shelvey</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="swiper-slide" role="group" aria-label="7 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user3.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">Amenda</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="swiper-slide" role="group" aria-label="8 / 8">
-                        <a href="profile.html" class="card text-center">
-                            <div class="card-body">
-                                <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                                    <img src="assets/img/user1.jpg" alt="">
-                                </figure>
-                                <p class="text-color-theme size-12 small">RXL15</p>
-                            </div>
-                        </a>
+                    <div class="col align-self-center text-end">
+                        <p class="mb-0">{{getAbonosToday()}} Bs</p>
+                        <p class="text-muted size-12">Entrante</p>
                     </div>
                 </div>
-            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-        </div>
+            </li>
+
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="avatar avatar-50 shadow rounded-10">
+                            <i class="bi bi-arrow-up-right-circle size-32 text-danger"></i>
+                        </div>
+                    </div>
+                    <div class="col align-self-center ps-0">
+                        <p class="text-color-theme mb-0">Prestado:</p>
+                        <p class="text-muted size-12">Hoy</p>
+                    </div>
+                    <div class="col align-self-center text-end">
+                        <p class="mb-0">{{totalPrestadoToday()}} Bs</p>
+                        <p class="text-muted size-12">Saliente</p>
+                    </div>
+                </div>
+            </li>
+
+        
+        </ul>
     </div>
 </div>

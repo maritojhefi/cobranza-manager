@@ -44,11 +44,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h4 class="fw-normal mb-2">
-                                            {{$user->prestamos}}
+                                            {{getAbonosCobradorSemana(auth()->id())}}
                                             <span class="small text-muted">Bs</span>
                                         </h4>
                                         <p class="mb-0 text-muted size-12">Cobrado</p>
-                                        <p class="text-muted size-12">Caja actual</p>
+                                        <p class="text-muted size-12">Caja semanal</p>
                                     </div>
                                 </div>
                             </div>
@@ -71,11 +71,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h4 class="fw-normal mb-2">
-                                            3452
+                                            {{getAbonosToday(auth()->id())}}
                                             <span class="small text-muted">Bs</span>
                                         </h4>
-                                        <p class="mb-0 text-muted size-12">Cuenta diaria</p>
-                                        <p class="text-muted size-12">Cobrado Hoy</p>
+                                        <p class="mb-0 text-muted size-12">Cobrado hoy</p>
+                                        <p class="text-muted size-12">Restante: {{getCobrosRestantesToday()}} Bs </p>
                                     </div>
                                 </div>
                             </div>
@@ -86,11 +86,11 @@
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-auto align-self-center">
-                                        <i class="bi bi-wallet2"></i> Pendientes Hoy
+                                        <i class="bi bi-wallet2"></i> Billetera actual:
                                     </div>
                                     <div class="col align-self-center text-end">
                                         <p class="small">
-                                            <span class="text-uppercase size-10">Validez</span><br>
+                                            <span class="text-uppercase size-10">{{date('d-m-Y')}}</span><br>
                                             <span class="text-muted">Hoy</span>
                                         </p>
                                     </div>
@@ -98,11 +98,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h4 class="fw-normal mb-2">
-                                            1045
+                                            {{auth()->user()->billetera}}
                                             <span class="small text-muted">Bs</span>
                                         </h4>
-                                        <p class="mb-0 text-muted size-12">Cuenta 1</p>
-                                        <p class="text-muted size-12">Pendientes hoy</p>
+                                        <p class="mb-0 text-muted size-12">|</p>
+                                        <p class="text-muted size-12">|</p>
                                     </div>
                                 </div>
                             </div>

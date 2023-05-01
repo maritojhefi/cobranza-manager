@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\Estado;
 use App\Models\Prestamo;
@@ -75,6 +76,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Gasto::class);
     }
+    public function gastosSemana()
+    {
+        $fechas = startEndWeek(Carbon::now());
+        return $this->hasMany(Gasto::class)->whereBetween('created_at', [$fechas[0], $fechas[1]]);
+    }
     public function prestamos()
     {
         return $this->hasMany(Prestamo::class);
@@ -82,6 +88,11 @@ class User extends Authenticatable
     public function prestamosPendientes()
     {
         return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('cobrador_id', auth()->id());
+    }
+    public function prestamosSemana()
+    {
+        $fechas = startEndWeek(Carbon::now());
+        return $this->hasMany(Prestamo::class,'cobrador_id')->where('estado_id', 2)->where('cobrador_id', auth()->id())->whereBetween('created_at', [$fechas[0], $fechas[1]]);
     }
 
     public function getIconoAttribute()
