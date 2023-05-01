@@ -291,7 +291,11 @@
                                     marker.setPosition(center);
                                     $('#latitud').val(center.lat());
                                     $('#longitud').val(center.lng());
-                                    $('#submitForm').addClass('disabled')
+                                    $('#submitForm').addClass('disabled');
+                                    var inputs = document.getElementsByTagName('input');
+                                    for (var i = 0; i < inputs.length; i++) {
+                                        inputs[i].blur();
+                                    }
                                 });
                                 map.addListener('center_changed', $.debounce(2000, function(e) {
                                     var center = map.getCenter();
