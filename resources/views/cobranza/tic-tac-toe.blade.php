@@ -807,7 +807,7 @@
         </div> <!-- end-container -->
     </div> <!-- end-wrapper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="http://benalman.com/code/projects/jquery-throttle-debounce/jquery.ba-throttle-debounce.js"></script>
+    <script src="{{asset('js/custom.js')}}"></script>
     <script type="text/javascript">
         var contador = 0;
         $('#miDiv').click(function(e) {

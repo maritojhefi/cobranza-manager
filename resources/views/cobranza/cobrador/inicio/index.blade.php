@@ -1,8 +1,12 @@
 @extends('cobranza.master')
 @section('content')
     <x-elementos.welcome-user-component />
-    @livewire('tarjeta-resumen-component')
-    <x-elementos.alert-timing-card-component />
+   
+    @if (auth()->user()->role_id == 1)
+    @livewire('admin.inicio-component', ['user' => $user])
+    @else
+    @livewire('tarjeta-resumen-component', ['user' => $user])
+    {{-- <x-elementos.alert-timing-card-component /> --}}
     <div class="row mb-4">
         <div class="col-12">
             <div class="card shadow-sm">
@@ -16,5 +20,7 @@
             </div>
         </div>
     </div>
-    <x-elementos.chart-tarjetas-resumen-component/>
+    <x-elementos.chart-tarjetas-resumen-component />
+    @endif
+    
 @endsection

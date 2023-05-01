@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cobrador\AbonoComponent;
 use App\Http\Livewire\Cobrador\AddAbonoComponent;
 use App\Http\Controllers\Cobrador\InicioController;
+use App\Http\Livewire\Cobrador\BilleteraComponent;
+use App\Http\Livewire\Cobrador\MetasComponent;
 use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
-
+use App\Http\Livewire\Cobrador\ReporteComponent;
 
 Route::get('/admin/debounce', function () {
     request()->session()->flash('success', 'Raton!');
@@ -23,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/prestamos', PrestamoCrudComponent::class)->name('prestamo');
         Route::get('/abono', AbonoComponent::class)->name('abono');
         Route::get('/abono/add/{id_prestamo}', AddAbonoComponent::class)->name('abono.add');
+        Route::get('/metas', MetasComponent::class)->name('metas');
+        Route::get('/billetera', BilleteraComponent::class)->name('billetera');
+        Route::get('/reporte', ReporteComponent::class)->name('reporte');
     });
 });
 //Rutas ajax

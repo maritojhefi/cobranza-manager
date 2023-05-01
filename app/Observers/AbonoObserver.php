@@ -15,7 +15,7 @@ class AbonoObserver
     public function creating(Abono $abono)
     {
         
-        $abono->caja_id=getCurrentCajaId($abono->prestamo->cobrador_id);
+        $abono->caja_id=getCurrentCaja($abono->prestamo->cobrador_id)->id;
     }
 
     /**

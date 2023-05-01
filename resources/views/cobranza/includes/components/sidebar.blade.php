@@ -37,12 +37,19 @@
         <div class="row">
             <div class="col-12">
                 <ul class="nav nav-pills">
-
                     <x-elementos.items-sidebar titulo="Inicio" segmentoLink="inicio" ruta="cobrador.inicio"
                         :lista="[]">
                         <i class="bi bi-list"></i>
                     </x-elementos.items-sidebar>
-
+                    @if (auth()->user()->role_id == 1)
+                        <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
+                            :lista="[
+                                'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task', 3],
+                                'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus', 3],
+                            ]">
+                            <i class="bi bi-person-circle"></i>
+                        </x-elementos.items-sidebar>
+                    @endif
                     <x-elementos.items-sidebar titulo="Clientes" segmentoLink="user" ruta="debounce" :lista="[
                         'Clientes Pendientes' => [
                             'admin.user.pendiente',
@@ -54,31 +61,22 @@
                     ]">
                         <i class="bi bi-person-circle"></i>
                     </x-elementos.items-sidebar>
-
-                    <x-elementos.items-sidebar titulo="Cobradores" segmentoLink="cobrador" ruta="debounce"
-                        :lista="[
-                            'Lista de Cobradores' => ['admin.cobrador.list', 'bi bi-list-task', 3],
-                            'Crear Nuevo' => ['admin.cobrador.create', 'bi bi-person-plus', 3],
-                        ]">
-                        <i class="bi bi-person-circle"></i>
-                    </x-elementos.items-sidebar>
-
-                    <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce"
-                        :lista="[
-                            'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
-                            'Estadisticas' => ['cobrador.prestamo', 'bi bi-card-checklist'],
-                        ]">
-                        <i class="bi bi-cash-coin"></i>
-                    </x-elementos.items-sidebar>
-
-                    <x-elementos.items-sidebar titulo="Gastos" segmentoLink="gasto" ruta="debounce"
-                        :lista="[
-                            'Nuevo' => ['cobrador.gasto.create', 'bi bi-plus'],
-                            'Historial' => ['cobrador.gasto.report', 'bi bi-cash-stack'],
-                        ]">
-                        <i class="bi bi-person-circle"></i>
-                    </x-elementos.items-sidebar>
-
+                    @if (auth()->user()->role_id == 3)
+                        <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce"
+                            :lista="[
+                                'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
+                                'Estadisticas' => ['cobrador.prestamo', 'bi bi-card-checklist'],
+                            ]">
+                            <i class="bi bi-cash-coin"></i>
+                        </x-elementos.items-sidebar>
+                        <x-elementos.items-sidebar titulo="Gastos" segmentoLink="gasto" ruta="debounce"
+                            :lista="[
+                                'Nuevo' => ['cobrador.gasto.create', 'bi bi-plus'],
+                                'Historial' => ['cobrador.gasto.report', 'bi bi-cash-stack'],
+                            ]">
+                            <i class="bi bi-person-circle"></i>
+                        </x-elementos.items-sidebar>
+                    @endif
                     <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion"
                         ruta="extra.personalizacion" :lista="[]">
                         <i class="bi bi-person"></i>

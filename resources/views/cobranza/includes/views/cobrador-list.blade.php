@@ -2,6 +2,9 @@
     <div class="col-10">
         <h4 class="mt-2 mb-2">
             Lista de {{ $role_id->nombre_rol }} ({{ $users->total() }})
+            <a href="{{route('admin.user.create',3)}}" target="_self" class="btn btn-light btn-44">
+                <i class="fa fa-user-plus"></i>
+            </a>
         </h4>
     </div>
     <div class="col-2 d-flex align-items-end justify-content-end">

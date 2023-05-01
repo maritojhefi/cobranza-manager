@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col-10">
         <h4 class="mt-2 mb-2">
-            Lista de {{ $role_id->nombre_rol }} ({{ $users->total() }})
+            Lista de {{ $role_id->nombre_rol }} ({{ $users->total() }}) 
+            <a href="{{route('admin.user.create',4)}}" target="_self" class="btn btn-light btn-44">
+                <i class="fa fa-user-plus"></i>
+            </a>
         </h4>
     </div>
     <div class="col-2 d-flex align-items-end justify-content-end">
@@ -94,7 +97,7 @@
             </p>
             <hr class="m-1 p-0 text-success">
             <p class=" text-success size-10 m-0">Deuda
-                hoy:{{ $user->prestamosPendientes->sum('cuota') }} Bs</p>
+                hoy:{{ $user->prestamosPendientes->sum('cuota')-getAllAbonosUser($user->id,date('Y-m-d')) }} Bs</p>
         </div>
 
         @if ($pendientes == true)

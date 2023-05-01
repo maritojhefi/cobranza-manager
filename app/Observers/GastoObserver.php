@@ -14,7 +14,7 @@ class GastoObserver
      */
     public function creating(Gasto $gasto)
     {
-        $gasto->caja_id=getCurrentCajaId($gasto->user_id);
+        $gasto->caja_id=getCurrentCaja($gasto->user_id)->id;
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace App\View\Components;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Abono;
 use Illuminate\View\Component;
 
 class ResumenSidebar extends Component
@@ -23,6 +26,7 @@ class ResumenSidebar extends Component
      */
     public function render()
     {
+        
         return view('components.resumen-sidebar');
     }
 }

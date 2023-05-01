@@ -37,18 +37,18 @@
                                     <div class="col align-self-center text-end">
                                         <p class="small">
                                             <span class="text-uppercase size-10">Expira</span></span><br>
-                                            <span class="text-muted">13/11</span>
+                                            <span class="text-muted">{{fechaFormateada(2,getCurrentCaja($user->id)->fecha_final)}}</span>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <h4 class="fw-normal mb-2">
-                                            4353
+                                            {{$user->prestamos}}
                                             <span class="small text-muted">Bs</span>
                                         </h4>
-                                        <p class="mb-0 text-muted size-12">Cuenta 1</p>
-                                        <p class="text-muted size-12">Cobrado esta semana</p>
+                                        <p class="mb-0 text-muted size-12">Cobrado</p>
+                                        <p class="text-muted size-12">Caja actual</p>
                                     </div>
                                 </div>
                             </div>

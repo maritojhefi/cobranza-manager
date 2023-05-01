@@ -15,7 +15,7 @@ class PrestamoObserver
     public function creating(Prestamo $prestamo)
     {
        
-        $prestamo->caja_id=getCurrentCajaId($prestamo->cobrador_id);
+        $prestamo->caja_id=getCurrentCaja($prestamo->cobrador_id)->id;
        
     }
 

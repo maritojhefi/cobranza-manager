@@ -55,6 +55,6 @@ class CobradorGastoComponent extends Component
         $this->gastoUser = Gasto::where('user_id', $user->id)->whereDate('created_at', $fechaActual)->orderBy('created_at', 'desc')->get();
         return view('livewire.cobrador.cobrador-gasto-component', compact('user', 'fechaActual'))
             ->extends('cobranza.master')
-            ->section('content');;
+            ->section('content');
     }
 }

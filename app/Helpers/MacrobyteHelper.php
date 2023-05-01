@@ -217,7 +217,7 @@ function validar(array $array)
   }
 }
 
-function getCurrentCajaId(int $cobradorId)
+function getCurrentCaja(int $cobradorId)
 {
   $fechas = startEndWeek(Carbon::now());
   $caja = CajaSemanal::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('cobrador_id', $cobradorId)->first();
@@ -238,7 +238,7 @@ function getCurrentCajaId(int $cobradorId)
       return null;
     }
   }
-  return $caja->id;
+  return $caja;
 }
 function startEndWeek($date)
 {
@@ -255,4 +255,42 @@ function getWeekRecordsGasto($fecha, $usuario)
   $fechas = startEndWeek($fecha);
   $gastos = Gasto::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('user_id', $usuario)->get();
   return $gastos;
+}
+function getAbonosToday()
+{
+  $abonos=Abono::where('fecha',Carbon::today())->where('caja_id',getCurrentCaja(auth()->id())->id)->sum('monto_abono');
+  return floatval($abonos);
+}
+
+function getCobroTotalToday()
+{
+  $sumaAbonosToday=Prestamo::where('estado_id',2)->where('caja_id',getCurrentCaja(auth()->id())->id)->sum('cuota');
+  return floatval($sumaAbonosToday);
+}
+
+function getCobrosRestantesToday()
+{
+  
+  return getCobroTotalToday()-getAbonosToday();
+}
+
+function getAbonosUser(int $prestamoId, $fecha)
+{
+  
+  $abonos=Abono::where('fecha',$fecha)->where('prestamo_id',$prestamoId)->sum('monto_abono');
+  return floatval($abonos);
+}
+function getAllAbonosUser(int $userId,$fecha)
+{
+  $total=0;
+  $prestamos=Prestamo::where('user_id',$userId)->get();
+  foreach($prestamos as $prestamo)
+  {
+    foreach($prestamo->abonos->where('fecha',$fecha) as $abono)
+    {
+      $total=$total+$abono->monto_abono;
+    }
+   
+  }
+  return floatval($total);
 }
