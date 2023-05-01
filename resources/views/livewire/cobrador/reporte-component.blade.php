@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="col align-self-center ps-0">
-                                    <p class="mb-0 text-color-theme">{{ fechaFormateada(2, $dia->fecha) }}</p>
+                                    <p class="mb-0 text-color-theme size-12">{{ fechaFormateada(2, $dia->fecha) }}</p>
                                 </div>
                             </div>
                             <div class="row">
