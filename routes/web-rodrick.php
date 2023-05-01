@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Admin\CobradorAumentoComponent;
+use App\Http\Livewire\Admin\CobradorAumentoMonto;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -25,10 +27,11 @@ Route::middleware(['auth'])->group(function () {
         Route::name('cobrador.')->prefix('cobrador')->group(function () {
             Route::get('/list/{role_id}', UserListComponent::class)->name('list');
             Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
+            Route::get('/aumento/historial', CobradorAumentoComponent::class)->name('historial');
         });
+
+
         Route::get('/maps/user/all', UserMapComponent::class)->name('maps.user');
-
-
         Route::get('/user/map/single/{idUser}', function ($idUser) {
             $user = User::find($idUser);
             return view('livewire.admin.user-single-map', compact('user'));

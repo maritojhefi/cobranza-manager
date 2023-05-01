@@ -6,6 +6,8 @@ use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\MontoCobrador;
+use Illuminate\Support\Facades\Hash;
 
 class UserListComponent extends Component
 {
@@ -14,7 +16,7 @@ class UserListComponent extends Component
     public Role $role_id;
     public $buscar, $pendientes = false;
     protected $queryString = ['buscar', 'pendientes'];
-    protected $listeners = ['eliminarUsuario' => 'eliminarUsuario'];
+    protected $listeners = ['eliminarUsuario' => 'eliminarUsuario', 'aumentoUser' => 'aumentoUser', 'calculoMonto' => 'calculoMonto', 'guardarAumento' => 'guardarAumento', 'cambioPassword' => 'cambioPassword', 'guardarPassword' => 'guardarPassword'];
     public function updatingBuscar()
     {
         $this->resetPage();
@@ -63,6 +65,108 @@ class UserListComponent extends Component
     {
         return redirect()->route('admin.maps.user');
     }
+    public function aumentoUser(User $user)
+    {
+        $this->emit('mostrarModalAumento', $user);
+    }
+    public function calculoMonto($monto, User $user)
+    {
+        $montoAumento = $monto;
+        $montoTotal = (float)$user->billetera + (float)$monto;
+        $montos = [$montoAumento, $montoTotal];
+        $this->emit('montosAumento', $montos);
+    }
+    public function guardarAumento(User $user, $montoActual, $montoAumento)
+    {
+
+
+
+
+        $error = validar([
+            'monto_aumento' => [
+                $montoAumento,
+                'required|numeric',
+                ['monto_aumento.numeric' => 'El monto debe ser unnumero']
+            ]
+        ]);
+        if (!$error) {
+            try {
+                if ($user) {
+                    $montoCobrador = MontoCobrador::create([
+                        'monto_actual' => $montoActual,
+                        'monto_aumento' => $montoAumento,
+                        'monto_total' => $montoAumento + $montoActual,
+                        'user_id' => $user->id,
+                    ]);
+                    $montoCobrador->save();
+                    $user->billetera = $montoCobrador->monto_total;
+                    $user->save();
+                    $toast = [
+                        'icon' => 'success',
+                        'title' => 'Se creo el aumento con exito'
+                    ];
+                    $this->emit('toastDispatch', $toast);
+                }
+            } catch (\Throwable $th) {
+                $toast = [
+                    'icon' => 'info',
+                    'title' => 'Ocurrio un error al intentar crear el aumento'
+                ];
+                $this->emit('toastDispatch', $toast);
+            }
+        } else {
+            $toast = [
+                'icon' => 'error',
+                'title' => $error
+            ];
+        }
+        $this->emit('toastDispatch', $toast);
+    }
+    public function guardarPassword(User $user, $password, $password_confirmation)
+    {
+        $error = validar([
+            'password' => [
+                $password,
+                'required|min:2',
+                ['password.min' => 'La contraseña debe ser mayor a 1 caracter']
+            ],
+            'password_confirmation' => [
+                $password_confirmation,
+                'required|same:password',
+                ['password_confirmation.same' => 'Las contraseñas no coinciden']
+            ]
+        ]);
+        if (!$error) {
+            try {
+                if ($user) {
+                    $user = User::find($user->id);
+                    $user->password = $password;
+                    $user->save();
+                    $toast = [
+                        'icon' => 'success',
+                        'title' => 'Se Actualizo la contraseña para el usuario exitosamente'
+                    ];
+                    $this->emit('toastDispatch', $toast);
+                }
+            } catch (\Throwable $th) {
+                $toast = [
+                    'icon' => 'info',
+                    'title' => 'No se pudo cambiar la contraseña del usuario intente nuevamente'
+                ];
+                $this->emit('toastDispatch', $toast);
+            }
+        } else {
+            $toast = [
+                'icon' => 'error',
+                'title' => $error
+            ];
+        }
+        $this->emit('toastDispatch', $toast);
+    }
+    public function cambioPassword(User $user)
+    {
+        $this->emit('mostrarModalPassword', $user);
+    }
     public function eliminarUsuario(User $user)
     {
         if ($user->role_id == 4) {
@@ -71,7 +175,7 @@ class UserListComponent extends Component
             $tipo = 'cobrador';
         }
         try {
-            if ($user->prestamosPendientes->count() > 0 ) {
+            if ($user->prestamosPendientes->count() > 0) {
                 $toast = [
                     'icon' => 'error',
                     'title' => 'No se pudo eliminar al ' . $tipo . ', tiene prestamos pendientes'
