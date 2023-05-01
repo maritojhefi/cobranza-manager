@@ -105,7 +105,7 @@ class UserListComponent extends Component
                         'icon' => 'success',
                         'title' => 'Se creo el aumento con exito'
                     ];
-                    $this->emit('toastDispatch', $toast);
+                    $this->emit('toastDispatch', $toast); 
                 }
             } catch (\Throwable $th) {
                 $toast = [
