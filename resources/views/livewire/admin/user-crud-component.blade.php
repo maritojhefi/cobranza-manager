@@ -246,8 +246,11 @@
                     });
                 }
                 initMap();
-                google.maps.event.addListener(map, 'click', function() {
-                    document.activeElement.blur();
+                document.getElementById('map').addEventListener('click', function() {
+                    var inputs = document.getElementsByTagName('input');
+                    for (var i = 0; i < inputs.length; i++) {
+                        inputs[i].blur();
+                    }
                 });
             </script>
         @else
@@ -292,13 +295,16 @@
                                     $('#latitud').val(center.lat());
                                     $('#longitud').val(center.lng());
                                     $('#submitForm').addClass('disabled')
+                                    var inputs = document.getElementsByTagName('input');
+                                    for (var i = 0; i < inputs.length; i++) {
+                                        inputs[i].blur();
+                                    }
                                 });
                                 map.addListener('center_changed', $.debounce(2000, function(e) {
                                     var center = map.getCenter();
                                     $('#submitForm').removeClass('disabled')
                                     Livewire.emit('enviarCoord', center.lat(), center
                                         .lng());
-
                                 }))
                                 $('#latitud').val(location.coords.latitude);
                                 $('#longitud').val(location.coords.longitude);
@@ -316,9 +322,6 @@
                                 });
                             }
                             initMap();
-                            google.maps.event.addListener(map, 'click', function() {
-                                document.activeElement.blur();
-                            });
                         },
                         errores);
 
@@ -331,6 +334,12 @@
                             alert("El dispositivo no pudo recuperar la posición actual");
                     }
                 };
+                document.getElementById('map').addEventListener('click', function() {
+                    var inputs = document.getElementsByTagName('input');
+                    for (var i = 0; i < inputs.length; i++) {
+                        inputs[i].blur();
+                    }
+                });
             </script>
         @endif
     @endpush
