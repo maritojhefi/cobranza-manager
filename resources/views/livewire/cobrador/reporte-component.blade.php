@@ -5,7 +5,7 @@
             <div class="card theme-bg text-white border-0 text-center">
                 <div class="card-body">
                     <h1 class="display-1 my-2">{{ ($cajaSemanal->abonos->sum('monto_abono') + $cajaSemanal->monto_inicial)-($cajaSemanal->prestamos->sum('monto_inicial') + $cajaSemanal->gastos->sum('monto')) }} Bs</h1>
-                    <p class="text-muted mb-2">Billetera actual</p>
+                    <p class="text-muted mb-2">Caja final de la semana</p>
                 </div>
             </div>
         </div>
