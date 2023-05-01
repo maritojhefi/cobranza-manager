@@ -16,7 +16,6 @@ class CobradorAumentoComponent extends Component
     public $userFiltro;
     public function selectUser($user_id)
     {
-dd($user_id);
         $this->userFiltro = MontoCobrador::where('user_id', $user_id);
     }
     public function render()
@@ -25,6 +24,6 @@ dd($user_id);
         $monto_cobrador =  MontoCobrador::orderBy('created_at', 'desc')->paginate(5);
         return view('livewire.admin.cobrador-aumento-component', compact('monto_cobrador', 'usuarios'))
             ->extends('cobranza.master')
-            ->section('content');;
+            ->section('content');
     }
 }

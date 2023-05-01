@@ -83,6 +83,11 @@
                         ruta="extra.personalizacion" :lista="[]">
                         <i class="bi bi-person"></i>
                     </x-elementos.items-sidebar>
+
+                    <x-elementos.items-sidebar titulo="Cambiar Contraseña" segmentoLink="cobrador"
+                        ruta="cobrador.reset" :lista="[]">
+                        <i class="fa fa-key"></i>
+                    </x-elementos.items-sidebar>
                 </ul>
 
             </div>

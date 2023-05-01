@@ -78,10 +78,6 @@ class UserListComponent extends Component
     }
     public function guardarAumento(User $user, $montoActual, $montoAumento)
     {
-
-
-
-
         $error = validar([
             'monto_aumento' => [
                 $montoAumento,

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Estado;
+use App\Models\MontoCobrador;
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
@@ -112,6 +113,14 @@ class UserCrudComponent extends Component
                 $this->user->foto = $rutaFoto;
             }
             $this->user->save();
+            if ($this->user->role_id == 3) {
+                MontoCobrador::create([
+                    'monto_actual' => 0,
+                    'monto_aumento' => $this->user->billetera,
+                    'monto_total' => $this->user->billetera,
+                    'user_id' => $this->user->id
+                ]);
+            }
             return redirect()->route('admin.user.list', $this->role_id)->with('success', 'Se creo el nuevo registro');
         }
     }
