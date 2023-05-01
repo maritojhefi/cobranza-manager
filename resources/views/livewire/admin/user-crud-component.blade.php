@@ -68,7 +68,6 @@
                             <label for="name">Nombre</label>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
@@ -121,42 +120,45 @@
             </div>
 
             @if ($role_id != 4)
-                <div class="col-12 col-md-6 col-lg-4 mb-3">
-                    <div class="form-group form-floating">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            placeholder="Contraseña" wire:model.debounce.750ms="password">
-                        @error('password')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                        <label class="form-control-label" for="password">Password</label>
+                @if ($editando == false)
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="form-group form-floating">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                placeholder="Contraseña" wire:model.debounce.750ms="password">
+                            @error('password')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                            <label class="form-control-label" for="password">Password</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-3">
-                    <div class="form-group form-floating">
-                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                            placeholder="Confirmacion de la contraseña"
-                            wire:model.debounce.750ms="password_confirmation">
-                        @error('password_confirmation')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                        <label class="form-control-label" for="password_confirmation">Pasword Confirmation</label>
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="form-group form-floating">
+                            <input type="password"
+                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                placeholder="Confirmacion de la contraseña"
+                                wire:model.debounce.750ms="password_confirmation">
+                            @error('password_confirmation')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                            <label class="form-control-label" for="password_confirmation">Pasword Confirmation</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-md-6 col-lg-4 mb-3">
-                    <div class="row position-relative">
-                        <div class="col-12">
-                            <div class="form-group form-floating">
-                                <input type="text" class="form-control @error('billetera') is-invalid @enderror"
-                                    wire:model.debounce.750ms="billetera" placeholder="billetera" />
-                                @error('billetera')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                                <label class="form-control-label" for="billetera">Entrada (Bs.)</label>
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="row position-relative">
+                            <div class="col-12">
+                                <div class="form-group form-floating">
+                                    <input type="text" class="form-control @error('billetera') is-invalid @enderror"
+                                        wire:model.debounce.750ms="billetera" placeholder="billetera" />
+                                    @error('billetera')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                    <label class="form-control-label" for="billetera">Entrada (Bs.)</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endif
 
             <input type="hidden" id="latitud" name="latitud" wire:model="lat">

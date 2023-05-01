@@ -10,6 +10,7 @@ use App\Http\Livewire\Admin\UserCrudComponent;
 use App\Http\Livewire\Admin\UserListComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoReportComponent;
+use App\Http\Livewire\Cobrador\ResetPasswordComponent;
 
 Route::get('/', function () {
     return view('cobranza.tic-tac-toe');
@@ -48,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/nuevo', CobradorGastoComponent::class)->name('create');
             Route::get('/reporte', CobradorGastoReportComponent::class)->name('report');
         });
+        Route::get('/change/password', ResetPasswordComponent::class)->name('reset');
     });
 });
 //Rutas ajax
