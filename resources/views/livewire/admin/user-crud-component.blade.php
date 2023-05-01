@@ -246,7 +246,7 @@
                 initMap();
                 google.maps.event.addListener(map, 'click', function() {
                     document.activeElement.blur();
-                });
+                }); 
             </script>
         @else
             <script src="http://benalman.com/code/projects/jquery-throttle-debounce/jquery.ba-throttle-debounce.js"></script>
