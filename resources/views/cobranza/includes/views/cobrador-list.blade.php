@@ -2,7 +2,7 @@
     <div class="col-10">
         <h4 class="mt-2 mb-2">
             Lista de {{ $role_id->nombre_rol }} ({{ $users->total() }})
-            <a href="{{route('admin.user.create',3)}}" target="_self" class="btn btn-light btn-44">
+            <a href="{{ route('admin.user.create', 3) }}" target="_self" class="btn btn-light btn-44">
                 <i class="fa fa-user-plus"></i>
             </a>
         </h4>
@@ -106,10 +106,11 @@
                                             </strong>
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item" href="{{ route('admin.single.map', $user->id) }}">Ver
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('admin.single.map', $user->id) }}">Ver
                                             en Mapa</a>
                                     </li>
-                                    <li><a class="dropdown-item" id="aumento" href="javascript:void(0)"
+                                    <li><a class="dropdown-item aumento" id="aumento"
                                             value={{ $user->id }}>Aumentar Monto</a>
                                     </li>
                                     <li><a class="dropdown-item"
@@ -120,7 +121,7 @@
                                             Datos</a>
                                     </li>
 
-                                    <li><a class="dropdown-item" id="password" href="javascript:void(0)"
+                                    <li><a class="dropdown-item password" id="password" href="javascript:void(0)"
                                             value={{ $user->id }}>Cambiar Contraseña del Cobrador</a>
                                     </li>
 
@@ -249,8 +250,9 @@
             });
         </script>
         <script>
-            $('#aumento').click(function() {
-                Livewire.emit('aumentoUser', $('#aumento').attr('value'));
+            $('.aumento').click(function() {
+                var value = $(this).attr('value');
+                Livewire.emit('aumentoUser', value);
             });
             Livewire.on('mostrarModalAumento', data => {
                 $('#modalCreateAumento').modal('show');
@@ -259,8 +261,9 @@
                 $('.monto-actual').html(data.billetera);
             });
 
-            $('#password').click(function() {
-                Livewire.emit('cambioPassword', $('#password').attr('value'));
+            $('.password').click(function() {
+                var value = $(this).attr('value');
+                Livewire.emit('cambioPassword', value);
             });
             Livewire.on('mostrarModalPassword', data => {
                 $('#mostrarModalPassword').modal('show');
