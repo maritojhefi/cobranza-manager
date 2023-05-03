@@ -165,13 +165,15 @@
             <input type="hidden" id="longitud" name="longitud" wire:model="long">
 
 
+            @if ($role_id == 4)
+                <div class="card card-style mb-2 map-full" data-card-height="cover-card" style="height: 450px;">
+                    <div id="map" style="width:100%;height:96%;" wire:ignore></div>
+                    <button type="button" id="como-llegar" class="como-llegar btn btn-sm btn-primary"
+                        style="position: absolute; right: 6%; bottom: 8%; z-index: 1;"> <i class="bi bi-map"></i> como
+                        llegar</button>
+                </div>
+            @endif
 
-            <div class="card card-style mb-2 map-full" data-card-height="cover-card" style="height: 450px;">
-                <div id="map" style="width:100%;height:96%;" wire:ignore></div>
-                <button type="button" id="como-llegar" class="como-llegar btn btn-sm btn-primary"
-                    style="position: absolute; right: 6%; bottom: 8%; z-index: 1;"> <i class="bi bi-map"></i> como
-                    llegar</button>
-            </div>
         </div>
         <div class="row h-100 mb-4">
             <div class="col-6 col-md-3 col-lg-2 mb-3">

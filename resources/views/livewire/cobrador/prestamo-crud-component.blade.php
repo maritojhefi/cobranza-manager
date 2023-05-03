@@ -1,30 +1,32 @@
 <div class="">
     <div class="row mb-3">
         <div class="col">
-            <h6>Creando prestamo para: <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h6>
-           
+            <h6>Creando prestamo para: <span wire:loading class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span></h6>
+
         </div>
     </div>
     <form wire:submit.prevent="submit">
         <div class="row h-100 mb-4">
 
-            <div wire:ignore class="col-12 col-md-3 col-lg-2 mb-4">
+            <div wire:ignore class="col-12 col-md-3 col-lg-2">
                 <div class="form-group form-floating mb-3">
                     <select name="" class="form-control @error('user_id') is-invalid @enderror" id="usuarios"
                         wire:model.debounce.750ms="user_id" placeholder="Usuario">
                         <option value="">Seleccione usuario</option>
                         @foreach ($usuarios as $user)
-                            <option value="{{$user->id}}">{{$user->name.' '.$user->apellido}}</option>
+                            <option value="{{ $user->id }}">{{ $user->name . ' ' . $user->apellido }}</option>
                         @endforeach
                     </select>
-                    @error('user_id')
-                        <span class="invalid-feedback">
-                            {{ $message }}
-                        </span>
-                    @enderror
                     <label for="usuarios">Usuario</label>
                 </div>
             </div>
+            @error('user_id')
+                <small class="text-danger text-center">
+                    {{ $message }}
+                </small>
+                <br>
+            @enderror
             <div class="col-6 col-md-3 col-lg-2">
                 <div class="form-group form-floating mb-3">
                     <input type="text" class="form-control @error('fecha_inicial') is-invalid @enderror"
@@ -37,6 +39,7 @@
                     <label for="fecha_inicial">Fecha</label>
                 </div>
             </div>
+
             <div class="col-6 col-md-3 col-lg-2">
                 <div class="form-group form-floating mb-3">
                     <input type="text" readonly class="form-control @error('fecha_final') is-invalid @enderror"
@@ -75,14 +78,14 @@
             </div>
             <div class="col-4 col-md-3 col-lg-2">
                 <div class="form-group form-floating mb-3">
-                    <input type="text" class="form-control @error('cuota') is-invalid @enderror" placeholder="Cuota (Bs)" readonly
-                        wire:model.debounce.750ms="cuota">
+                    <input type="text" class="form-control @error('cuota') is-invalid @enderror"
+                        placeholder="Cuota (Bs)" readonly wire:model.debounce.750ms="cuota">
                     @error('cuota')
                         <span class="invalid-feedback">
                             {{ $message }}
                         </span>
                     @enderror
-                    <label for="cuota">Cuota (Bs)</label>
+                    <label for="cuota">Cuota Bs</label>
                 </div>
             </div>
             <div class="col-4 col-md-3 col-lg-2">
@@ -128,8 +131,8 @@
             $('#usuarios').select2({
                 theme: 'bootstrap-5'
             });
-            $('#usuarios').change(function () { 
-                Livewire.emit('usuarioID',$(this).val())
+            $('#usuarios').change(function() {
+                Livewire.emit('usuarioID', $(this).val())
             });
         });
     </script>
