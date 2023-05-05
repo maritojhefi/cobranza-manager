@@ -56,7 +56,7 @@
                         $('.lista-gasto').append('<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">'+gasto.nombreDia+'</span>');
                         diaAnterior = gasto.nombreDia;
                     }
-                    $('.lista-gasto').append('<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><p class="text-color-theme mb-0 size-10">'+ ucfirst(gasto.descripcion) +'</p></div><div class="col align-self-center text-end"><p class="mb-0 size-12">'+ gasto.monto +' Bs.</p><p class="text-muted size-12">'+ moment(fecha).format('H:mm A') +'</p></div></div></li>');
+                    $('.lista-gasto').append('<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><p align="left" style="text-align: left !important;" class="text-color-theme mb-0 size-10">'+ ucfirst(gasto.descripcion) +'</p></div><div class="col align-self-center text-end"><p class="mb-0 size-12">'+ gasto.monto +' Bs.</p><p class="text-muted size-12">'+ moment(fecha).format('H:mm A') +'</p></div></div></li>');
                 });
             });
         </script>
