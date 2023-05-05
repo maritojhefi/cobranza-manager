@@ -11,7 +11,7 @@ class Gasto extends Model
 {
     use HasFactory;
 
-    protected $appends = array('nombreDia');
+    protected $appends = array('nombreDia', 'fecha');
     protected $fillable = [
         'user_id',
         'monto',
@@ -28,4 +28,9 @@ class Gasto extends Model
         $nombreDia = Carbon::parse($fecha)->locale('es')->isoFormat('dddd');
         return ucfirst($nombreDia);
     }
+    public function getFechaAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('Y-m-d');
+    }
+    
 }

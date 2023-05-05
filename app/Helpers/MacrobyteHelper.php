@@ -227,6 +227,7 @@ function getCurrentCaja(int $cobradorId)
       $caja = CajaSemanal::create([
         'fecha_inicial' => $fechas[0],
         'monto_inicial' => $user->billetera,
+        'monto_final' => $user->billetera,
         'fecha_final' => $fechas[1],
         'estado_id' => Estado::ID_ACTIVO,
         'cobrador_id' => $cobradorId
