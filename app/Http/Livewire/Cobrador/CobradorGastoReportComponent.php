@@ -22,8 +22,6 @@ class CobradorGastoReportComponent extends Component
     public function mostrarGasto($registros)
     {
         $this->emit('mostrarSemana', $registros);
-        // $url = route('cobrador.gasto.ver.semana', ['registros' => $registros]);
-        // return redirect()->to($url);
     }
 
     public function render()
