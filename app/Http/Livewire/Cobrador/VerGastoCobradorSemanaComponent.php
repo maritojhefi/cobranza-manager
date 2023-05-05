@@ -4,16 +4,19 @@ namespace App\Http\Livewire\Cobrador;
 
 use Livewire\Component;
 use App\Models\CajaSemanal;
+use App\Models\Gasto;
 
 class VerGastoCobradorSemanaComponent extends Component
 {
 
-
+    public function mostrarGasto($caja)
+    {
+        $registros = Gasto::where([['user_id', auth()->user()->id], ['caja_id', $caja]])->get();
+        $this->emit('mostrarSemana', $registros);
+    }
     public function render()
     {
         $registros = getGastosCajas(auth()->user()->id);
-
-        // dd($registros);
         $arrayCajas = [];
         foreach ($registros as $key => $value) {
             $caja = CajaSemanal::where('id', $key)->get();

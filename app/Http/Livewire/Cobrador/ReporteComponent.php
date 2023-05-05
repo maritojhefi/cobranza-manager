@@ -26,7 +26,6 @@ class ReporteComponent extends Component
             foreach ($pres as $fecha=>$valor) {
                 $this->datos[$fecha]=$valor;
             }
-            
         }
         if($this->gastos->count()>0){
             $gas=$this->gastos->groupBy('fecha');

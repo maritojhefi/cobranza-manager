@@ -54,7 +54,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script>
             Livewire.on('mostrarSemana', data => {
-console.log(data)
                 var data = $.parseJSON(data);
                 $('#modalVerGastoSemana').modal('show');
                 $('.lista-gasto').empty();
