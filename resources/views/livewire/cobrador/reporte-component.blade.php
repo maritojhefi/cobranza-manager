@@ -153,19 +153,28 @@
             $abonos=$cajaSemanal->abonos;
             $prestamos=$cajaSemanal->prestamos;
             $gastos=$cajaSemanal->gastos;
-            if(isset($abonos))
+            $datos=array();
+            if($abonos->count()>0)
             {
                 $datos=$abonos->groupBy('fecha');
             }
-            else if(isset($prestamos))
+            if($prestamos->count()>0)
             {
-                $datos=
+                $pres=$prestamos->groupBy('fecha');
+                foreach ($pres as $fecha=>$valor) {
+                    $datos[$fecha]=$valor;
+                }
+                
             }
-            else {
-                $datos=
+            if($gastos->count()>0){
+                $gas=$gastos->groupBy('fecha');
+                foreach ($gas as $fecha=>$valor) {
+                    $datos[$fecha]=$valor;
+                }
             }
+            
         @endphp
-        @foreach ($cajaSemanal->abonos->groupBy('fecha') as $dias)
+        @foreach ($datos as $dias)
             @foreach ($dias as $dia)
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card mb-4">
@@ -186,7 +195,7 @@
                                 </div>
                                 <div class="col-auto align-self-center text-end size-12">
                                     <small
-                                        class="">{{ $cajaSemanal->abonos->where('fecha', $dia->fecha)->sum('monto_abono') }}
+                                        class="">{{ $abonos->where('fecha', $dia->fecha)->sum('monto_abono') }}
                                         Bs</small>
                                 </div>
                             </div>
@@ -200,7 +209,7 @@
                                         $date = Carbon\Carbon::parse($dia->fecha);
                                     @endphp
                                     <small
-                                        class="">{{ $cajaSemanal->prestamos->filter(function ($item) use ($date) {
+                                        class="">{{ $prestamos->filter(function ($item) use ($date) {
                                                 return data_get($item, 'created_at') > $date && data_get($item, 'created_at') < $date->endOfDay();
                                             })->sum('monto_inicial') }}
                                         Bs</small>
@@ -216,7 +225,7 @@
                                         $date = Carbon\Carbon::parse($dia->fecha);
                                     @endphp
                                     <small
-                                        class="">{{ $cajaSemanal->gastos->filter(function ($item) use ($date) {
+                                        class="">{{ $gastos->filter(function ($item) use ($date) {
                                                 return data_get($item, 'created_at') > $date && data_get($item, 'created_at') < $date->endOfDay();
                                             })->sum('monto') }}
                                         Bs</small>

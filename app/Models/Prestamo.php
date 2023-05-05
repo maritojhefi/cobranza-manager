@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Prestamo extends Model
 {
     use HasFactory;
+    protected $appends = array('fecha');
     protected $fillable = [
         'user_id',
         'cobrador_id',
@@ -36,13 +37,13 @@ class Prestamo extends Model
     public function colorEstado()
     {
         switch ($this->estado_id) {
-            // case 1:
-            //     return 'success';
+                // case 1:
+                //     return 'success';
             case 2:
                 return 'warning';
             case 3:
                 return 'success';
-          
+
             default:
                 return 'primary';
         }
@@ -77,48 +78,39 @@ class Prestamo extends Model
     }
     public function cuotasRestantes()
     {
-        return $this->dias-$this->abonos->count();
+        return $this->dias - $this->abonos->count();
     }
     public function gananciaPrestamo()
     {
-        return $this->monto_final-$this->monto_inicial;
+        return $this->monto_final - $this->monto_inicial;
     }
     public function porcentajeProgreso()
     {
-        
-        return number_format($this->abonos->count()*100/$this->dias);
+
+        return number_format($this->abonos->count() * 100 / $this->dias);
     }
     public function colorProgresoBar()
     {
-        if($this->porcentajeProgreso()<20)
-        {
+        if ($this->porcentajeProgreso() < 20) {
             return 'danger';
-        }
-        else if($this->porcentajeProgreso()>=20 && $this->porcentajeProgreso()<=50)
-        {
+        } else if ($this->porcentajeProgreso() >= 20 && $this->porcentajeProgreso() <= 50) {
             return 'warning';
-        }
-        else if($this->porcentajeProgreso()>50 && $this->porcentajeProgreso()<=75)
-        {
+        } else if ($this->porcentajeProgreso() > 50 && $this->porcentajeProgreso() <= 75) {
             return 'info';
-        }
-        else
-        {
+        } else {
             return 'success';
         }
-        
     }
     public function diasFaltantes()
     {
-        if($this->fecha_final < Carbon::now())
-        {
-            return '<span class="text-danger">Expirado hace '. Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()).' dia(s)</span>';
+        if ($this->fecha_final < Carbon::now()) {
+            return '<span class="text-danger">Expirado hace ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
+        } else {
+            return '<span class="text-success">Faltan  ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
         }
-        else
-        {
-            return '<span class="text-success">Faltan  '. Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()).' dia(s)</span>';
-        }
-       
     }
-    
+    public function getFechaAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('Y-m-d');
+    }
 }
