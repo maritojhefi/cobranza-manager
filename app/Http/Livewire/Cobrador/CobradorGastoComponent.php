@@ -17,7 +17,6 @@ class CobradorGastoComponent extends Component
     }
     public function guardarGasto($monto, $descripcion)
     {
-
         $error = validar([
             'monto' => [
                 $monto,

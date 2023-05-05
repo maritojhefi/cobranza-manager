@@ -4,7 +4,9 @@
         <div class="col-12">
             <div class="card theme-bg text-white border-0 text-center">
                 <div class="card-body">
-                    <h1 class="display-1 my-2">{{ ($cajaSemanal->abonos->sum('monto_abono') + $cajaSemanal->monto_inicial)-($cajaSemanal->prestamos->sum('monto_inicial') + $cajaSemanal->gastos->sum('monto')) }} Bs</h1>
+                    <h1 class="display-1 my-2">
+                        {{ $cajaSemanal->abonos->sum('monto_abono') + $cajaSemanal->monto_inicial - ($cajaSemanal->prestamos->sum('monto_inicial') + $cajaSemanal->gastos->sum('monto')) }}
+                        Bs</h1>
                     <p class="text-muted mb-2">Caja final de la semana</p>
                 </div>
             </div>
@@ -58,12 +60,10 @@
             </div>
         </div>
     </div>
-
     <div class="row mb-3">
         <div class="col">
             <h6 class="title">Detalle:</h6>
         </div>
-
     </div>
     <div class="row mb-4">
         <div class="col-12 px-0">
@@ -79,11 +79,6 @@
                             <p class="text-color-theme mb-0">Monto de entrada</p>
                             <p class="text-muted size-12">Al iniciar la semana</p>
                         </div>
-                        <div class="col align-self-center text-end">
-                            <p class="mb-0 fw-bold">{{ $cajaSemanal->monto_inicial }} Bs</p>
-
-                        </div>
-                    </div>
                 </li>
 
                 <li class="list-group-item">
@@ -99,7 +94,7 @@
                         </div>
                         <div class="col align-self-center text-end">
                             <p class="mb-0 fw-bold">{{ $cajaSemanal->abonos->sum('monto_abono') }} Bs</p>
-                            <a href="#" class="small">Ver detalles</a>
+                            <a href="javascript:void(0)" class="small">Ver detalles</a>
                         </div>
                     </div>
                 </li>
@@ -117,11 +112,10 @@
                         </div>
                         <div class="col align-self-center text-end">
                             <p class="mb-0 fw-bold">{{ $cajaSemanal->prestamos->sum('monto_inicial') }} Bs</p>
-                            <a href="#" class="small">Ver detalles</a>
+                            <a href="javascript:void(0)" class="small">Ver detalles</a>
                         </div>
                     </div>
                 </li>
-
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-auto">
@@ -135,7 +129,7 @@
                         </div>
                         <div class="col align-self-center text-end">
                             <p class="mb-0 fw-bold">{{ $cajaSemanal->gastos->sum('monto') }} Bs</p>
-                            <a href="#" class="small">Ver detalles</a>
+                            <a href="javascript:void(0)" wire:click="gastoSemanaActual()" class="small">Ver detalles</a>
                         </div>
                     </div>
                 </li>
@@ -146,7 +140,6 @@
         <div class="col">
             <h6 class="title">Por Dias:</h6>
         </div>
-
     </div>
     <div class="row">
         @foreach ($cajaSemanal->abonos->groupBy('fecha') as $dias)
@@ -157,7 +150,7 @@
                             <div class="row mb-3">
                                 <div class="col-auto align-self-center">
                                     <div class="avatar avatar-40 bg-success text-white shadow-sm rounded-10">
-                                        <span class="size-32">{{fechaFormateada(2, $dia->fecha)[0]}}</span>
+                                        <span class="size-32">{{ fechaFormateada(2, $dia->fecha)[0] }}</span>
                                     </div>
                                 </div>
                                 <div class="col align-self-center ps-0">

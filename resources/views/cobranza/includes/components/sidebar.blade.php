@@ -76,7 +76,7 @@
                         <x-elementos.items-sidebar titulo="Gastos" segmentoLink="gasto" ruta="debounce"
                             :lista="[
                                 'Nuevo' => ['cobrador.gasto.create', 'bi bi-plus'],
-                                'Historial' => ['cobrador.gasto.report', 'bi bi-cash-stack'],
+                                'Historial' => ['cobrador.gasto.todo', 'bi bi-cash-stack'],
                             ]">
                             <i class="fa fa-cart-arrow-down"></i>
                         </x-elementos.items-sidebar>

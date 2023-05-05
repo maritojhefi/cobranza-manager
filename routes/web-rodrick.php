@@ -11,6 +11,8 @@ use App\Http\Livewire\Admin\UserListComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoReportComponent;
 use App\Http\Livewire\Cobrador\ResetPasswordComponent;
+use App\Http\Livewire\Cobrador\VerGastoCobradorSemana;
+use App\Http\Livewire\Cobrador\VerGastoCobradorSemanaComponent;
 
 Route::get('/', function () {
     return view('cobranza.tic-tac-toe');
@@ -47,7 +49,8 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::name('gasto.')->prefix('gasto')->group(function () {
             Route::get('/nuevo', CobradorGastoComponent::class)->name('create');
-            Route::get('/reporte', CobradorGastoReportComponent::class)->name('report');
+            Route::get('/reporte/{caja}', CobradorGastoReportComponent::class)->name('report');
+            Route::get('/reporte/ver/todo', VerGastoCobradorSemanaComponent::class)->name('todo');
         });
         Route::get('/change/password', ResetPasswordComponent::class)->name('reset');
     });
