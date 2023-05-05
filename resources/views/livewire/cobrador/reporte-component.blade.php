@@ -149,31 +149,6 @@
 
     </div>
     <div class="row">
-        @php
-            $abonos=$cajaSemanal->abonos;
-            $prestamos=$cajaSemanal->prestamos;
-            $gastos=$cajaSemanal->gastos;
-            $datos=array();
-            if($abonos->count()>0)
-            {
-                $datos=$abonos->groupBy('fecha');
-            }
-            if($prestamos->count()>0)
-            {
-                $pres=$prestamos->groupBy('fecha');
-                foreach ($pres as $fecha=>$valor) {
-                    $datos[$fecha]=$valor;
-                }
-                
-            }
-            if($gastos->count()>0){
-                $gas=$gastos->groupBy('fecha');
-                foreach ($gas as $fecha=>$valor) {
-                    $datos[$fecha]=$valor;
-                }
-            }
-            
-        @endphp
         @foreach ($datos as $dias)
             @foreach ($dias as $dia)
                 <div class="col-6 col-md-4 col-lg-3">
