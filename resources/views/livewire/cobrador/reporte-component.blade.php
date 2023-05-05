@@ -142,6 +142,22 @@
         </div>
     </div>
     <div class="row">
+        @php
+            $abonos=$cajaSemanal->abonos;
+            $prestamos=$cajaSemanal->prestamos;
+            $gastos=$cajaSemanal->gastos;
+            if(isset($abonos))
+            {
+                $datos=$abonos->groupBy('fecha');
+            }
+            else if(isset($prestamos))
+            {
+                $datos=
+            }
+            else {
+                $datos=
+            }
+        @endphp
         @foreach ($cajaSemanal->abonos->groupBy('fecha') as $dias)
             @foreach ($dias as $dia)
                 <div class="col-6 col-md-4 col-lg-3">

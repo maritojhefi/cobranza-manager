@@ -12,7 +12,7 @@ class ListReporteComponent extends Component
     protected $paginationTheme = 'bootstrap';
     public function render()
     {
-        $cajas=CajaSemanal::orderBy('created_at','desc')->paginate(8);
+        $cajas=CajaSemanal::orderBy('created_at','desc')->where('cobrador_id',auth()->user()->id)->paginate(8);
         return view('livewire.cobrador.list-reporte-component',compact('cajas'))
         ->extends('cobranza.master')
         ->section('content');

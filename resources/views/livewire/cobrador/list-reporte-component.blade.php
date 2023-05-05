@@ -1,7 +1,7 @@
 <div>
     <div class="row mb-3">
         <div class="col">
-            <h6 class="title">Extra Expenses</h6>
+            <h6 class="title">Listado por semanas</h6>
         </div>
         <div class="col-auto align-self-center">
 
