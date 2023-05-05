@@ -143,7 +143,6 @@
                             <label class="form-control-label" for="password_confirmation">Pasword Confirmation</label>
                         </div>
                     </div>
-
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="row position-relative">
                             <div class="col-12">
@@ -159,17 +158,13 @@
                         </div>
                     </div>
                 @endif
-            @endif
-
-            <input type="hidden" id="latitud" name="latitud" wire:model="lat">
-            <input type="hidden" id="longitud" name="longitud" wire:model="long">
-
-
-            @if ($role_id == 4)
+            @else
+                <input type="hidden" id="latitud" name="latitud" wire:model="lat">
+                <input type="hidden" id="longitud" name="longitud" wire:model="long">
                 <div class="card card-style mb-2 map-full" data-card-height="cover-card" style="height: 450px;">
                     <div id="map" style="width:100%;height:96%;" wire:ignore></div>
                     <button type="button" id="como-llegar" class="como-llegar btn btn-sm btn-primary"
-                        style="position: absolute; right: 6%; bottom: 8%; z-index: 1;"> <i class="bi bi-map"></i> como
+                        style="position: absolute; right: 6%; bottom: 8%; z-index: 1;"> <i class="bi bi-map"></i>como
                         llegar</button>
                 </div>
             @endif

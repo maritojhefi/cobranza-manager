@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Gasto extends Model
 {
     use HasFactory;
-    protected $appends = array('fecha');
+    protected $appends = array('nombreDia', 'fecha');
     protected $fillable = [
         'user_id',
         'monto',
@@ -20,6 +20,12 @@ class Gasto extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function getNombreDiaAttribute()
+    {
+        $fecha = $this->created_at;
+        $nombreDia = Carbon::parse($fecha)->locale('es')->isoFormat('dddd');
+        return ucfirst($nombreDia);
     }
     public function getFechaAttribute()
     {

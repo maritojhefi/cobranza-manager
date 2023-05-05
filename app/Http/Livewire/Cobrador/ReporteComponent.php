@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Cobrador;
 
-use App\Models\CajaSemanal;
+use Carbon\Carbon;
 use Livewire\Component;
+use App\Models\CajaSemanal;
 
 class ReporteComponent extends Component
 {
@@ -25,7 +26,6 @@ class ReporteComponent extends Component
             foreach ($pres as $fecha=>$valor) {
                 $this->datos[$fecha]=$valor;
             }
-            
         }
         if($this->gastos->count()>0){
             $gas=$this->gastos->groupBy('fecha');
@@ -33,6 +33,13 @@ class ReporteComponent extends Component
                 $this->datos[$fecha]=$valor;
             }
         }
+    }
+
+
+
+    public function gastoSemanaActual()
+    {
+        return redirect()->route('cobrador.gasto.report', getCurrentCaja(auth()->id())->id);
     }
     public function render()
     {
