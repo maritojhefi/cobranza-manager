@@ -243,10 +243,10 @@ function getGastosCajas($usuario, $caja = null)
   $user = User::find($usuario);
   if ($caja == null) {
     $cajas = CajaSemanal::where('cobrador_id', $user->id)->get();
-    $collection = collect();
+    $collection = null;
     foreach ($cajas as $item) {
       $gastos = Gasto::whereBetween('created_at', [$item->fecha_inicial, $item->fecha_final])->where([['caja_id', $item->id]])->get();
-      $collection->push($gastos);
+      $collection[$item->id] = $gastos;
     }
     return $collection;
   } else {

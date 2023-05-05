@@ -13,8 +13,13 @@ class VerGastoCobradorSemanaComponent extends Component
     {
         $registros = getGastosCajas(auth()->user()->id);
 
-dd($registros);
-        return view('livewire.cobrador.ver-gasto-cobrador-semana-component', compact('registros'))
+        // dd($registros);
+        $arrayCajas = [];
+        foreach ($registros as $key => $value) {
+            $caja = CajaSemanal::where('id', $key)->get();
+            array_push($arrayCajas, $caja);
+        }
+        return view('livewire.cobrador.ver-gasto-cobrador-semana-component', compact('registros', 'arrayCajas'))
             ->extends('cobranza.master')
             ->section('content');
     }
