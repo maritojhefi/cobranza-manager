@@ -7,11 +7,11 @@
             wire:click="mostrarGasto('{{ $registros }}')">
             <div class="card theme-bg text-white text-center">
                 <div class="card-body">
-                    <p class="text-muted">({{ date('y-m-d', strtotime($cajaSeleccionada->fecha_inicial)) }} hasta
-                        {{ date('y-m-d', strtotime($cajaSeleccionada->fecha_final)) }} ) </p>
-                    <h4 class="display-1" style="font-size: 22px;">
+                    <p class="text-muted size-12">{{ fechaFormateada(2, $cajaSeleccionada->fecha_inicial) }} -
+                        {{ fechaFormateada(2, $cajaSeleccionada->fecha_final) }} </p>
+                    <h4 class="display-1" style="font-size: 17px;">
                         {{ number_format($registros->sum('monto'), 2, ',', ' ') }} Bs.</h4>
-                    <p class="text-muted mb-2 size-12">Gasto Total de la Semana <span
+                    <p class="text-muted size-12">Gasto Total de la Semana <span
                             class="text-muted mr-2">({{ $registros->count() }}
                             gastos)</span>
                     </p>
@@ -40,9 +40,9 @@
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body text-center">
-                        <h3 class="text-color-theme mb-2">Gastos de la semana</h3>
-                        <div class="lista-gasto">
-                        </div>
+                        <h3 class="text-color-theme mb-2 size-14">Gastos de la semana</h3>
+                        <ul class="list-group list-group-flush bg-none lista-gasto">
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -53,16 +53,31 @@
     @push('footer')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script>
+            function ucfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
             Livewire.on('mostrarSemana', data => {
                 var data = $.parseJSON(data);
+                data.sort(function(a, b) {
+                    return moment(b.created_at).unix() - moment(a.created_at).unix();
+                });
                 $('#modalVerGastoSemana').modal('show');
                 $('.lista-gasto').empty();
+                var diaAnterior = null;
                 data.forEach(function(gasto, index) {
                     var fecha = gasto.created_at;
+                    if (gasto.nombreDia != diaAnterior) {
+                        $('.lista-gasto').append(
+                            '<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +
+                            gasto.nombreDia + '</span>');
+                        diaAnterior = gasto.nombreDia;
+                    }
                     $('.lista-gasto').append(
-                        '<div class="list-group list-group-flush bg-none col-12 px-0 card"><a class="list-group-item bg-theme"><div class="row"><div class="col align-self-center ps-0"><p class="size-10" style="display:grid;"><b class="size-9 mr-2">'+gasto.nombreDia+' | '+
-                        gasto.descripcion + '</b><b class=" size-10 text-muted">' + gasto.monto +
-                        ' Bs. | ' + moment(fecha).format('H:m A') + '</b></p></div></div></a></div>');
+                        '<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><p class="text-color-theme mb-0 size-10">' +
+                        ucfirst(gasto.descripcion) +
+                        '</p></div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +
+                        gasto.monto + ' Bs.</p><p class="text-muted size-12">' + moment(fecha).format(
+                            'H:mm A') + '</p></div></div></li>');
                 });
             });
         </script>
