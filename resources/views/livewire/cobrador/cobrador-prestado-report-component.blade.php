@@ -86,27 +86,12 @@
                 data.forEach(function(prestamo, index) {
                     var fecha = prestamo.created_at;
                     if (prestamo.nombreDia != diaAnterior) {
-                        $('.lista-prestamo-many').append(
-                            '<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +
-                            prestamo.nombreDia + '</span>');
-                        diaAnterior = prestamo.nombreDia;
+                        $('.lista-prestamo-many').append('<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +prestamo.nombreDia + '</span>'); diaAnterior = prestamo.nombreDia;
                     }
-                    $('.lista-prestamo-many').append(
-                        '<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><div class="avatar avatar-40 rounded-10" style="margin-right:3%;"><img src="{{ asset('') }}' +
-                        prestamo.user.foto +
-                        '" alt=""></div><div class="col align-self-center ps-0"><p align="left" style="text-align: left !important;" class="text-color-theme mb-0 size-10">' +
-                        prestamo.user.name + ' ' + prestamo.user.apellido +
-                        '</p><p align="left" style="text-align: left !important;margin-bottom: 0px;margin-top: 3px;" class="text-muted size-12"> CI : ' +
-                        prestamo.user.ci +
-                        '</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12"> Couta : ' +
-                        prestamo.cuota +
-                        ' Bs.</p>  </div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +
-                        prestamo.monto_inicial + ' Bs.</p><p class="text-muted size-12">' + moment(fecha)
-                        .format('H:mm A') + '</p></div></div></div></li>');
+                    $('.lista-prestamo-many').append('<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><div class="avatar avatar-40 rounded-10" style="margin-right:3%;"><img src="{{ asset('') }}' +prestamo.user.foto +'" alt=""></div><div class="col align-self-center ps-0"><p align="left" style="text-align: left !important;" class="text-color-theme mb-0 size-10">' +prestamo.user.name + ' ' + prestamo.user.apellido +'</p><p align="left" style="text-align: left !important;margin-bottom: 0px;margin-top: 3px;" class="text-muted size-12"> CI : ' +prestamo.user.ci +'</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12"> Couta : ' +prestamo.cuota +' Bs.</p>  </div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +prestamo.monto_inicial + ' Bs.</p><p class="text-muted size-12">' + moment(fecha).format('H:mm A') + '</p></div></div></div></li>');
                 });
             });
         </script>
-
         <script>
             function ucfirst(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
@@ -121,23 +106,9 @@
                 datas.forEach(function(prestamo, index) {
                     var fecha = prestamo.created_at;
                     if (prestamo.nombreDia != diaAnterior) {
-                        $('.lista-prestamo-single').append(
-                            '<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +
-                            prestamo.nombreDia + '</span>');
-                        diaAnterior = prestamo.nombreDia;
+                        $('.lista-prestamo-single').append('<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +prestamo.nombreDia + '</span>'); diaAnterior = prestamo.nombreDia;
                     }
-                    $('.lista-prestamo-single').append(
-                        '<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><div class="avatar avatar-40 rounded-10" style="margin-right:3%;"><img src="{{ asset('') }}' +
-                        prestamo.user.foto +
-                        '" alt=""></div><div class="col align-self-center ps-0"><p align="left" style="text-align: left !important;" class="text-color-theme mb-0 size-10">' +
-                        prestamo.user.name + ' ' + prestamo.user.apellido +
-                        '</p><p align="left" style="text-align: left !important;margin-bottom: 0px;margin-top: 3px;" class="text-muted size-12"> CI : ' +
-                        prestamo.user.ci +
-                        '</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12"> Couta : ' +
-                        prestamo.cuota +
-                        ' Bs.</p>  </div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +
-                        prestamo.monto_inicial + ' Bs.</p><p class="text-muted size-12">' + moment(fecha)
-                        .format('H:mm A') + '</p></div></div></div></li>');
+                    $('.lista-prestamo-single').append('<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><div class="avatar avatar-40 rounded-10" style="margin-right:3%;"><img src="{{ asset('') }}' +prestamo.user.foto +'" alt=""></div><div class="col align-self-center ps-0"><p align="left" style="text-align: left !important;" class="text-color-theme mb-0 size-10">' +prestamo.user.name + ' ' + prestamo.user.apellido +'</p><p align="left" style="text-align: left !important;margin-bottom: 0px;margin-top: 3px;" class="text-muted size-12"> CI : ' +prestamo.user.ci +'</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12"> Couta : ' +prestamo.cuota +' Bs.</p>  </div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +prestamo.monto_inicial + ' Bs.</p><p class="text-muted size-12">' + moment(fecha).format('H:mm A') + '</p></div></div></div></li>');
                 });
             });
         </script>
