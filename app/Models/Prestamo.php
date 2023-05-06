@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Prestamo extends Model
 {
     use HasFactory;
-    protected $appends = array('fecha');
+    protected $appends = array('fecha', 'nombreDia');
     protected $fillable = [
         'user_id',
         'cobrador_id',
@@ -112,5 +112,11 @@ class Prestamo extends Model
     public function getFechaAttribute()
     {
         return Carbon::parse($this->created_at)->format('Y-m-d');
+    }
+    public function getNombreDiaAttribute()
+    {
+        $fecha = $this->created_at;
+        $nombreDia = Carbon::parse($fecha)->locale('es')->isoFormat('dddd');
+        return ucfirst($nombreDia);
     }
 }
