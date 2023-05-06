@@ -92,7 +92,7 @@ class User extends Authenticatable
     public function prestamosSemana()
     {
         $fechas = startEndWeek(Carbon::now());
-        return $this->hasMany(Prestamo::class,'cobrador_id')->where('estado_id', 2)->where('cobrador_id', auth()->id())->whereBetween('created_at', [$fechas[0], $fechas[1]]);
+        return $this->hasMany(Prestamo::class, 'cobrador_id')->where('estado_id', 2)->where('cobrador_id', auth()->id())->whereBetween('created_at', [$fechas[0], $fechas[1]]);
     }
 
     public function getIconoAttribute()
@@ -144,5 +144,4 @@ class User extends Authenticatable
     {
         return self::findOrFail(auth()->user()->id);
     }
-    
 }

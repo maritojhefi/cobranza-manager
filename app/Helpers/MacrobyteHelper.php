@@ -257,6 +257,31 @@ function getGastosCajas($usuario, $caja = null)
   }
 }
 
+
+
+function getRegistrosPorCaja($user, $modelo, $caja = null)
+{
+  if ($caja) {
+    //dd($caja);
+    $cajas = CajaSemanal::where([['id', $caja], ['cobrador_id', $user->id]])->get();
+    //dd($cajas[0]->fecha_inicial);
+    $prestamos = $modelo->whereBetween('created_at', [$cajas[0]->fecha_inicial, $cajas[0]->fecha_final])->where('caja_id', $cajas[0]->id);
+    //dd($prestamos);   
+    return $prestamos;
+  } else {
+    $cajas = CajaSemanal::where('cobrador_id', $user->id)->get();
+    //dd($cajas);
+    $collection = null;
+    foreach ($cajas as $caja) {
+      $prestamos = $modelo->whereBetween('created_at', [$caja->fecha_inicial, $caja->fecha_final])->where('caja_id', $caja->id);
+      //dd($prestamos);     
+      $collection[$caja->id] = $prestamos;
+    }
+    //dd($collection);
+    return $collection;
+  }
+}
+
 function startEndWeek($date)
 {
   $fecha = Carbon::parse($date);

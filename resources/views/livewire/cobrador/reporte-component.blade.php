@@ -112,7 +112,7 @@
                         </div>
                         <div class="col align-self-center text-end">
                             <p class="mb-0 fw-bold">{{ $cajaSemanal->prestamos->sum('monto_inicial') }} Bs</p>
-                            <a href="javascript:void(0)" class="small">Ver detalles</a>
+                            <a href="{{route('cobrador.report', getCurrentCaja(auth()->id())->id )}}" class="small">Ver detalles</a>
                         </div>
                     </div>
                 </li>

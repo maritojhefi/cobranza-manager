@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-auto">
                                 <figure class="avatar avatar-44 rounded-15">
-                                    <img src="{{ asset('').auth()->user()->foto }}" alt="">
+                                    <img src="{{ asset('') . auth()->user()->foto }}" alt="">
                                 </figure>
                             </div>
                             <div class="col px-0 align-self-center">
@@ -28,10 +28,10 @@
                             </div>
                         </div>
                     </div>
-                    @if (auth()->user()->role_id==3)
-                    <x-resumen-sidebar />
+                    @if (auth()->user()->role_id == 3)
+                        <x-resumen-sidebar />
                     @endif
-                    
+
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@
                         <x-elementos.items-sidebar titulo="Prestamos" segmentoLink="prestamos" ruta="debounce"
                             :lista="[
                                 'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
-                                'Estadisticas' => ['cobrador.prestamo', 'bi bi-card-checklist'],
+                                'Historial' => ['cobrador.report', 'bi bi-card-checklist'],
                             ]">
                             <i class="bi bi-cash-coin"></i>
                         </x-elementos.items-sidebar>
@@ -82,7 +82,11 @@
                         </x-elementos.items-sidebar>
                         <x-elementos.items-sidebar titulo="Reportes" segmentoLink="reporte" ruta="debounce"
                             :lista="[
-                                'Reporte de hoy' => ['cobrador.reporte', 'fa fa-calendar',getCurrentCaja(auth()->id())->id],
+                                'Reporte de hoy' => [
+                                    'cobrador.reporte',
+                                    'fa fa-calendar',
+                                    getCurrentCaja(auth()->id())->id,
+                                ],
                                 'Historial' => ['cobrador.lista.reporte', 'fa fa-list-check'],
                             ]">
                             <i class="fa fa-chart-simple"></i>
@@ -93,8 +97,8 @@
                         <i class="fa fa-palette"></i>
                     </x-elementos.items-sidebar>
 
-                    <x-elementos.items-sidebar titulo="Cambiar Contraseña" segmentoLink="cobrador"
-                        ruta="cobrador.reset" :lista="[]">
+                    <x-elementos.items-sidebar titulo="Cambiar Contraseña" segmentoLink="cobrador" ruta="cobrador.reset"
+                        :lista="[]">
                         <i class="fa fa-key"></i>
                     </x-elementos.items-sidebar>
                 </ul>
