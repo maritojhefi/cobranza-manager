@@ -19,13 +19,13 @@ class CobradorPrestadoReportComponent extends Component
     }
     public function mostrarPrestamoMany($caja)
     {
-        $registros = Prestamo::with('user')->where([['cobrador_id', auth()->user()->id], ['caja_id', $caja]])->get();
-        $this->emit('mostrarSemana', $registros);
+        $registro = Prestamo::with('user')->where([['cobrador_id', auth()->user()->id], ['caja_id', $caja]])->get();
+        $this->emit('mostrarSemanaMany', $registro);
     }
     public function mostrarPrestamoSingle($registros)
     {
         // dd( json_decode($registros));
-        $this->emit('mostrarSemana', json_decode($registros));
+        $this->emit('mostrarSemanaSingle', json_decode($registros));
     }
     public function render()
     {

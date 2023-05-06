@@ -62,14 +62,12 @@
 
 
     @push('footer')
-
-        @if (!$caja)
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
             <script>
                 function ucfirst(string) {
                     return string.charAt(0).toUpperCase() + string.slice(1);
                 }
-                Livewire.on('mostrarSemana', data => {
+                Livewire.on('mostrarSemanaMany', data => {
                     $('#modalVerPrestamoSemana').modal('show');
                     $('.lista-prestamo').empty();
                     var diaAnterior = null;
@@ -96,13 +94,12 @@
                     });
                 });
             </script>
-        @else
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
             <script>
                 function ucfirst(string) {
                     return string.charAt(0).toUpperCase() + string.slice(1);
                 }
-                Livewire.on('mostrarSemana', datas => {
+                Livewire.on('mostrarSemanaSingle', datas => {
                     datas.sort(function(a, b) {
                         return moment(b.created_at).unix() - moment(a.created_at).unix();
                     });
@@ -132,7 +129,7 @@
                     });
                 });
             </script>
-        @endif
+        
     @endpush
 
 
