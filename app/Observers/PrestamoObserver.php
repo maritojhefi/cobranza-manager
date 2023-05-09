@@ -2,9 +2,10 @@
 
 namespace App\Observers;
 
-use App\Models\CajaSemanal;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Prestamo;
+use App\Models\CajaSemanal;
 
 class PrestamoObserver
 {
@@ -17,6 +18,7 @@ class PrestamoObserver
     public function creating(Prestamo $prestamo)
     {
             $prestamo->caja_id = getCurrentCaja($prestamo->cobrador_id)->id;
+            $prestamo->fecha= Carbon::parse($prestamo->created_at)->format('Y-m-d');
     }
     public function created(Prestamo $prestamo)
     {
