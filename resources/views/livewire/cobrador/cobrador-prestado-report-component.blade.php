@@ -50,8 +50,13 @@
             style="display: none;" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-body text-center">
+                    <div class="modal-header" style="border-bottom:none; margin-left: 2%;margin-top: 2%;margin-bottom: -5%;">
                         <h3 class="text-color-theme mb-2 size-14">Prestamos de la semana</h3>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="border-radius: 50%;">
+                            <i class="fa fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
                         <ul class="list-group list-group-flush bg-none lista-prestamo-many">
                         </ul>
                     </div>
@@ -62,8 +67,13 @@
             style="display: none;" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-body text-center">
+                    <div class="modal-header" style="border-bottom:none; margin-left: 2%;margin-top: 2%;margin-bottom: -5%;">
                         <h3 class="text-color-theme mb-2 size-14">Prestamos de la semana</h3>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" style="border-radius: 50%;">
+                            <i class="fa fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
                         <ul class="list-group list-group-flush bg-none lista-prestamo-single">
                         </ul>
                     </div>
@@ -95,13 +105,14 @@
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
             Livewire.on('mostrarSemanaSingle', datas => {
-                datas.sort(function(a, b) {
+                var datos = Object.values(datas);
+                datos.sort(function(a, b) {
                     return moment(b.created_at).unix() - moment(a.created_at).unix();
                 });
                 $('#modalVerPrestamoSemanaSingle').modal('show');
                 $('.lista-prestamo-single').empty();
                 var diaAnterior = null;
-                datas.forEach(function(prestamo, index) {
+                datos.forEach(function(prestamo, index) {
                     var fecha = prestamo.created_at;
                     if (prestamo.nombreDia != diaAnterior) {
                         $('.lista-prestamo-single').append('<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +prestamo.nombreDia + '</span>'); diaAnterior = prestamo.nombreDia;

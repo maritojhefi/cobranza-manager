@@ -34,13 +34,6 @@ class ReporteComponent extends Component
             }
         }
     }
-
-
-
-    public function gastoSemanaActual()
-    {
-        return redirect()->route('cobrador.gasto.report', getCurrentCaja(auth()->id())->id);
-    }
     public function render()
     {
         
