@@ -104,7 +104,7 @@ class Prestamo extends Model
     }
     public function diasFaltantes()
     {
-        if ($this->fecha_final < Carbon::now()) {
+        if (strtotime($this->fecha_final) < strtotime(Carbon::now()->format('Y-m-d'))) {
             return '<span class="text-danger">Expirado hace ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
         } else {
             return '<span class="text-success">Faltan  ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
