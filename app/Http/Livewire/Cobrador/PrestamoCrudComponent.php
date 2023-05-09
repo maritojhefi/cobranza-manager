@@ -61,7 +61,6 @@ class PrestamoCrudComponent extends Component
         $array = $this->validate();
         $array['cobrador_id']=auth()->id();
         $prestamo = Prestamo::create($array);
-        
         // $toast = [
         //     'icon' => 'success',
         //     'title' => 'Prestamo creado exitosamente!'
