@@ -316,7 +316,7 @@ function getAbonosToday($idCobrador = null)
 
 function getCobroTotalToday()
 {
-  $sumaAbonosToday = Prestamo::where('estado_id', 2)->where('caja_id', getCurrentCaja(auth()->id())->id)->where('fecha','!=',date('Y-m-d'))->sum('cuota');
+  $sumaAbonosToday = Prestamo::where('estado_id', 2)->where('caja_id', getCurrentCaja(auth()->id())->id)->where('fecha', '!=', date('Y-m-d'))->sum('cuota');
   return floatval($sumaAbonosToday);
 }
 
@@ -404,5 +404,5 @@ function diasConActividad($idCaja = null)
   $diasGastos = Gasto::where('caja_id', $caja->id)->pluck('fecha')->unique();
   $dias = $diasPrestamos->merge($diasAbonos);
   $dias = $dias->merge($diasGastos);
-  return $dias;
+  return $dias->unique();
 }
