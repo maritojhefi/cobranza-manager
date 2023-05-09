@@ -40,20 +40,17 @@
                                         <small class="size-10">{!!$prestamo->diasFaltantes()!!}</small>
                                     </div>
                                 </div>
-                                <div class="col-auto p-1">
-
-
+                                <div class="col-auto p-1 mx-2">
                                     <p class="text-muted size-12 m-0">Retrasos: {{ retrasosPrestamoUser($user->id,$prestamo->id) }} dias</p>
                                     <hr class="m-1 p-0 text-success">
                                     <p class="text-muted size-12 m-0">Cuota
                                         : {{ $prestamo->cuota }} Bs</p>
                                     <p
-                                        class="size-10 tag bg-{{ $prestamo->colorEstado() }} text-white border-{{ $prestamo->colorEstado() }} py-1 px-2 float-end mt-1">
+                                        class="size-10 tag bg-{{ $prestamo->colorEstado() }} text-white border-{{ $prestamo->colorEstado() }} py-1 px-2 float-end mt-1" style="margin-right: 20%;">
                                         {{ $prestamo->estado->nombre_estado }}</p>
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mx-0">
                             <div class="col-12">
                                 <div class="progress bg-none h-5 ">
@@ -66,9 +63,6 @@
                     </div>
                 </a>
             @endforeach
-
-
-
         </div>
     </div>
 </div>
