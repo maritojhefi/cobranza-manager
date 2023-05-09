@@ -10,7 +10,7 @@ use App\Models\Prestamo;
 
 class AddAbonoComponent extends Component
 {
-    public $prestamo, $calendario;
+    public $prestamo, $calendario,$dias;
     protected $listeners = ['saveAbono' => 'storeAbono'];
     public function mount(Prestamo $id_prestamo)
     {
@@ -27,8 +27,8 @@ class AddAbonoComponent extends Component
             ],
             'fecha' => [
                 $fecha,
-                'required|date|after:' . $this->prestamo->created_at,
-                ['after' => 'La fecha no puede ser menor al dia de creacion del prestamo']
+                'required|date|after_or_equal:' . $this->prestamo->created_at,
+                ['after_or_equal' => 'La fecha no puede ser menor o igual al dia de creacion del prestamo']
             ],
             'cantidad' => [
                 $cantidad,
@@ -36,11 +36,29 @@ class AddAbonoComponent extends Component
             ]
         ]);
         if (!$error) {
-            Abono::create([
-                'monto_abono' => $monto,
-                'fecha' => $fecha,
-                'prestamo_id' => $this->prestamo->id,
-            ]);
+            $contador=0;
+            for ($i=0; $i < $cantidad; $i++) {
+                $siExiste=Abono::where('prestamo_id',$this->prestamo->id)->where('fecha',$fecha)->first();
+                // dd(array_search($fecha,$this->dias));
+                $existeFecha=array_search($fecha,$this->dias);
+                // dd($siExiste);
+                if($existeFecha!=false && $fecha < getCurrentCaja()->fecha_final && !$siExiste)
+                {
+                    Abono::create([
+                        'monto_abono' => $monto,
+                        'fecha' => $fecha,
+                        'prestamo_id' => $this->prestamo->id,
+                    ]);
+                }
+                else
+                {
+                    $contador++;
+                }
+               $fecha=Carbon::parse($fecha)->addDay();
+            }
+               
+            
+            
             $usuario = User::find($this->prestamo->user_id);
             if ($this->prestamo->abonos->count() >= $this->prestamo->dias) {
                 $this->prestamo->estado_id = 3;
@@ -51,7 +69,15 @@ class AddAbonoComponent extends Component
             //     'title' => 'Abono creado exitosamente!'
             // ];
             // $this->emit('resetModal');
-            return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('success', 'Abono creado exitosamente!');
+            if($contador>0)
+            {
+                return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('warning', $cantidad-$contador.' abono(s) creado(s), '.$contador.' ignorados');
+            }
+            else
+            {
+                return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('success', 'Abono(s) creado(s) exitosamente!');
+
+            }
         } else {
 
             $toast = [
@@ -64,9 +90,9 @@ class AddAbonoComponent extends Component
     public function render()
     {
         $array = [];
-        $dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
+        $this->dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
         $registros = $this->prestamo->abonos;
-        foreach ($dias as $dia) {
+        foreach ($this->dias as $dia) {
             $fechasAbonadas = $registros->where('fecha', $dia);
             if ($fechasAbonadas->count() > 0) {
                 foreach ($fechasAbonadas as $abono) {

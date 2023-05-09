@@ -148,7 +148,7 @@
                             <div class="form-group form-floating  mb-3">
 
                                 <input type="number" class="form-control" placeholder="Cantidad"
-                                    id="fecha" value="1">
+                                    id="cantidad" value="1">
 
                                 <label for="descripcion">Cantidad</label>
                             </div>
@@ -176,7 +176,7 @@
         });
         $(document).ready(function() {
             $('#saveAbono').click(function() {
-                Livewire.emit('saveAbono', $('#monto').val(), $('#fecha').val())
+                Livewire.emit('saveAbono', $('#monto').val(), $('#fecha').val(),$('#cantidad').val())
 
             });
             Livewire.on('resetModal', data => {
