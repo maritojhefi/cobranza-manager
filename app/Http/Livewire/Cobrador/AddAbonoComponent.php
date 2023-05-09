@@ -56,11 +56,8 @@ class AddAbonoComponent extends Component
                 }
                $fecha=Carbon::parse($fecha)->addDay();
             }
-               
-            
-            
-            $usuario = User::find($this->prestamo->user_id);
-            if ($this->prestamo->abonos->count() >= $this->prestamo->dias) {
+            $this->prestamo=Prestamo::find($this->prestamo->id);
+            if ($this->prestamo->abonos->count() >= $this->prestamo->dias || $this->prestamo->abonos->sum('monto_abono') >= $this->prestamo->monto_final) {
                 $this->prestamo->estado_id = 3;
                 $this->prestamo->save();
             }
@@ -92,6 +89,7 @@ class AddAbonoComponent extends Component
         $array = [];
         $this->dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
         $registros = $this->prestamo->abonos;
+        $contRetrasos=0;
         foreach ($this->dias as $dia) {
             $fechasAbonadas = $registros->where('fecha', $dia);
             if ($fechasAbonadas->count() > 0) {
@@ -105,10 +103,12 @@ class AddAbonoComponent extends Component
                     array_push($array, $fecha);
                 }
             } else {
-                if ($dia >= Carbon::now()) {
+                if ($dia >= date('Y-m-d')) {
                     $titulo = 'pendiente';
                     $color = 'orange';
                 } else {
+                    
+                    $contRetrasos++;
                     $titulo = 'retraso';
                     $color = 'red';
                 }
@@ -121,7 +121,9 @@ class AddAbonoComponent extends Component
                 array_push($array, $fecha);
             }
         }
-
+       
+        $this->prestamo->retrasos=$contRetrasos;
+        $this->prestamo->save();
         $this->calendario = json_encode($array);
         return view('livewire.cobrador.add-abono-component')->section('content')->extends('cobranza.master');
     }

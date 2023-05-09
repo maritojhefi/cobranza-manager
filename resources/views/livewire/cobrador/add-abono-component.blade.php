@@ -12,7 +12,7 @@
                         <div class="col align-self-center ps-0">
                             <p class="mb-0 text-color-theme">Detalle de Prestamo: {{ $prestamo->idFolio() }}</p>
                             <p class="text-muted small">Dias de retraso:
-                                {{ retrasosPrestamoUser($prestamo->user_id, $prestamo->id) }}</p>
+                                {{ $prestamo->retrasos }}</p>
 
                         </div>
                     </div>
