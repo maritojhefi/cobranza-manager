@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     const PATH_FOTO_DEFAULT = '';
-    protected $appends = array('icono', 'retrasos', 'color', 'full_name');
+    protected $appends = array('icono', 'retrasos', 'color', 'full_name', 'prestamos_cantidad');
     protected $fillable = [
         'id',
         'name',
@@ -84,6 +84,10 @@ class User extends Authenticatable
     public function prestamos()
     {
         return $this->hasMany(Prestamo::class);
+    }
+    public function getPrestamosCantidadAttribute()
+    {
+        return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('cobrador_id', auth()->id())->count();
     }
     public function prestamosPendientes()
     {

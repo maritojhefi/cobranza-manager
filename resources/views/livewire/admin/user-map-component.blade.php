@@ -56,19 +56,17 @@
                             "<div class='text-center'>" +
                             "<img class='mb-2' style='background-repeat: no-repeat; background-position: 50%;border-radius: 50%;background-size: 100% auto;height: 74px;width: 74px;' src='{{ asset('') }}"+ element.foto  +"' alt = 'Grapefruit slice atop a pile of other slices' > " +
                             "<div class='text-center mt-3'><h5><strong class='text-primary'>" +
-                            element.name +
+                            element.name +' '+element.apellido+
                             "</strong></h5></div>" +
-                            "<div class='text-center'><small class='text-primary col-12'>(" + element
-                            .estado.nombre_estado +
-                            ")</small></div>" +
-                            "<small class='text-primary col-12'>" + element.telf +
-                            "</small>" +
-                            "<div class='text-center'><small class='text-primary col-12'>" + element
-                            .direccion +
+                            "<div class='text-center'><small class='text-primary col-12'>CI :" + element
+                            .ci +
                             "</small></div>" +
-                            +
-                            "<div class='text-center'><small class='text-danger col-12'>" + element
-                            .retrasos +
+                            "<small class='text-primary col-12'> Telf : " + element.telf +
+                            "</small>" +
+                            "<div class='text-center'><small class='text-primary col-12'> Dirección : " + element
+                            .direccion +
+                            "</small></div>" +      
+                            "<div class='text-center'><small class='text-primary col-12'>Cantidad prestamos pendientes : " + element.prestamos_cantidad+
                             "</small></div>" +
                             "</div>" +
                             "<div class='d-flex align-items-center justify-content-center' style='gap: 10px;'><a type='button' href='https://api.whatsapp.com/send?phone=" +

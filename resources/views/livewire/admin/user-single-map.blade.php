@@ -70,7 +70,7 @@
                         "<div class='text-center mt-3'><h5><strong class='text-primary'>" +
                         nombre +
                         "</strong></h5></div>" +
-                        "<div class='text-center'><small class='text-primary col-12'>(" + estado +
+                        "<div class='text-center'><small class='text-primary col-12'>(" + ci +
                         ")</small></div>" +
                         "<small class='text-primary col-12'>" + telf +
                         "</small>" +
