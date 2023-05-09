@@ -12,7 +12,7 @@ class ReporteComponent extends Component
     public function mount(CajaSemanal $cajaSemanal)
     {
         
-        
+        $this->cajaSemanal=$cajaSemanal;
         getCurrentCaja(auth()->user()->id);
        
     }
