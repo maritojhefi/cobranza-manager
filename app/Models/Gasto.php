@@ -28,9 +28,6 @@ class Gasto extends Model
         $nombreDia = Carbon::parse($fecha)->locale('es')->isoFormat('dddd');
         return ucfirst($nombreDia);
     }
-    public function setFechaAttribute()
-    {
-        return Carbon::parse($this->created_at)->format('Y-m-d');
-    }
+    
     
 }

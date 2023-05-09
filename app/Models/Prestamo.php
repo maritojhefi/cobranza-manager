@@ -110,10 +110,7 @@ class Prestamo extends Model
             return '<span class="text-success">Faltan  ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
         }
     }
-    public function setFechaAttribute()
-    {
-        return Carbon::parse($this->created_at)->format('Y-m-d');
-    }
+    
     public function getNombreDiaAttribute()
     {
         $fecha = $this->created_at;

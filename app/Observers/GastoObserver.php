@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Gasto;
 use App\Models\CajaSemanal;
@@ -17,6 +18,7 @@ class GastoObserver
     public function creating(Gasto $gasto)
     {
         $gasto->caja_id=getCurrentCaja($gasto->user_id)->id;
+        $gasto->fecha= Carbon::parse($gasto->created_at)->format('Y-m-d');
     }
     public function created(Gasto $gasto)
     {
