@@ -143,6 +143,16 @@
                                 <label for="descripcion">Fecha</label>
                             </div>
                         </div>
+
+                        <div class="col-12">
+                            <div class="form-group form-floating  mb-3">
+
+                                <input type="number" class="form-control" placeholder="Cantidad"
+                                    id="fecha" value="1">
+
+                                <label for="descripcion">Cantidad</label>
+                            </div>
+                        </div>
                         <button type="button" id="saveAbono"
                             class="btn btn-success btn-lg w-100 btn-block text-white">Crear</button>
                     </form>

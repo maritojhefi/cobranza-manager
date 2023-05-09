@@ -17,7 +17,7 @@ class AddAbonoComponent extends Component
 
         $this->prestamo = $id_prestamo;
     }
-    public function storeAbono($monto, $fecha)
+    public function storeAbono($monto, $fecha,$cantidad)
     {
         $error = validar([
             'monto' => [
@@ -29,6 +29,10 @@ class AddAbonoComponent extends Component
                 $fecha,
                 'required|date|after:' . $this->prestamo->created_at,
                 ['after' => 'La fecha no puede ser menor al dia de creacion del prestamo']
+            ],
+            'cantidad' => [
+                $cantidad,
+                'required|min:1|max:5',
             ]
         ]);
         if (!$error) {

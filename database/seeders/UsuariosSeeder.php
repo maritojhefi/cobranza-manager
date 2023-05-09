@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\CajaSemanal;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\CajaSemanal;
 use Illuminate\Database\Seeder;
 
 class UsuariosSeeder extends Seeder
@@ -39,6 +40,18 @@ class UsuariosSeeder extends Seeder
             'direccion'=>'el campo',
             'estado_id'=>1,
             'role_id'=>1
+        ]);
+        User::create([
+            'name'=>'Dina',
+            'apellido'=>'Arostegui',
+            'email'=>'dina@gmail.com',
+            'password'=>'123',
+            'foto'=>'',
+            'ci'=>'10655035',
+            'telf'=>'75142260',
+            'direccion'=>'el campo',
+            'estado_id'=>1,
+            'role_id'=>3
         ]);
         
     }
