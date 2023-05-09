@@ -16,13 +16,6 @@ class ReporteComponent extends Component
         getCurrentCaja(auth()->user()->id);
        
     }
-
-
-
-    public function gastoSemanaActual()
-    {
-        return redirect()->route('cobrador.gasto.report', getCurrentCaja(auth()->id())->id);
-    }
     public function render()
     {
         

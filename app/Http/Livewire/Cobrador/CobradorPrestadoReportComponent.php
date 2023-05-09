@@ -24,8 +24,8 @@ class CobradorPrestadoReportComponent extends Component
     }
     public function mostrarPrestamoSingle($registros)
     {
-        // dd( json_decode($registros));
-        $this->emit('mostrarSemanaSingle', json_decode($registros));
+        // dd((array)json_decode($registros));
+        $this->emit('mostrarSemanaSingle', (array)json_decode($registros));
     }
     public function render()
     {
