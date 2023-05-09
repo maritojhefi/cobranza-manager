@@ -142,19 +142,18 @@
         </div>
     </div>
     <div class="row">
-        @foreach ($datos as $dias)
-            @foreach ($dias as $dia)
+            @foreach (diasConActividad($cajaSemanal->id) as $dia)
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-auto align-self-center">
                                     <div class="avatar avatar-40 bg-success text-white shadow-sm rounded-10">
-                                        <span class="size-32">{{ fechaFormateada(2, $dia->fecha)[0] }}</span>
+                                        <span class="size-32">{{ fechaFormateada(2, $dia)[0] }}</span>
                                     </div>
                                 </div>
                                 <div class="col align-self-center ps-0">
-                                    <p class="mb-0 text-color-theme size-10">{{ fechaFormateada(2, $dia->fecha) }}</p>
+                                    <p class="mb-0 text-color-theme size-10">{{ fechaFormateada(2, $dia) }}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -163,7 +162,7 @@
                                 </div>
                                 <div class="col-auto align-self-center text-end size-12">
                                     <small
-                                        class="">{{ $abonos->where('fecha', $dia->fecha)->sum('monto_abono') }}
+                                        class="">{{ totalAbonadoDay($cajaSemanal->id,$dia) }}
                                         Bs</small>
                                 </div>
                             </div>
@@ -173,13 +172,9 @@
                                     <small class="size-10">Prestado:</small>
                                 </div>
                                 <div class="col-auto align-self-center text-end size-12">
-                                    @php
-                                        $date = Carbon\Carbon::parse($dia->fecha);
-                                    @endphp
+                                   
                                     <small
-                                        class="">{{ $prestamos->filter(function ($item) use ($date) {
-                                                return data_get($item, 'created_at') > $date && data_get($item, 'created_at') < $date->endOfDay();
-                                            })->sum('monto_inicial') }}
+                                        class="">{{ totalPrestadoDay($cajaSemanal->id,$dia) }}
                                         Bs</small>
                                 </div>
                             </div>
@@ -189,13 +184,9 @@
                                     <small class="size-10">Gastado:</small>
                                 </div>
                                 <div class="col-auto align-self-center text-end size-12">
-                                    @php
-                                        $date = Carbon\Carbon::parse($dia->fecha);
-                                    @endphp
+                                    
                                     <small
-                                        class="">{{ $gastos->filter(function ($item) use ($date) {
-                                                return data_get($item, 'created_at') > $date && data_get($item, 'created_at') < $date->endOfDay();
-                                            })->sum('monto') }}
+                                        class="">{{ totalGastadoDay($cajaSemanal->id,$dia) }}
                                         Bs</small>
                                 </div>
                             </div>
@@ -203,7 +194,5 @@
                     </div>
                 </div>
             @endforeach
-        @endforeach
-
     </div>
 </div>

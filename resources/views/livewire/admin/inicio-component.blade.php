@@ -63,7 +63,7 @@
                         <p class="text-muted size-12">Hoy</p>
                     </div>
                     <div class="col align-self-center text-end">
-                        <p class="mb-0">{{totalPrestadoToday()}} Bs</p>
+                        <p class="mb-0">{{totalPrestadoDay()}} Bs</p>
                         <p class="text-muted size-12">Saliente</p>
                     </div>
                 </div>

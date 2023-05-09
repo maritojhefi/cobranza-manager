@@ -217,17 +217,22 @@ function validar(array $array)
   }
 }
 
-function getCurrentCaja(int $cobradorId)
+function getCurrentCaja(int $cobradorId = null)
 {
+  if (!$cobradorId) {
+    $cobrador = User::find(auth()->id());
+  } else {
+    $cobrador = User::find($cobradorId);
+  }
   $fechas = startEndWeek(Carbon::now());
-  $caja = CajaSemanal::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('cobrador_id', $cobradorId)->first();
+  $caja = CajaSemanal::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('cobrador_id', $cobrador->id)->first();
   if (!$caja) {
-    $user = User::find($cobradorId);
-    if ($user) {
+
+    if ($cobrador) {
       $caja = CajaSemanal::create([
         'fecha_inicial' => $fechas[0],
-        'monto_inicial' => $user->billetera,
-        'monto_final' => $user->billetera,
+        'monto_inicial' => $cobrador->billetera,
+        'monto_final' => $cobrador->billetera,
         'fecha_final' => $fechas[1],
         'estado_id' => Estado::ID_ACTIVO,
         'cobrador_id' => $cobradorId
@@ -357,8 +362,47 @@ function getAllAbonosUser(int $userId, $fecha)
   }
   return floatval($total);
 }
-function totalPrestadoToday()
+function totalPrestadoDay($idCaja = null, $fecha = null)
 {
-  $prestado = Prestamo::where('created_at', Carbon::now())->sum('monto_inicial');
-  return $prestado;
+  if (!$fecha) {
+    $fecha = Carbon::today();
+  } else {
+    $fecha = Carbon::parse($fecha)->format('Y-m-d');
+  }
+  $prestado = Prestamo::whereDate('fecha', $fecha)->where('caja_id', $idCaja ? $idCaja : getCurrentCaja()->id)->sum('monto_inicial');
+  return floatval($prestado);
+}
+function totalAbonadoDay($idCaja = null, $fecha = null)
+{
+  if (!$fecha) {
+    $fecha = Carbon::today();
+  } else {
+    $fecha = Carbon::parse($fecha)->format('Y-m-d');
+  }
+  $prestado = Abono::whereDate('fecha', $fecha)->where('caja_id', $idCaja ? $idCaja : getCurrentCaja()->id)->sum('monto_abono');
+  return floatval($prestado);
+}
+function totalGastadoDay($idCaja = null, $fecha = null)
+{
+  if (!$fecha) {
+    $fecha = Carbon::today();
+  } else {
+    $fecha = Carbon::parse($fecha)->format('Y-m-d');
+  }
+  $prestado = Gasto::whereDate('fecha', $fecha)->where('caja_id', $idCaja ? $idCaja : getCurrentCaja()->id)->sum('monto');
+  return floatval($prestado);
+}
+function diasConActividad($idCaja = null)
+{
+  if ($idCaja) {
+    $caja = CajaSemanal::where('id', $idCaja)->first();
+  } else {
+    $caja = getCurrentCaja();
+  }
+  $diasPrestamos = Prestamo::where('caja_id', $caja->id)->pluck('fecha')->unique();
+  $diasAbonos = Abono::where('caja_id', $caja->id)->pluck('fecha')->unique();
+  $diasGastos = Gasto::where('caja_id', $caja->id)->pluck('fecha')->unique();
+  $dias = $diasPrestamos->merge($diasAbonos);
+  $dias = $dias->merge($diasGastos);
+  return $dias;
 }

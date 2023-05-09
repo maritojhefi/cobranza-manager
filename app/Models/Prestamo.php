@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Prestamo extends Model
 {
     use HasFactory;
-    protected $appends = array('fecha', 'nombreDia');
+    protected $appends = array('nombreDia');
     protected $fillable = [
         'user_id',
         'cobrador_id',
@@ -24,7 +24,8 @@ class Prestamo extends Model
         'dias_por_semana',
         'retrasos',
         'estado_id',
-        'caja_id'
+        'caja_id',
+        'fecha'
     ];
     public function user()
     {
@@ -109,7 +110,7 @@ class Prestamo extends Model
             return '<span class="text-success">Faltan  ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
         }
     }
-    public function getFechaAttribute()
+    public function setFechaAttribute()
     {
         return Carbon::parse($this->created_at)->format('Y-m-d');
     }

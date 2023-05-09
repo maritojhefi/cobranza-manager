@@ -107,6 +107,7 @@ class UserCrudComponent extends Component
                 'billetera' => $this->billetera,
                 'password' => $this->password
             ]);
+            getCurrentCaja($this->user->id);
             if ($this->image) {
                 $filename = time() . "." . $this->image->extension();
                 $rutaFoto = $this->image->storeAs('/profiles',  $filename, 'publicdisk');
