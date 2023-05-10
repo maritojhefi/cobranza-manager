@@ -94,7 +94,7 @@
                         </div>
                         <div class="col align-self-center text-end">
                             <p class="mb-0 fw-bold">{{ $cajaSemanal->abonos->sum('monto_abono') }} Bs</p>
-                            <a href="javascript:void(0)" class="small">Ver detalles</a>
+                            <a href="{{route('cobrador.abonos.all', $cajaSemanal->id )}}" class="small">Ver detalles</a>
                         </div>
                     </div>
                 </li>

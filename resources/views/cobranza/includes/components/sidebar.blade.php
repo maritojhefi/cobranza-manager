@@ -70,6 +70,7 @@
                             :lista="[
                                 'Nuevo prestamo' => ['cobrador.prestamo', 'bi bi-coin'],
                                 'Historial' => ['cobrador.report', 'bi bi-card-checklist'],
+                                'Tus Abonos' => ['cobrador.abonos.all', 'fa fa-money-bill-trend-up'],
                             ]">
                             <i class="bi bi-cash-coin"></i>
                         </x-elementos.items-sidebar>

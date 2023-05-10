@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Prestamo extends Model
 {
     use HasFactory;
-    protected $appends = array('nombreDia');
+    protected $appends = array('nombreDia', 'user');
     protected $fillable = [
         'user_id',
         'cobrador_id',
@@ -30,6 +30,10 @@ class Prestamo extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function getUserAttribute()
+    {
+        return User::find($this->user_id);
     }
     public function estado()
     {
@@ -110,7 +114,7 @@ class Prestamo extends Model
             return '<span class="text-success">Faltan  ' . Carbon::parse($this->fecha_final)->diffInDays(Carbon::now()) . ' dia(s)</span>';
         }
     }
-    
+
     public function getNombreDiaAttribute()
     {
         $fecha = $this->created_at;

@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Livewire\Admin\CobradorAumentoComponent;
-use App\Http\Livewire\Admin\CobradorAumentoMonto;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\UserMapComponent;
 use App\Http\Livewire\Admin\UserCrudComponent;
 use App\Http\Livewire\Admin\UserListComponent;
+use App\Http\Livewire\Admin\CobradorAumentoMonto;
+use App\Http\Livewire\Admin\CobradorAumentoComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoComponent;
-use App\Http\Livewire\Cobrador\CobradorGastoReportComponent;
-use App\Http\Livewire\Cobrador\CobradorPrestadoReportComponent;
 use App\Http\Livewire\Cobrador\ResetPasswordComponent;
 use App\Http\Livewire\Cobrador\VerGastoCobradorSemana;
+use App\Http\Livewire\Cobrador\CobradorAbonoReportComponent;
+use App\Http\Livewire\Cobrador\CobradorGastoReportComponent;
+use App\Http\Livewire\Cobrador\CobradorPrestadoReportComponent;
 use App\Http\Livewire\Cobrador\VerGastoCobradorSemanaComponent;
 
 Route::get('/', function () {
@@ -55,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::get('/change/password', ResetPasswordComponent::class)->name('reset');
         Route::get('/prestado/report/{caja?}', CobradorPrestadoReportComponent::class)->name('report');
+        Route::get('/abono/report/{caja?}', CobradorAbonoReportComponent::class)->name('abonos.all');
     });
 });
 //Rutas ajax
