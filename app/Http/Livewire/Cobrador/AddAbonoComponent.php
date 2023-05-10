@@ -27,7 +27,7 @@ class AddAbonoComponent extends Component
             ],
             'fecha' => [
                 $fecha,
-                'required|date|after_or_equal:' . $this->prestamo->created_at,
+                'required|date|after_or_equal:' . $this->prestamo->fecha,
                 ['after_or_equal' => 'La fecha no puede ser menor o igual al dia de creacion del prestamo']
             ],
         ]);
@@ -70,7 +70,7 @@ class AddAbonoComponent extends Component
             ],
             'fecha' => [
                 $fecha,
-                'required|date|after_or_equal:' . $this->prestamo->created_at,
+                'required|date|after_or_equal:' . $this->prestamo->fecha,
                 ['after_or_equal' => 'La fecha no puede ser menor o igual al dia de creacion del prestamo']
             ],
             'cantidad' => [
@@ -126,7 +126,7 @@ class AddAbonoComponent extends Component
     public function render()
     {
         $array = [];
-        $this->dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
+        $this->dias = getDiasHabiles(Carbon::parse($this->prestamo->fecha)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
         $registros = $this->prestamo->abonos;
         $registrosFallidos = $this->prestamo->abonosFallidos;
         $contRetrasos = 0;

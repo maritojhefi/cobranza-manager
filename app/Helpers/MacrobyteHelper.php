@@ -65,7 +65,7 @@ function retrasosPrestamos()
   $prestamos = Prestamo::where('estado_id', 2)->get();
   foreach ($prestamos as $item) {
     $diasSemana = $item->dias_por_semana;
-    $fechaCreadoCarbon = Carbon::parse($item->created_at)->addDays(1);
+    $fechaCreadoCarbon = Carbon::parse($item->fecha)->addDays(1);
 
     $diferencia = 0;
 
@@ -101,7 +101,7 @@ function retrasosPrestamoUser($usuario, $idPrestamo = null)
 
   if ($prestamo) {
     $diasSemana = $prestamo->dias_por_semana;
-    $fechaCreadoCarbon = Carbon::parse($prestamo->created_at)->addDays(1);
+    $fechaCreadoCarbon = Carbon::parse($prestamo->fecha)->addDays(1);
     $diferencia = 0;
     // Creamos un array con los días de la semana que queremos tomar en cuenta
     $diasSemanaArray = range(1, 7);
@@ -306,9 +306,9 @@ function getWeekRecordsGasto($fecha, $usuario)
 function getAbonosToday($idCobrador = null)
 {
   if ($idCobrador) {
-    $abonos = Abono::where('fecha', Carbon::today())->where('caja_id', getCurrentCaja($idCobrador)->id)->sum('monto_abono');
+    $abonos = Abono::where('fecha', Carbon::today()->format('Y-m-d'))->where('caja_id', getCurrentCaja($idCobrador)->id)->sum('monto_abono');
   } else {
-    $abonos = Abono::where('fecha', Carbon::today())->sum('monto_abono');
+    $abonos = Abono::where('fecha', Carbon::today()->format('Y-m-d'))->sum('monto_abono');
   }
 
   return floatval($abonos);
@@ -322,7 +322,7 @@ function getCobroTotalToday()
 
 function getCobrosRestantesToday()
 {
-
+  
   return getCobroTotalToday() - getAbonosToday(auth()->id());
 }
 function getPorcentajeCobroToday()

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Prestamo extends Model
 {
     use HasFactory;
-    protected $appends = array('nombreDia');
+    protected $appends = array('nombreDia','estadoHoy','colorHoy','numeroHoy','iconoHoy');
     protected $fillable = [
         'user_id',
         'cobrador_id',
@@ -136,5 +136,64 @@ class Prestamo extends Model
             return 'silver';
         }
     }
-    
+    public function getEstadoHoyAttribute()
+    {
+        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'Pagado hoy';
+        }
+        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'Anulado hoy';
+        }
+        else
+        {
+            return 'Pendiente';
+        }
+    }
+    public function getColorHoyAttribute()
+    {
+        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'success';
+        }
+        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'danger';
+        }
+        else
+        {
+            return 'warning';
+        }
+    }
+    public function getNumeroHoyAttribute()
+    {
+        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 2;
+        }
+        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 3;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    public function getIconoHoyAttribute()
+    {
+        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'fa fa-check';
+        }
+        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'fa fa-warning';
+        }
+        else
+        {
+            return 'fa fa-money-bill-transfer';
+        }
+    }
 }
