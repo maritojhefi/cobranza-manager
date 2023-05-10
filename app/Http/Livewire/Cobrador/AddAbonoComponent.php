@@ -5,19 +5,62 @@ namespace App\Http\Livewire\Cobrador;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Abono;
+use App\Models\AbonoFallido;
 use Livewire\Component;
 use App\Models\Prestamo;
 
 class AddAbonoComponent extends Component
 {
-    public $prestamo, $calendario,$dias;
-    protected $listeners = ['saveAbono' => 'storeAbono'];
+    public $prestamo, $calendario, $dias, $motivosNoPago;
+    protected $listeners = ['saveAbono' => 'storeAbono', 'saveAbonoFallido' => 'storeAbonoFallido'];
     public function mount(Prestamo $id_prestamo)
     {
-
+        $this->motivosNoPago = AbonoFallido::MOTIVOSNOPAGO;
         $this->prestamo = $id_prestamo;
     }
-    public function storeAbono($monto, $fecha,$cantidad)
+    public function storeAbonoFallido($motivo, $fecha)
+    {
+        $error = validar([
+            'motivo' => [
+                $motivo,
+                'required|string',
+            ],
+            'fecha' => [
+                $fecha,
+                'required|date|after_or_equal:' . $this->prestamo->created_at,
+                ['after_or_equal' => 'La fecha no puede ser menor o igual al dia de creacion del prestamo']
+            ],
+        ]);
+        if (!$error) {
+            $siExiste=AbonoFallido::where('fecha',$fecha)->where('prestamo_id',$this->prestamo->id)->first();
+            $siExisteAbono = Abono::where('prestamo_id', $this->prestamo->id)->where('fecha', $fecha)->first();
+            if(!$siExiste && !$siExisteAbono)
+            {
+                AbonoFallido::create([
+                    'fecha'=>Carbon::today(),
+                    'motivo'=>$motivo,
+                    'prestamo_id'=>$this->prestamo->id
+                ]);
+                return redirect()->route('cobrador.abono', ['user_id'=>$this->prestamo->user_id])->with('success', 'Registrado exitosamente');
+            }
+            else if($siExiste && !$siExisteAbono)
+            {
+                $siExiste->motivo=$motivo;
+                $siExiste->save();
+                return redirect()->route('cobrador.abono', ['user_id'=>$this->prestamo->user_id])->with('info', 'Informacion actualizada');
+            }
+            return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('warning', 'Ya existe un abono registrado, operacion cancelada');
+            
+        } else {
+            $toast = [
+                'icon' => 'error',
+                'title' => $error
+            ];
+            $this->emit('toastDispatch', $toast);
+        }
+        
+    }
+    public function storeAbono($monto, $fecha, $cantidad)
     {
         $error = validar([
             'monto' => [
@@ -36,27 +79,27 @@ class AddAbonoComponent extends Component
             ]
         ]);
         if (!$error) {
-            $contador=0;
-            for ($i=0; $i < $cantidad; $i++) {
-                $siExiste=Abono::where('prestamo_id',$this->prestamo->id)->where('fecha',$fecha)->first();
+            $contador = 0;
+            for ($i = 0; $i < $cantidad; $i++) {
+                $siExiste = Abono::where('prestamo_id', $this->prestamo->id)->where('fecha', $fecha)->first();
+                AbonoFallido::where('prestamo_id', $this->prestamo->id)->where('fecha', $fecha)->delete();
                 // dd(array_search($fecha,$this->dias));
-                $existeFecha=array_search($fecha,$this->dias);
-                // dd($siExiste);
-                if($existeFecha!=false && $fecha < getCurrentCaja()->fecha_final && !$siExiste)
-                {
+                $existeFecha = array_search($fecha, $this->dias);
+                //  dd($existeFecha);
+                if (is_numeric($existeFecha) && $fecha < getCurrentCaja()->fecha_final && !$siExiste) {
+
                     Abono::create([
                         'monto_abono' => $monto,
                         'fecha' => $fecha,
                         'prestamo_id' => $this->prestamo->id,
                     ]);
-                }
-                else
-                {
+                } else {
+                    // dd(is_numeric($existeFecha),$fecha < getCurrentCaja()->fecha_final,!$siExiste);
                     $contador++;
                 }
-               $fecha=Carbon::parse($fecha)->addDay();
+                $fecha = Carbon::parse($fecha)->addDay()->format('Y-m-d');
             }
-            $this->prestamo=Prestamo::find($this->prestamo->id);
+            $this->prestamo = Prestamo::find($this->prestamo->id);
             if ($this->prestamo->abonos->count() >= $this->prestamo->dias || $this->prestamo->abonos->sum('monto_abono') >= $this->prestamo->monto_final) {
                 $this->prestamo->estado_id = 3;
                 $this->prestamo->save();
@@ -66,14 +109,10 @@ class AddAbonoComponent extends Component
             //     'title' => 'Abono creado exitosamente!'
             // ];
             // $this->emit('resetModal');
-            if($contador>0)
-            {
-                return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('warning', $cantidad-$contador.' abono(s) creado(s), '.$contador.' ignorados');
-            }
-            else
-            {
+            if ($contador > 0) {
+                return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('warning', $cantidad - $contador . ' abono(s) creado(s), ' . $contador . ' ignorados');
+            } else {
                 return redirect()->route('cobrador.abono.add', $this->prestamo->id)->with('success', 'Abono(s) creado(s) exitosamente!');
-
             }
         } else {
 
@@ -89,10 +128,22 @@ class AddAbonoComponent extends Component
         $array = [];
         $this->dias = getDiasHabiles(Carbon::parse($this->prestamo->created_at)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
         $registros = $this->prestamo->abonos;
-        $contRetrasos=0;
+        $registrosFallidos = $this->prestamo->abonosFallidos;
+        $contRetrasos = 0;
         foreach ($this->dias as $dia) {
             $fechasAbonadas = $registros->where('fecha', $dia);
-            if ($fechasAbonadas->count() > 0) {
+            $fechaFallida = $registrosFallidos->where('fecha', $dia)->first();
+            if($fechaFallida)
+            {
+                $fecha = [
+                    'start' => $fechaFallida->fecha,
+                    'end' => $fechaFallida->fecha,
+                    'color' => 'red',
+                    'title' => $fechaFallida->motivo
+                ];
+                array_push($array, $fecha);
+            }
+            else if ($fechasAbonadas->count() > 0) {
                 foreach ($fechasAbonadas as $abono) {
                     $fecha = [
                         'start' => $abono->fecha,
@@ -107,10 +158,10 @@ class AddAbonoComponent extends Component
                     $titulo = 'pendiente';
                     $color = 'orange';
                 } else {
-                    
+
                     $contRetrasos++;
                     $titulo = 'retraso';
-                    $color = 'red';
+                    $color = 'silver';
                 }
                 $fecha = [
                     'start' => $dia,
@@ -121,8 +172,8 @@ class AddAbonoComponent extends Component
                 array_push($array, $fecha);
             }
         }
-       
-        $this->prestamo->retrasos=$contRetrasos;
+
+        $this->prestamo->retrasos = $contRetrasos;
         $this->prestamo->save();
         $this->calendario = json_encode($array);
         return view('livewire.cobrador.add-abono-component')->section('content')->extends('cobranza.master');

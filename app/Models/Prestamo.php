@@ -57,6 +57,10 @@ class Prestamo extends Model
     {
         return $this->hasMany(Abono::class);
     }
+    public function abonosFallidos()
+    {
+        return $this->hasMany(AbonoFallido::class);
+    }
     public function getFechaFinalAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y');
@@ -121,4 +125,20 @@ class Prestamo extends Model
         $nombreDia = Carbon::parse($fecha)->locale('es')->isoFormat('dddd');
         return ucfirst($nombreDia);
     }
+    public function estadoAbonoHoy()
+    {
+        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'green';
+        }
+        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
+        {
+            return 'red';
+        }
+        else
+        {
+            return 'silver';
+        }
+    }
+    
 }
