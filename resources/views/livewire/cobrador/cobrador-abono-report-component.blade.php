@@ -97,11 +97,11 @@
                 var diaAnterior = null;
                 data.forEach(function(abono, index) {
                     var hora = abono.created_at;
-                    if (abono.nombreDia != diaAnterior) {
+                    if (abono.fechaCreada != diaAnterior) {
                         $('.lista-abono-many').append(
                             '<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +
-                            abono.nombreDia + '</span>');
-                        diaAnterior = abono.nombreDia;
+                            abono.fechaCreada + '</span>');
+                        diaAnterior = abono.fechaCreada;
                     }
                     $('.lista-abono-many').append(
                         '<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><div class="avatar avatar-40 rounded-10" style="margin-right:3%;"><img src="{{ asset('') }}' +
@@ -110,8 +110,8 @@
                         abono.prestamo.user.name + ' ' + abono.prestamo.user.apellido +
                         '</p><p align="left" style="text-align: left !important;margin-bottom: 0px;margin-top: 3px;" class="text-muted size-12"> CI : ' +
                         abono.prestamo.user.ci +
-                        '</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12">' +
-                        timeago(abono.fecha) +
+                        '</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12">Fecha Pagada : ' +
+                        abono.fechaFormateada +
                         '</p>  </div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +
                         abono.monto_abono + ' Bs.</p><p class="text-muted size-12">' + moment(hora)
                         .format('H:mm A') + '</p></div></div></div></li>');
@@ -124,7 +124,6 @@
                 const strTime = ['segundo', 'minuto', 'hora', 'día', 'mes', 'año'];
                 const length = [60, 60, 24, 30, 12, 10];
                 const currentTime = Math.floor(Date.now() / 1000);
-
                 if (currentTime >= timestamp) {
                     let diff = currentTime - timestamp;
                     let i = 0;
@@ -155,11 +154,11 @@
                 var diaAnterior = null;
                 datos.forEach(function(abono, index) {
                     var hora = abono.created_at;
-                    if (abono.nombreDia != diaAnterior) {
-                        $('.lista-abono-single').append(
+                    if (abono.fechaCreada != diaAnterior) {
+                        $('.lista-abono-many').append(
                             '<span class="size-15" style="margin-top: 3%; display: flex; align-items: flex-start;justify-content: flex-start;">' +
-                            abono.nombreDia + '</span>');
-                        diaAnterior = abono.nombreDia;
+                            abono.fechaCreada + '</span>');
+                        diaAnterior = abono.fechaCreada;
                     }
                     $('.lista-abono-single').append(
                         '<li class="list-group-item p-1 m-1"><div class="row"><div class="col d-flex align-self-center ps-0"><div class="avatar avatar-40 rounded-10" style="margin-right:3%;"><img src="{{ asset('') }}' +
@@ -168,8 +167,8 @@
                         abono.prestamo.user.name + ' ' + abono.prestamo.user.apellido +
                         '</p><p align="left" style="text-align: left !important;margin-bottom: 0px;margin-top: 3px;" class="text-muted size-12"> CI : ' +
                         abono.prestamo.user.ci +
-                        '</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12">' +
-                        timeago(abono.fecha) +
+                        '</p>  <p align="left" style="text-align: left !important;" class="text-muted size-12">Fecha Pagada : ' +
+                        abono.fechaFormateada +
                         '</p>  </div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +
                         abono.monto_abono + ' Bs.</p><p class="text-muted size-12">' + moment(hora)
                         .format('H:mm A') + '</p></div></div></div></li>');
