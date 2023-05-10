@@ -18,7 +18,7 @@ class CreateAbonoFallidosTable extends Migration
             $table->id();
             $table->foreignId('prestamo_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->date('fecha')->nullable();
-            $table->string('motivo', 100)->nullable()->default(AbonoFallido::MOTIVOSNOPAGO);
+            $table->string('motivo', 100)->nullable()->default(AbonoFallido::MOTIVOSNOPAGO[0]);
             $table->timestamps();
         });
     }
