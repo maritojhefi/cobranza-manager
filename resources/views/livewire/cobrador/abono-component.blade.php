@@ -25,7 +25,7 @@
             </div>
             @foreach ($user->prestamos->sortByDesc('created_at') as $prestamo)
                 <a href="{{ route('cobrador.abono.add', $prestamo->id) }}">
-                    <div class="card mb-2 mt-2">
+                    <div class="card mb-2 mt-2"  style="border: 3px solid {{ $prestamo->estadoAbonoHoy() }} !important;">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-auto">

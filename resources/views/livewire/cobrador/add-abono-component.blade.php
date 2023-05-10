@@ -41,7 +41,7 @@
                                 </button>
                             </div>
                             <div class="progress m-2">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-{{$prestamo->colorProgresoBar()}}"
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-{{ $prestamo->colorProgresoBar() }}"
                                     style="width: {{ $prestamo->porcentajeProgreso() }}%" role="progressbar"
                                     aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
@@ -110,16 +110,26 @@
         </div>
     </div>
     <div class="row mb-4">
-        <div class="col-12 ">
+        <div class="col-6 ">
             <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalAbono"
                 class="btn btn-primary btn-lg shadow-sm w-100">
                 Abonar
             </a>
         </div>
+        <div class="col-6 ">
+            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalAbonoFallido"
+                class="btn btn-danger btn-lg shadow-sm w-100 text-white">
+                NO PAGO!
+            </a>
+        </div>
     </div>
+
     <div wire:ignore class="card" id='calendar'></div>
+    <div class="row mb-4">
+
+    </div>
 </div>
-@push('footer')
+@push('modals')
     <div class="modal fade" id="modalAbono" tabindex="-1" aria-labelledby="modalCreateGastoLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
@@ -147,8 +157,8 @@
                         <div class="col-12">
                             <div class="form-group form-floating  mb-3">
 
-                                <input type="number" class="form-control" placeholder="Cantidad"
-                                    id="cantidad" value="1">
+                                <input type="number" class="form-control" placeholder="Cantidad" id="cantidad"
+                                    value="1">
 
                                 <label for="descripcion">Cantidad</label>
                             </div>
@@ -160,6 +170,32 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalAbonoFallido" tabindex="-1" aria-labelledby="modalCreateGastoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h3 class="text-color-theme mb-2">Motivo de no pago</h3>
+                    <div class="modal-body">
+                        <input type="date" class="form-control" readonly id="fechaFallida"
+                            value="{{ date('Y-m-d') }}">
+                        <br>
+                        <select name="" id="abonoFallido" class="form-control">
+                            @foreach ($motivosNoPago as $motivo)
+                                <option value="{{ $motivo }}">{{ $motivo }}</option>
+                            @endforeach
+                        </select>
+                        <hr>
+                        <button id="saveAbonoFallido"
+                            class="btn btn-danger btn-lg w-100 btn-block text-white">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endpush
+@push('footer')
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -176,11 +212,21 @@
         });
         $(document).ready(function() {
             $('#saveAbono').click(function() {
-                Livewire.emit('saveAbono', $('#monto').val(), $('#fecha').val(),$('#cantidad').val())
+                Livewire.emit('saveAbono', $('#monto').val(), $('#fecha').val(), $('#cantidad').val())
 
             });
             Livewire.on('resetModal', data => {
                 $('#modalAbono').modal('hide');
+            })
+
+        });
+        $(document).ready(function() {
+            $('#saveAbonoFallido').click(function() {
+                Livewire.emit('saveAbonoFallido', $('#abonoFallido').val(),$('#fechaFallida').val())
+
+            });
+            Livewire.on('resetModal2', data => {
+                $('#modalAbonoFallido').modal('hide');
             })
 
         });
