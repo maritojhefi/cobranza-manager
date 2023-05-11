@@ -17,7 +17,8 @@ class Abono extends Model
         'fecha',
         'long',
         'lat',
-        'caja_id'
+        'caja_id',
+        'created_at'
     ];
     public function prestamo()
     {

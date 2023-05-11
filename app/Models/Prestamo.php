@@ -25,7 +25,8 @@ class Prestamo extends Model
         'retrasos',
         'estado_id',
         'caja_id',
-        'fecha'
+        'fecha',
+        'created_at'
     ];
     public function user()
     {

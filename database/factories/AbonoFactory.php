@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
+use App\Models\Abono;
 use App\Models\Prestamo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,14 +16,27 @@ class AbonoFactory extends Factory
      */
     public function definition()
     {
-        $id_prestamo = $this->faker->numberBetween($min = 1, $max = 30);
-        $prestamo = Prestamo::findOrFail($id_prestamo);
+        
+        $prestamo = Prestamo::inRandomOrder()->first();
+        $ultimo=Abono::where('prestamo_id',$prestamo->id)->get()->last();
+        $abono=$prestamo->cuota+rand(-10,15);
+        if($ultimo)
+        {
+            $fecha=Carbon::parse($ultimo->fecha)->addDay();
+            dd($fecha);
+        }
+        else
+        {
+            $fecha=Carbon::parse($prestamo->fecha)->addDay();
+        }
         return [
-            'prestamo_id' => $id_prestamo,
-            'monto_abono' => $prestamo->cuota,
-            'fecha' => Carbon::now(),
+            'caja_id'=>getCurrentCaja($prestamo->cobrador_id,$fecha),
+            'prestamo_id' => $prestamo->id,
+            'monto_abono' => $abono,
+            'fecha' => $fecha,
             'long' => $this->faker->longitude(),
-            'lat' => $this->faker->latitude()
+            'lat' => $this->faker->latitude(),
+            'created_at'=>$fecha
         ];
     }
 }

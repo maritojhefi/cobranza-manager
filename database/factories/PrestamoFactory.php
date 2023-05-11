@@ -17,7 +17,7 @@ class PrestamoFactory extends Factory
      */
     public function definition()
     {
-        $inicial = $this->faker->numberBetween($min = 100, $max = 3000);
+        $inicial = $this->faker->numberBetween($min = 1000, $max = 3000);
         $interes = $this->faker->randomElement([20, 30, 10]);
         $final = $inicial + ($inicial * ($interes / 100));
         $dias = $this->faker->randomElement([24, 30]);
