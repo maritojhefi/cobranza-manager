@@ -28,7 +28,7 @@ class PrestamoFactory extends Factory
         $user=User::where('role_id',4)->inRandomOrder()->first();
         $user->estado_id=2;
         $user->save();
-        $fecha=Carbon::now()->subDays(rand(1,15));
+        $fecha=Carbon::now()->subDays(rand(1,35));
         return [
             'cobrador_id'=>$cobrador->id,
             'fecha_final'=>$fechaFinal,

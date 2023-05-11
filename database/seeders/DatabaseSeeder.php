@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadosSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(UsuariosSeeder::class);
-        User::factory(50)->create();
+        User::factory(20)->create();
         Prestamo::factory(200)->create();
         // Abono::factory(300)->create();
         

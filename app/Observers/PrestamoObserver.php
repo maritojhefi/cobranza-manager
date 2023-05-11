@@ -17,7 +17,7 @@ class PrestamoObserver
      */
     public function creating(Prestamo $prestamo)
     {
-            $prestamo->caja_id = getCurrentCaja($prestamo->cobrador_id)->id;
+            $prestamo->caja_id = getCurrentCaja($prestamo->cobrador_id,$prestamo->created_at)->id;
             $prestamo->fecha= Carbon::parse($prestamo->created_at)->format('Y-m-d');
     }
     public function created(Prestamo $prestamo)

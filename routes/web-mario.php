@@ -1,15 +1,16 @@
 <?php
 
+use Carbon\Carbon;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cobrador\AbonoComponent;
-use App\Http\Livewire\Cobrador\AddAbonoComponent;
-use App\Http\Controllers\Cobrador\InicioController;
-use App\Http\Livewire\Cobrador\BilleteraComponent;
-use App\Http\Livewire\Cobrador\ListReporteComponent;
 use App\Http\Livewire\Cobrador\MetasComponent;
-use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 use App\Http\Livewire\Cobrador\ReporteComponent;
+use App\Http\Livewire\Cobrador\AddAbonoComponent;
+use App\Http\Livewire\Cobrador\BilleteraComponent;
+use App\Http\Controllers\Cobrador\InicioController;
+use App\Http\Livewire\Cobrador\ListReporteComponent;
+use App\Http\Livewire\Cobrador\PrestamoCrudComponent;
 
 Route::get('/admin/debounce', function () {
     request()->session()->flash('success', 'Raton!');
@@ -47,3 +48,7 @@ Route::middleware([])->name('extra.')->prefix('extras')->group(function () {
         return view('cobranza.extras.ajustes');
     })->name('personalizacion');
 });
+
+
+
+

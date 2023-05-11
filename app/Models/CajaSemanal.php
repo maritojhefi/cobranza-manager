@@ -17,7 +17,8 @@ class CajaSemanal extends Model
         'fecha_final',
         'monto_final',
         'estado_id',
-        'cobrador_id'
+        'cobrador_id',
+        'created_at'
     ];
     public function abonos()
     {

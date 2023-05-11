@@ -217,15 +217,24 @@ function validar(array $array)
   }
 }
 
-function getCurrentCaja(int $cobradorId = null)
+function getCurrentCaja(int $cobradorId = null,$fecha=null)
 {
   if (!$cobradorId) {
     $cobrador = User::find(auth()->id());
   } else {
     $cobrador = User::find($cobradorId);
   }
-  $fechas = startEndWeek(Carbon::now());
+  if($fecha)
+  {
+    $fechas = startEndWeek(Carbon::parse($fecha)->format('Y-m-d'));
+  }
+  else
+  {
+    $fechas = startEndWeek(Carbon::today());
+  }
+  // dd($fechas);
   $caja = CajaSemanal::whereBetween('created_at', [$fechas[0], $fechas[1]])->where('cobrador_id', $cobrador->id)->first();
+
   if (!$caja) {
 
     if ($cobrador) {
@@ -235,7 +244,8 @@ function getCurrentCaja(int $cobradorId = null)
         'monto_final' => $cobrador->billetera,
         'fecha_final' => $fechas[1],
         'estado_id' => Estado::ID_ACTIVO,
-        'cobrador_id' => $cobradorId
+        'cobrador_id' => $cobradorId,
+        'created_at' => $fecha?$fecha:Carbon::now()
       ]);
     } else {
       return null;
