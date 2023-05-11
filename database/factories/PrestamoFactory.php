@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Estado;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PrestamoFactory extends Factory
@@ -24,9 +25,10 @@ class PrestamoFactory extends Factory
         $diasPorSemana=$this->faker->randomElement([5, 6]);
         $fechaFinal=$diasPorSemana==5?addDays(20):addDays(20,true);
         $cobrador=User::where('role_id',3)->inRandomOrder()->first();
-        $user=User::where('role_id',4)->where('estado_id',1)->inRandomOrder()->first();
+        $user=User::where('role_id',4)->inRandomOrder()->first();
         $user->estado_id=2;
         $user->save();
+        $fecha=Carbon::now()->subDays(rand(1,15));
         return [
             'cobrador_id'=>$cobrador->id,
             'fecha_final'=>$fechaFinal,
@@ -37,7 +39,8 @@ class PrestamoFactory extends Factory
             'cuota' => $cuota,
             'interes' => $interes,
             'dias' => $dias,
-            'estado_id' => Estado::ID_PENDIENTE
+            'estado_id' => Estado::ID_PENDIENTE,
+            'created_at' => $fecha
         ];
     }
 }

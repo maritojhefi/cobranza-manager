@@ -17,7 +17,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'password' => Hash::make($this->faker->password(4)), // password
+            'password' => 123, // password
             'apellido'=> $this->faker->lastName(),
             'email'=> $this->faker->email(),
             'ci'=> $this->faker->unique()->randomNumber($nbDigits = NULL, $strict = false),
@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'lat'=> $this->faker->latitude($min = -21, $max = -22),
             'long'=> $this->faker->longitude($min = -64, $max = -65),
             'estado_id'=> 1,
-            'role_id'=> $this->faker->randomElement([1,3,4]),
+            'role_id'=> $this->faker->randomElement([3,4]),
         ];
     }
 

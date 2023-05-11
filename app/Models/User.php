@@ -83,7 +83,7 @@ class User extends Authenticatable
     }
     public function prestamos()
     {
-        return $this->hasMany(Prestamo::class);
+        return $this->hasMany(Prestamo::class)->where('cobrador_id', auth()->id());
     }
     public function getPrestamosCantidadAttribute()
     {
@@ -91,7 +91,7 @@ class User extends Authenticatable
     }
     public function prestamosPendientes()
     {
-        return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('fecha', '<',date('Y-m-d'))->where('cobrador_id', auth()->id());
+        return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('cobrador_id', auth()->id());
     }
     public function prestamosSemana()
     {
