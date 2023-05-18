@@ -14,6 +14,14 @@
                             <p class="text-muted small">Dias de retraso:
                                 {{ $prestamo->retrasos }}</p>
                         </div>
+                        @if (auth()->user()->role_id == 1 && prestamoCurrentCajaSemanal($prestamo->created_at) == true)
+                            <div class="col-auto">
+                                <div class="avatar avatar-40 text-white shadow-sm rounded-10">
+                                    <button type="button" class="btn btn-danger show_confirm"
+                                        id="{{ $prestamo->id }}"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="row position-relative">
                         <div class="col pe-0">
@@ -241,6 +249,26 @@
                 $('#modalAbonoFallido').modal('hide');
             })
 
+        });
+    </script>
+    <script type="text/javascript">
+        $('.show_confirm').click(function(event) {
+            var id = $(this).attr('id');
+            event.preventDefault();
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "Esta a punto de borrar el prestamo y los abonos asociados a este. Esta acción no se puede revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('eliminarPrestamo', id);
+                }
+            })
         });
     </script>
 @endpush

@@ -5,13 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Abono;
+use App\Models\CajaSemanal;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Prestamo extends Model
 {
     use HasFactory;
-    protected $appends = array('nombreDia','estadoHoy','colorHoy','numeroHoy','iconoHoy','user');
+    protected $appends = array('nombreDia', 'estadoHoy', 'colorHoy', 'numeroHoy', 'iconoHoy', 'user');
     protected $fillable = [
         'user_id',
         'cobrador_id',
@@ -43,8 +44,8 @@ class Prestamo extends Model
     public function colorEstado()
     {
         switch ($this->estado_id) {
-                // case 1:
-                //     return 'success';
+            // case 1:
+            //     return 'success';
             case 2:
                 return 'warning';
             case 3:
@@ -128,77 +129,56 @@ class Prestamo extends Model
     }
     public function estadoAbonoHoy()
     {
-        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'green';
-        }
-        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        } else if ($this->abonosFallidos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'red';
-        }
-        else
-        {
+        } else {
             return 'silver';
         }
     }
     public function getEstadoHoyAttribute()
     {
-        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'Pagado hoy';
-        }
-        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        } else if ($this->abonosFallidos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'Anulado hoy';
-        }
-        else
-        {
+        } else {
             return 'Pendiente';
         }
     }
     public function getColorHoyAttribute()
     {
-        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'success';
-        }
-        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        } else if ($this->abonosFallidos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'danger';
-        }
-        else
-        {
+        } else {
             return 'warning';
         }
     }
     public function getNumeroHoyAttribute()
     {
-        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 2;
-        }
-        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        } else if ($this->abonosFallidos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 3;
-        }
-        else
-        {
+        } else {
             return 1;
         }
     }
     public function getIconoHoyAttribute()
     {
-        if($this->abonos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'fa fa-check';
-        }
-        else if($this->abonosFallidos->where('fecha',date('Y-m-d'))->count()>0)
-        {
+        } else if ($this->abonosFallidos->where('fecha', date('Y-m-d'))->count() > 0) {
             return 'fa fa-warning';
-        }
-        else
-        {
+        } else {
             return 'fa fa-money-bill-transfer';
         }
+    }
+    public function caja()
+    {
+        return $this->belongsTo(CajaSemanal::class);
     }
 }

@@ -83,7 +83,11 @@ class User extends Authenticatable
     }
     public function prestamos()
     {
-        return $this->hasMany(Prestamo::class)->where('cobrador_id', auth()->id());
+        if (auth()->user()->role_id == 1) {
+            return $this->hasMany(Prestamo::class);
+        } else {
+            return $this->hasMany(Prestamo::class)->where('cobrador_id', auth()->id());
+        }
     }
     public function getPrestamosCantidadAttribute()
     {
@@ -91,7 +95,11 @@ class User extends Authenticatable
     }
     public function prestamosPendientes()
     {
-        return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('cobrador_id', auth()->id());
+        if (auth()->user()->role_id == 1) {
+            return $this->hasMany(Prestamo::class)->where('estado_id', 2);
+        } else {
+            return $this->hasMany(Prestamo::class)->where('estado_id', 2)->where('cobrador_id', auth()->id());
+        }
     }
     public function prestamosSemana()
     {
@@ -104,7 +112,7 @@ class User extends Authenticatable
         $dias = retrasosPrestamoUser($this->id);
         if ($dias <= 10) {
             $icono = asset('assets/images/person-black.png');
-        } elseif ($dias >= 11  &&  $dias <= 20) {
+        } elseif ($dias >= 11 && $dias <= 20) {
             $icono = asset('assets/images/person-orange.png');
         } else if ($dias > 20) {
             $icono = asset('assets/images/person-red.png');
@@ -116,7 +124,7 @@ class User extends Authenticatable
         $dias = retrasosPrestamoUser($this->id);
         if ($dias <= 10) {
             $color = '#464749';
-        } elseif ($dias >= 11  &&  $dias <= 20) {
+        } elseif ($dias >= 11 && $dias <= 20) {
             $color = '#ff9800';
         } else if ($dias > 20) {
             $color = '#f2574b';

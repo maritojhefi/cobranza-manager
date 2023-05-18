@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\User;
 use App\Models\Abono;
 use App\Models\CajaSemanal;
+use App\Models\Prestamo;
 
 class AbonoObserver
 {
@@ -16,13 +17,13 @@ class AbonoObserver
      */
     public function creating(Abono $abono)
     {
-        
-        $abono->caja_id=getCurrentCaja($abono->prestamo->cobrador_id)->id;
+
+        $abono->caja_id = getCurrentCaja($abono->prestamo->cobrador_id)->id;
     }
     public function created(Abono $abono)
     {
-        User::find($abono->prestamo->cobrador_id)->increment('billetera',$abono->monto_abono);
-        CajaSemanal::find(getCurrentCaja($abono->prestamo->cobrador_id)->id)->increment('monto_final',$abono->monto_abono);
+        User::find($abono->prestamo->cobrador_id)->increment('billetera', $abono->monto_abono);
+        CajaSemanal::find(getCurrentCaja($abono->prestamo->cobrador_id)->id)->increment('monto_final', $abono->monto_abono);
 
     }
     /**
@@ -37,14 +38,22 @@ class AbonoObserver
     }
 
     /**
-     * Handle the Abono "deleted" event.
+     * Handle the Abono "deleted" event.s
      *
      * @param  \App\Models\Abono  $abono
      * @return void
      */
     public function deleted(Abono $abono)
     {
-        //
+        //ajuste de total para la caja semanal del abono que se borrará
+        $caja = CajaSemanal::find($abono->caja_id);
+        $caja->monto_final = $caja->monto_final - $abono->monto_abono;
+        $caja->save();
+
+        //ajuste de total para la billetera del cobrador
+        $user = User::find($caja->cobrador_id);
+        $user->billetera = $user->billetera - $abono->monto_abono;
+        $user->save();
     }
 
     /**
