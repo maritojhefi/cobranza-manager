@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Prestamo;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Cobrador\AbonoComponent;
@@ -23,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     });
     //Rutas cobrador
     Route::middleware([])->name('cobrador.')->prefix('cobrador')->group(function () {
-        Route::get('/inicio', [InicioController::class,'index'])->name('inicio');
+        Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
         Route::get('/prestamos', PrestamoCrudComponent::class)->name('prestamo');
         Route::get('/abono', AbonoComponent::class)->name('abono');
         Route::get('/abono/add/{id_prestamo}', AddAbonoComponent::class)->name('abono.add');
@@ -50,5 +51,17 @@ Route::middleware([])->name('extra.')->prefix('extras')->group(function () {
 });
 
 
-
-
+Route::get('/prueba/caja', function () {
+    $prestamo = Prestamo::find(17);
+    $ultimo = $prestamo->abonos->last();
+    if ($ultimo) {
+        $fecha = Carbon::parse($ultimo->fecha)->addDay();
+       
+    }
+    else
+    {
+        $fecha=Carbon::parse($prestamo->fecha)->addDay();
+    }
+    dd($fecha);
+    dd($ultimo);
+});

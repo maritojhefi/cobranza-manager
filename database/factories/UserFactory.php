@@ -15,6 +15,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        
         return [
             'name' => $this->faker->name(),
             'password' => 123, // password
@@ -27,6 +28,7 @@ class UserFactory extends Factory
             'long'=> $this->faker->longitude($min = -64, $max = -65),
             'estado_id'=> 1,
             'role_id'=> $this->faker->randomElement([3,4]),
+            'billetera'=>mt_rand(ceil(4000/10) , floor(15000/10))*10
         ];
     }
 

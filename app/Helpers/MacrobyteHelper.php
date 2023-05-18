@@ -335,7 +335,7 @@ function getAbonosToday($idCobrador = null)
 
 function getCobroTotalToday()
 {
-  $sumaAbonosToday = Prestamo::where('estado_id', 2)->where('caja_id', getCurrentCaja(auth()->id())->id)->where('fecha', '<', date('Y-m-d'))->sum('cuota');
+  $sumaAbonosToday = Prestamo::where('estado_id', 2)->where('cobrador_id', auth()->id())->where('fecha', '<', date('Y-m-d'))->sum('cuota');
   return floatval($sumaAbonosToday);
 }
 
