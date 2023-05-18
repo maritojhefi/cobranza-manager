@@ -23,30 +23,32 @@
                     <h6 class="title">Prestamos totales: {{ $user->prestamos->count() }}</h6>
                 </div>
             </div>
-            @foreach ($user->prestamos->sortBy('numeroHoy') as $prestamo)
+            @foreach (auth()->user()->id != 1 ? $user->prestamos->sortBy('numeroHoy') : $user->prestamos->sortBy('created_at', 'desc') as $prestamo)
                 <a href="{{ route('cobrador.abono.add', $prestamo->id) }}">
-                    <div class="card mb-2 mt-2" >
+                    <div class="card mb-2 mt-2">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-auto">
-                                    <div class="avatar avatar-60 shadow-sm rounded-10 bg-{{$prestamo->colorHoy}}">
-                                        <i class="{{$prestamo->iconoHoy}} fs-3 text-white"></i>
+                                    <div class="avatar avatar-60 shadow-sm rounded-10 bg-{{ $prestamo->colorHoy }}">
+                                        <i class="{{ $prestamo->iconoHoy }} fs-3 text-white"></i>
                                     </div>
                                 </div>
                                 <div class="col align-self-center p-0">
                                     <p class="text-color-theme size-12">ID: {{ $prestamo->idFolio() }}</p>
                                     <div class="row p-0">
                                         <strong class="col">{{ $prestamo->monto_final }} Bs</strong><br>
-                                        <small class="size-10">{!!$prestamo->diasFaltantes()!!}</small>
+                                        <small class="size-10">{!! $prestamo->diasFaltantes() !!}</small><br>
+                                        <small class="size-10">Creado : {{ fechaFormateada(4,$prestamo->created_at) }}</small>
                                     </div>
                                 </div>
                                 <div class="col-auto p-1 mx-2">
-                                    <p class="text-muted size-12 m-0">Retrasos: {{ retrasosPrestamoUser($user->id,$prestamo->id) }} dias</p>
+                                    <p class="text-muted size-12 m-0">Retrasos:
+                                        {{ retrasosPrestamoUser($user->id, $prestamo->id) }} dias</p>
                                     <hr class="m-1 p-0 text-success">
                                     <p class="text-muted size-12 m-0">Cuota
                                         : {{ $prestamo->cuota }} Bs</p>
-                                    <p
-                                        class="size-10 tag bg-{{ $prestamo->colorHoy }} text-white border-{{ $prestamo->colorHoy }} py-1 px-1 float-end mt-1" style="margin-right: 20%;">
+                                    <p class="size-10 tag bg-{{ $prestamo->colorHoy }} text-white border-{{ $prestamo->colorHoy }} py-1 px-1 float-end mt-3"
+                                        style="margin-right: 20%;">
                                         {{ $prestamo->estadoHoy }}</p>
                                 </div>
                             </div>
