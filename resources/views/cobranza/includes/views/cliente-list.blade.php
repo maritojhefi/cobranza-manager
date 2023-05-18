@@ -97,7 +97,7 @@
                                     Bs</p>
                             </div>
 
-                            @if ($pendientes == true)
+                            @if ($pendientes == true || auth()->user()->role_id == 1)
                                 <div class=" col-2 dropdown dropstart text-end">
                                     <a type="button" href="javascript:void(0);"
                                         class="btn btn-primary btn-sm text-white rounded-circle shadow-sm dropdown-toggle-split"
@@ -130,9 +130,12 @@
                                                 href="{{ url('admin/user/create/' . $user->role->id . '?editando=true&user_id=' . $user->id) }}">Editar
                                                 Datos</a>
                                         </li>
-                                        <li><a class="dropdown-item show_confirm" id="{{ $user->id }}">Eliminar
-                                                Usuario</a>
-                                        </li>
+                                        @if (auth()->user()->role_id == 1)
+                                            <li><a class="dropdown-item show_confirm"
+                                                    id="{{ $user->id }}">Eliminar
+                                                    Usuario</a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             @endif

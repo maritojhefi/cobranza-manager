@@ -12,11 +12,32 @@ use App\Models\Prestamo;
 class AddAbonoComponent extends Component
 {
     public $prestamo, $calendario, $dias, $motivosNoPago;
-    protected $listeners = ['saveAbono' => 'storeAbono', 'saveAbonoFallido' => 'storeAbonoFallido'];
+    protected $listeners = ['saveAbono' => 'storeAbono', 'saveAbonoFallido' => 'storeAbonoFallido', 'eliminarPrestamo' => 'eliminarPrestamo'];
     public function mount(Prestamo $id_prestamo)
     {
         $this->motivosNoPago = AbonoFallido::MOTIVOSNOPAGO;
         $this->prestamo = $id_prestamo;
+    }
+    public function eliminarPrestamo(Prestamo $prestamo)
+    {
+        try {
+            if ($prestamo) {
+                $abonos = $prestamo->abonos()->get();
+                foreach ($abonos as $abono) {
+                    $abono->delete();
+                }
+                // $prestamo->abonos()->delete();
+                $prestamo->delete();
+                return redirect()->route('cobrador.abono', ['user_id' => $this->prestamo->user_id])->with('success', 'El prestamo y los abonos fueron borrados con exito!');
+            }
+        } catch (\Throwable $th) {
+            // dd($th->getMessage());
+            $toast = [
+                'icon' => 'error',
+                'title' => 'hubo un problema al intentar borrar el prestamo, intente nuevamente'
+            ];
+            $this->emit('toastDispatch', $toast);
+        }
     }
     public function storeAbonoFallido($motivo, $fecha)
     {
@@ -99,8 +120,8 @@ class AddAbonoComponent extends Component
                     'icon' => 'success',
                     'title' => 'Abono creado exitosamente!'
                 ];
-                $this->emit('toastDispatch',$toast);
-                
+                $this->emit('toastDispatch', $toast);
+
             } else {
 
                 $toast = [

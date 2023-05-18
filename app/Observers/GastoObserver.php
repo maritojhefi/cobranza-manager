@@ -17,12 +17,12 @@ class GastoObserver
      */
     public function creating(Gasto $gasto)
     {
-        $gasto->caja_id=getCurrentCaja($gasto->user_id)->id;
-        $gasto->fecha= Carbon::parse($gasto->created_at)->format('Y-m-d');
+        $gasto->caja_id = getCurrentCaja($gasto->user_id)->id;
+        $gasto->fecha = Carbon::parse($gasto->created_at)->format('Y-m-d');
     }
     public function created(Gasto $gasto)
     {
-        User::find($gasto->user_id)->decrement('billetera',$gasto->monto);
+        User::find($gasto->user_id)->decrement('billetera', $gasto->monto);
         CajaSemanal::find(getCurrentCaja($gasto->user_id)->id)->decrement('monto_final', $gasto->monto);
     }
     /**
@@ -44,7 +44,14 @@ class GastoObserver
      */
     public function deleted(Gasto $gasto)
     {
-        //
+        //ajuste de total para la caja semanal del gasto que se borrara
+        $caja = CajaSemanal::find($gasto->caja_id);
+        $caja->monto_final = $caja->monto_final + $gasto->monto;
+        $caja->save();
+        //ajuste de total para la billetera del cobrador que esta borrando su gasto de la caja actual
+        $user = User::find($gasto->user_id);
+        $user->billetera = $user->billetera + $gasto->monto;
+        $user->save();
     }
 
     /**

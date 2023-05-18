@@ -217,19 +217,16 @@ function validar(array $array)
   }
 }
 
-function getCurrentCaja(int $cobradorId = null,$fecha=null)
+function getCurrentCaja(int $cobradorId = null, $fecha = null)
 {
   if (!$cobradorId) {
     $cobrador = User::find(auth()->id());
   } else {
     $cobrador = User::find($cobradorId);
   }
-  if($fecha)
-  {
+  if ($fecha) {
     $fechas = startEndWeek(Carbon::parse($fecha)->format('Y-m-d'));
-  }
-  else
-  {
+  } else {
     $fechas = startEndWeek(Carbon::today());
   }
   // dd($fechas);
@@ -244,8 +241,8 @@ function getCurrentCaja(int $cobradorId = null,$fecha=null)
         'monto_final' => $cobrador->billetera,
         'fecha_final' => $fechas[1],
         'estado_id' => Estado::ID_ACTIVO,
-        'cobrador_id' => $cobradorId,
-        'created_at' => $fecha?$fecha:Carbon::now()
+        'cobrador_id' => $cobrador->id,
+        'created_at' => $fecha ? $fecha : Carbon::now()
       ]);
     } else {
       return null;
@@ -280,7 +277,7 @@ function getRegistrosPorCaja($user, $modelo, $caja = null)
     //dd($caja);
     $cajas = CajaSemanal::where([['id', $caja], ['cobrador_id', $user->id]])->get();
     //dd($cajas[0]->fecha_inicial);
-    $prestamos = $modelo->whereBetween('created_at', [$cajas[0]->fecha_inicial, $cajas[0]->fecha_final])->where('caja_id', $cajas[0]->id);
+    $prestamos = $modelo->whereBetween('created_at', [$cajas[0]->fecha_inicial . " 00:00:00", $cajas[0]->fecha_final . " 23:59:59"])->where('caja_id', $cajas[0]->id);
     //dd($prestamos);   
     return $prestamos;
   } else {
@@ -288,7 +285,7 @@ function getRegistrosPorCaja($user, $modelo, $caja = null)
     //dd($cajas);
     $collection = null;
     foreach ($cajas as $caja) {
-      $prestamos = $modelo->whereBetween('created_at', [$caja->fecha_inicial, $caja->fecha_final])->where('caja_id', $caja->id);
+      $prestamos = $modelo->whereBetween('created_at', [$caja->fecha_inicial . " 00:00:00", $caja->fecha_final . " 23:59:59"])->where('caja_id', $caja->id);
       //dd($prestamos);     
       $collection[$caja->id] = $prestamos;
     }
@@ -307,6 +304,18 @@ function startEndWeek($date)
     $finSemana,
   ];
 }
+
+function prestamoCurrentCajaSemanal($date)
+{
+  $inicioSemana = Carbon::now()->startOfWeek(Carbon::MONDAY)->format('Y-m-d H:i:s');
+  $finSemana = Carbon::now()->endOfWeek(Carbon::SUNDAY)->format('Y-m-d H:i:s');
+  if (Carbon::parse($date)->between(Carbon::parse($inicioSemana), Carbon::parse($finSemana))) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function getWeekRecordsGasto($fecha, $usuario)
 {
   $fechas = startEndWeek($fecha);
@@ -332,7 +341,7 @@ function getCobroTotalToday()
 
 function getCobrosRestantesToday()
 {
-  
+
   return getCobroTotalToday() - getAbonosToday(auth()->id());
 }
 function getPorcentajeCobroToday()
@@ -340,7 +349,7 @@ function getPorcentajeCobroToday()
   $total = getCobroTotalToday();
   if ($total > 0) {
     $abonado = getAbonosToday(auth()->id());
-    return floatval((float)$abonado * 100 / (float)$total);
+    return floatval((float) $abonado * 100 / (float) $total);
   } else {
     return 0;
   }
