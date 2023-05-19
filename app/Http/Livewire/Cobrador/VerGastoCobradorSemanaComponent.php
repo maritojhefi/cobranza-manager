@@ -8,22 +8,10 @@ use App\Models\Gasto;
 
 class VerGastoCobradorSemanaComponent extends Component
 {
-    protected $listeners = ['eliminarGasto' => 'eliminarGasto'];
     public function mostrarGasto($caja)
     {
         $registros = Gasto::where([['user_id', auth()->user()->id], ['caja_id', $caja]])->get();
         $this->emit('mostrarSemana', $registros);
-    }
-
-    public function eliminarGasto(Gasto $gasto)
-    {
-        $gasto->delete();
-        $toast = [
-            'icon' => 'success',
-            'title' => 'Se elimino el gasto con exito!'
-        ];
-        $this->emit('closeModal', true);
-        $this->emit('toastDispatch', $toast);
     }
     public function render()
     {
