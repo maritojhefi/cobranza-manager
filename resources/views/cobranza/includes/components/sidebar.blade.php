@@ -93,6 +93,17 @@
                             <i class="fa fa-chart-simple"></i>
                         </x-elementos.items-sidebar>
                     @endif
+
+                    @if (auth()->user()->role_id == 1)
+                        <x-elementos.items-sidebar titulo="Gastos" segmentoLink="gasto" ruta="debounce"
+                            :lista="[
+                                'Gasto Total del día' => ['cobrador.gasto.create', 'bi bi-plus'],
+                                'Historial' => ['admin.gasto.historial', 'bi bi-cash-stack'],
+                            ]">
+                            <i class="fa fa-cart-arrow-down"></i>
+                        </x-elementos.items-sidebar>
+                    @endif
+
                     <x-elementos.items-sidebar titulo="Personalizacion" segmentoLink="personalizacion"
                         ruta="extra.personalizacion" :lista="[]">
                         <i class="fa fa-palette"></i>
