@@ -37,7 +37,7 @@
                                     <p class="text-color-theme size-12">ID: {{ $prestamo->idFolio() }}</p>
                                     <div class="row p-0">
                                         <strong class="col">{{ $prestamo->monto_final }} Bs</strong><br>
-                                        <small class="size-10">{!! $prestamo->diasFaltantes() !!}</small><br>
+                                        <small class="size-10"></small><br>
                                         <small class="size-10">Creado : {{ fechaFormateada(4,$prestamo->created_at) }}</small>
                                     </div>
                                 </div>
@@ -47,9 +47,9 @@
                                     <hr class="m-1 p-0 text-success">
                                     <p class="text-muted size-12 m-0">Cuota
                                         : {{ $prestamo->cuota }} Bs</p>
-                                    <p class="size-10 tag bg-{{ $prestamo->colorHoy }} text-white border-{{ $prestamo->colorHoy }} py-1 px-1 float-end mt-3"
+                                    {{-- <p class="size-10 tag bg-{{ $prestamo->colorHoy }} text-white border-{{ $prestamo->colorHoy }} py-1 px-1 float-end mt-3"
                                         style="margin-right: 20%;">
-                                        {{ $prestamo->estadoHoy }}</p>
+                                        {{ $prestamo->estadoHoy }}</p> --}}
                                 </div>
                             </div>
                         </div>

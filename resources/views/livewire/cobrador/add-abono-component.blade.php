@@ -12,7 +12,7 @@
                         <div class="col align-self-center ps-0">
                             <p class="mb-0 text-color-theme">Detalle de Prestamo: {{ $prestamo->idFolio() }}</p>
                             <p class="text-muted small">Dias de retraso:
-                                {{ $prestamo->retrasos }}</p>
+                                {{ retrasosPrestamoUser($prestamo->user_id, $prestamo->id) }}</p>
                         </div>
                         @if (auth()->user()->role_id == 1 && prestamoCurrentCajaSemanal($prestamo->created_at) == true)
                             <div class="col-auto">
@@ -27,8 +27,8 @@
                         <div class="col pe-0">
                             <div class="form-group form-floating">
                                 <input type="text" class="form-control " placeholder="Bs"
-                                    value="{{ $prestamo->monto_inicial }}" readonly>
-                                <label class="form-control-label" for="amountpoints">Inicial(Bs)</label>
+                                    value="{{ $prestamo->abonos->sum('monto_abono') }}" readonly>
+                                <label class="form-control-label" for="amountpoints">Acumulado(Bs)</label>
                             </div>
                         </div>
                         <div class="col align-self-center ps-0">
@@ -128,14 +128,14 @@
             <div class="col-3 mb-1 p-1">
                 <div class="card text-center m-0 p-0">
                     <div class="card-body m-0 p-1">
-                        @if ($i <= $tarjetasFinalizadas)
+                        @if ($i <= $prestamo->getTarjetasFinalizadas())
                             <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-success text-white p-0">
                                 <span class="size-10">{{$prestamo->cuota}} Bs</span><br>
                                 <i class="fa fa-check"></i>
                                 
                             </div>
                             <p class="text-color-theme size-12 small mb-1">Finalizado</p>
-                        @elseif($i > $tarjetasFinalizadas && $i < $tarjetasFinalizadas + 1)
+                        @elseif($i > $prestamo->getArrayTarjetas() && $i < $prestamo->getTarjetasFinalizadas() + 1)
                             <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-warning text-white">
                                 <i class="fa fa-clock size-18"></i>
                             </div>

@@ -136,7 +136,7 @@ class AddAbonoComponent extends Component
         $array = [];
         $this->dias = getDiasHabiles(Carbon::parse($this->prestamo->fecha)->addDay(), Carbon::parse($this->prestamo->fecha_final)->addDays(retrasosPrestamoUser($this->prestamo->user_id, $this->prestamo->id) + 1));
         $registros = $this->prestamo->abonos;
-        $this->tarjetasFinalizadas = $registros->sum('monto_abono') / $this->prestamo->cuota;
+        
         $registrosFallidos = $this->prestamo->abonosFallidos;
         $contRetrasos = 0;
         // foreach ($this->dias as $dia) {

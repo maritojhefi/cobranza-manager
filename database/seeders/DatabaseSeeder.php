@@ -16,13 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $this->call(EstadosSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(UsuariosSeeder::class);
-        User::factory(20)->create();
-        Prestamo::factory(20)->create();
-        Abono::factory(30)->create();
-        
+        if (env('APP_ENV') == 'local') {
+            User::factory(20)->create();
+            Prestamo::factory(20)->create();
+            Abono::factory(30)->create();
+        }
     }
 }

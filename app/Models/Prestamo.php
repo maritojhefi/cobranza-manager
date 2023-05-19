@@ -98,7 +98,7 @@ class Prestamo extends Model
     public function porcentajeProgreso()
     {
 
-        return number_format($this->abonos->count() * 100 / $this->dias);
+        return number_format($this->abonos->sum('monto_abono') * 100 / $this->monto_final);
     }
     public function colorProgresoBar()
     {
@@ -157,6 +157,7 @@ class Prestamo extends Model
             return 'warning';
         }
     }
+    
     public function getNumeroHoyAttribute()
     {
         if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
@@ -180,5 +181,19 @@ class Prestamo extends Model
     public function caja()
     {
         return $this->belongsTo(CajaSemanal::class);
+    }
+    public function getTarjetasFinalizadas()
+    {
+        return $this->abonos->sum('monto_abono') / $this->cuota;
+    }
+    public function getArrayTarjetas()
+    {
+        $array=[];
+        $restante=0;
+        foreach ($this->abonos as $abono) {
+           $tarjetas=$abono->monto_abono/$this->cuota;
+           dd($tarjetas);
+        }
+        
     }
 }
