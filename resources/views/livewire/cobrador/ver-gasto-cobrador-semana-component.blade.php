@@ -46,17 +46,6 @@
             function ucfirst(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-
-            function prestamoCurrentCajaSemanal(date, id) {
-                var inicioSemana = moment().startOf('isoWeek').isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
-                var finSemana = moment().startOf('isoWeek').isoWeekday(7).format('YYYY-MM-DD HH:mm:ss');
-                if (moment(date).isBetween(inicioSemana, finSemana)) {
-                    return `<div class="col-2 align-self-center text-end"><button type="button" class="btn btn-danger" onclick="eliminarGasto(` +
-                        id + `)"><i class="fa fa-trash text-white"></i></button></div>`;
-                } else {
-                    return ' ';
-                }
-            }
             Livewire.on('mostrarSemana', data => {
                 $('#modalVerGastoSemana').modal('show');
                 $('.lista-gasto').empty();
@@ -74,8 +63,7 @@
                         ucfirst(gasto.descripcion) +
                         '</p></div><div class="col align-self-center text-end"><p class="mb-0 size-12">' +
                         gasto.monto + ' Bs.</p><p class="text-muted size-12">' + moment(fecha).format(
-                            'H:mm A') + '</p></div>' + prestamoCurrentCajaSemanal(gasto.fecha, gasto.id) +
-                        '</div></li>');
+                            'H:mm A') + '</p></div></div></li>');
                 });
             });
         </script>

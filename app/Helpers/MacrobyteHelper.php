@@ -309,7 +309,7 @@ function prestamoCurrentCajaSemanal($date)
 {
   $inicioSemana = Carbon::now()->startOfWeek(Carbon::MONDAY)->format('Y-m-d H:i:s');
   $finSemana = Carbon::now()->endOfWeek(Carbon::SUNDAY)->format('Y-m-d H:i:s');
-  if (Carbon::parse($date)->between(Carbon::parse($inicioSemana), Carbon::parse($finSemana))) {
+  if (Carbon::parse($date . ' 00:00:00')->between(Carbon::parse($inicioSemana), Carbon::parse($finSemana))) {
     return true;
   } else {
     return false;

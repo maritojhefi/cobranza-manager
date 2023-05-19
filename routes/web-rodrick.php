@@ -7,10 +7,12 @@ use App\Http\Livewire\Admin\UserMapComponent;
 use App\Http\Livewire\Admin\UserCrudComponent;
 use App\Http\Livewire\Admin\UserListComponent;
 use App\Http\Livewire\Admin\CobradorAumentoMonto;
+use App\Http\Livewire\Admin\VerGastosAdminComponent;
 use App\Http\Livewire\Admin\CobradorAumentoComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoComponent;
 use App\Http\Livewire\Cobrador\ResetPasswordComponent;
 use App\Http\Livewire\Cobrador\VerGastoCobradorSemana;
+use App\Http\Livewire\Admin\CobradorGastoAdminComponent;
 use App\Http\Livewire\Cobrador\CobradorAbonoReportComponent;
 use App\Http\Livewire\Cobrador\CobradorGastoReportComponent;
 use App\Http\Livewire\Cobrador\CobradorPrestadoReportComponent;
@@ -34,7 +36,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create/{role_id}', UserCrudComponent::class)->name('create');
             Route::get('/aumento/historial', CobradorAumentoComponent::class)->name('historial');
         });
-
+        Route::name('gasto.')->prefix('gasto')->group(function () {
+            Route::get('/ver/gastos/cobradores', VerGastosAdminComponent::class)->name('historial');
+            Route::get('/gasto/cobrador', CobradorGastoAdminComponent::class)->name('cobrador');
+        });
 
         Route::get('/maps/user/all', UserMapComponent::class)->name('maps.user');
         Route::get('/user/map/single/{idUser}', function ($idUser) {

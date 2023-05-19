@@ -11,12 +11,14 @@
                     <p class="mb-0 text-color-theme">{{ $user->getFullNameAttribute() }}</p>
                     <p class="text-muted size-12">({{ $user->role->nombre_rol }})</p>
                 </div>
-                <div class="col-auto">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalCreateGasto"
-                        class="btn btn-44 btn-light shadow-sm">
-                        <i class="bi bi-plus-circle"></i>
-                    </a>
-                </div>
+                @if ($user->role_id != 1)
+                    <div class="col-auto">
+                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalCreateGasto"
+                            class="btn btn-44 btn-light shadow-sm">
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="card theme-bg text-white border-0 text-center">
@@ -39,7 +41,11 @@
                 @foreach ($gastoUser as $gasto)
                     <div class="card mb-3 ml-2 mr-2">
                         <div class="card-body">
-                            <div class="row">
+                            @if (auth()->user()->role_id == 1)
+                                <span class="text-muted">{{ $gasto->user->name }} - (C.I :
+                                    {{ $gasto->user->ci }})</span>
+                            @endif
+                            <div class="row mt-1">
                                 <div class="col-auto d-flex align-items-center">
                                     <div class="avatar avatar-40 bg-secondary text-white shadow-sm rounded-10">
                                         <i class="bi bi-cash-stack" style="font-size: 30px;"></i>
