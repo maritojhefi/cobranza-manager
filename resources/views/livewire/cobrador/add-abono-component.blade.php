@@ -124,14 +124,30 @@
         </div>
     </div>
     <div class="row">
-        @for ($i = 0; $i < $prestamo->dias; $i++)
+        @for ($i = 1; $i <= $prestamo->dias; $i++)
             <div class="col-3 mb-1 p-1">
                 <div class="card text-center m-0 p-0">
                     <div class="card-body m-0 p-1">
-                        <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 theme-bg text-white">
-                            <img src="assets/img/company2-50.png" alt="" class="">
-                        </div>
-                        <p class="text-color-theme size-12 small mb-1">Flat 20%</p>
+                        @if ($i <= $tarjetasFinalizadas)
+                            <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-success text-white p-0">
+                                <span class="size-10">{{$prestamo->cuota}} Bs</span><br>
+                                <i class="fa fa-check"></i>
+                                
+                            </div>
+                            <p class="text-color-theme size-12 small mb-1">Finalizado</p>
+                        @elseif($i > $tarjetasFinalizadas && $i < $tarjetasFinalizadas + 1)
+                            <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-warning text-white">
+                                <i class="fa fa-clock size-18"></i>
+                            </div>
+                            <p class="text-color-theme size-12 small mb-1">Pendiente</p>
+                        @else
+                            <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-danger text-white">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <p class="text-color-theme size-12 small mb-1">Pendiente</p>
+                        @endif
+
+
 
                     </div>
                 </div>
