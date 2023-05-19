@@ -6,23 +6,25 @@
                 @foreach ($cobradores as $cobrador)
                     <div class="card mb-3 ml-2 mr-2">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto d-flex align-items-center">
-                                    <div onclick="location.href='{{ route('admin.gasto.cobrador', ['cobrador_id' => $cobrador->id]) }}'"
-                                        class="col-2 p-1">
+                            <div onclick="location.href='{{ route('admin.gasto.cobrador', ['cobrador_id' => $cobrador->id]) }}'"
+                                class="">
+                                <div class="row">
+                                    <div class="col-auto d-flex align-items-center">
                                         <div class="avatar avatar-40 bg-secondary text-white shadow-sm rounded-10">
                                             <img src="{{ asset('') . $cobrador->foto }}" alt="">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col align-self-center ps-0">
-                                    <small class="mb-0">{{ ucwords($cobrador->name) }}</small>
-                                    <p class="text-muted size-12">Monto Actual :
-                                        {{ number_format($cobrador->billetera, 2, ',', ' ') }} Bs</p>
-                                </div>
-                                <div class="col align-self-center text-end">
-                                    <p class="mb-0">C.I : {{ $cobrador->ci }}</p>
-                                    <p class="text-muted size-12">Gastos : {{ $cobrador->gastos->count() }}</p>
+                                    <div class="col align-self-center ps-0">
+                                        <small class="mb-0">{{ ucwords($cobrador->name) }}</small>
+                                        <p class="text-muted size-12 mb-0">Monto Actual :</p>
+                                        <small
+                                            class="text-muted size-12">{{ number_format($cobrador->billetera, 2, ',', ' ') }}
+                                            Bs</small>
+                                    </div>
+                                    <div class="col align-self-center text-end">
+                                        <p class="size-12">C.I : {{ $cobrador->ci }}</p>
+                                        <p class="text-muted size-12">Gastos : {{ $cobrador->gastos->count() }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
