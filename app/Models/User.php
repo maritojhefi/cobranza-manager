@@ -109,7 +109,8 @@ class User extends Authenticatable
 
     public function getIconoAttribute()
     {
-        $dias = retrasosPrestamoUser($this->id);
+        // $dias = retrasosPrestamoUser($this->id);
+        $dias=$this->prestamos->avg('retrasos');
         if ($dias <= 10) {
             $icono = asset('assets/images/person-black.png');
         } elseif ($dias >= 11 && $dias <= 20) {
@@ -121,7 +122,8 @@ class User extends Authenticatable
     }
     public function getColorAttribute()
     {
-        $dias = retrasosPrestamoUser($this->id);
+        // $dias = retrasosPrestamoUser($this->id);
+        $dias=$this->prestamos->avg('retrasos');
         if ($dias <= 10) {
             $color = '#464749';
         } elseif ($dias >= 11 && $dias <= 20) {
@@ -141,7 +143,8 @@ class User extends Authenticatable
 
     public function getRetrasosAttribute()
     {
-        $dias = retrasosPrestamoUser($this->id);
+        // $dias = retrasosPrestamoUser($this->id);
+        $dias=$this->prestamos->avg('retrasos');
         return $dias;
     }
     public function getFullNameAttribute()
@@ -150,7 +153,14 @@ class User extends Authenticatable
     }
     public function getPromRetrasosAttribute($value)
     {
-        return floatval(number_format($value, 1));
+        $dias=$this->prestamos->avg('retrasos');
+        // return floatval(number_format($value, 1));
+        return number_format($dias,0);
+    }
+    public function setPromRetrasosAttribute($value)
+    {
+        $dias=$this->prestamos->avg('retrasos');
+        $this->attributes['prom_retrasos'] = $dias;
     }
     public static function getCurrentUser()
     {

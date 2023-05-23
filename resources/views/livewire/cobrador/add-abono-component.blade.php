@@ -124,35 +124,22 @@
         </div>
     </div>
     <div class="row">
-        @for ($i = 1; $i <= $prestamo->dias; $i++)
+        @foreach ($prestamo->getArrayTarjetas() as $tarjeta)
             <div class="col-3 mb-1 p-1">
                 <div class="card text-center m-0 p-0">
                     <div class="card-body m-0 p-1">
-                        @if ($i <= $prestamo->getTarjetasFinalizadas())
-                            <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-success text-white p-0">
-                                <span class="size-10">{{$prestamo->cuota}} Bs</span><br>
-                                <i class="fa fa-check"></i>
-                                
-                            </div>
-                            <p class="text-color-theme size-12 small mb-1">Finalizado</p>
-                        @elseif($i > $prestamo->getArrayTarjetas() && $i < $prestamo->getTarjetasFinalizadas() + 1)
-                            <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-warning text-white">
-                                <i class="fa fa-clock size-18"></i>
-                            </div>
-                            <p class="text-color-theme size-12 small mb-1">Pendiente</p>
-                        @else
-                            <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-danger text-white">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <p class="text-color-theme size-12 small mb-1">Pendiente</p>
-                        @endif
+                        <div class="avatar avatar-50 shadow-sm mb-2 mt-1 rounded-10 bg-{{$tarjeta['color']}} text-white p-0">
+                           
+                            <i class="{{$tarjeta['icono']}}"></i>
 
-
-
+                        </div>
+                        <p class="text-color-theme size-10 small m-0 p-0">{{fechaFormateada(2,$tarjeta['fecha'])}}</p>
+                        <strong class="size-10 p-0">{{ $tarjeta['cuota'] }} Bs</strong><br>
                     </div>
                 </div>
             </div>
-        @endfor
+        @endforeach
+        
     </div>
 
 
@@ -177,8 +164,8 @@
                         <div class="col-12">
                             <div class="form-group form-floating  mb-3">
 
-                                <input type="date" step="any" class="form-control" placeholder="Fecha" id="fecha"
-                                    value="{{ date('Y-m-d') }}">
+                                <input type="date" step="any" class="form-control" placeholder="Fecha"
+                                    id="fecha" value="{{ date('Y-m-d') }}">
 
                                 <label for="descripcion">Fecha</label>
                             </div>

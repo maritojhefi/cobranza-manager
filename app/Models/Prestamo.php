@@ -44,8 +44,8 @@ class Prestamo extends Model
     public function colorEstado()
     {
         switch ($this->estado_id) {
-            // case 1:
-            //     return 'success';
+                // case 1:
+                //     return 'success';
             case 2:
                 return 'warning';
             case 3:
@@ -157,7 +157,7 @@ class Prestamo extends Model
             return 'warning';
         }
     }
-    
+
     public function getNumeroHoyAttribute()
     {
         if ($this->abonos->where('fecha', date('Y-m-d'))->count() > 0) {
@@ -184,16 +184,70 @@ class Prestamo extends Model
     }
     public function getTarjetasFinalizadas()
     {
-        return $this->abonos->sum('monto_abono') / $this->cuota;
+        return floor($this->abonos->sum('monto_abono') / $this->cuota);
     }
     public function getArrayTarjetas()
     {
-        $array=[];
-        $restante=0;
-        foreach ($this->abonos as $abono) {
-           $tarjetas=$abono->monto_abono/$this->cuota;
-           dd($tarjetas);
+        $array = collect();
+        $restante = 0;
+        $cuota = $this->cuota;
+        $cantidadAbonos = $this->abonos->count();
+        $cont = 0;
+        $dias = getDiasHabiles(Carbon::parse($this->fecha)->addDay(), Carbon::parse($this->fecha_final));
+        foreach ($this->abonos->sortBy('fecha') as $abono) {
+            if ($restante > 0) {
+                $falta = $cuota - $restante;
+                $abono->monto_abono = $abono->monto_abono - $falta;
+                // array_push($array, [$cuota => $abono->fecha]);
+                $array->push([
+                    'cuota'=>$cuota,
+                    'fecha'=>$abono->fecha,
+                    'color'=>'success',
+                    'estado'=>'Finalizado',
+                    'icono'=>'fa fa-check'
+                ]);
+                array_splice($dias, 0, 1);
+            }
+            $tarjetas = floor($abono->monto_abono / $this->cuota);
+            for ($i = 0; $i < $tarjetas; $i++) {
+                // array_push($array, [$cuota => $abono->fecha]);
+                $array->push([
+                    'cuota'=>$cuota,
+                    'fecha'=>$abono->fecha,
+                    'color'=>'success',
+                    'estado'=>'Finalizado',
+                    'icono'=>'fa fa-check'
+                ]);
+                array_splice($dias, 0, 1);
+            }
+
+            $restante = $abono->monto_abono % $this->cuota;
+            // unset($dias[0]);
+            
+            $cont++;
+            if ($cont >= $cantidadAbonos && $restante>0) {
+                // array_push($array, [$restante => $abono->fecha]);
+                $array->push([
+                    'cuota'=>$restante,
+                    'fecha'=>$abono->fecha,
+                    'color'=>'warning',
+                    'estado'=>'En curso',
+                    'icono'=>'fa fa-warning'
+                ]);
+                array_splice($dias, 0, 1);
+            }
         }
-        
+        foreach($dias as $fecha)
+        {
+            // array_push($array, ['0' => $fecha]);
+            $array->push([
+                'cuota'=>0,
+                'fecha'=>$fecha,
+                'color'=>'danger',
+                'estado'=>'Pendiente',
+                'icono'=>'fa fa-hourglass'
+            ]);
+        }
+       return $array;
     }
 }
